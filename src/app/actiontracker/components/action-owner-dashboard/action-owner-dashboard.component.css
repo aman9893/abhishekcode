@@ -1,0 +1,138 @@
+.page-content-wrapper {
+    width: 90%;
+}
+.ellepsis{
+	width: 132px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+	cursor: pointer;
+}
+.ellepsis .popover-content{
+	max-height: 85px;
+    overflow-y: auto;
+}
+.popover-content{
+	position: relative;
+    max-width: 240px;
+    font-size: 13px;
+}
+.close-popover{
+	position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    color: #afafaf;
+}
+.legend{
+	display: inline-block;
+    height: 18px;
+    width: 4px;
+    margin: 0 10px 0 3px;
+    vertical-align: middle;
+}
+.overdue-actions{
+	background: #ac1e2e;
+}
+.approaching-due-dt{
+	background: #d6a228;
+}
+.legend-name{
+	font-size: 13px;
+    margin-left: -4px;
+    margin-right: 10px;
+}
+/* action owner dashboard */
+.action-owner-tabs{
+	padding-top: 15px;
+}
+.action-owner-tabs .nav-tabs > li{
+	margin-right: 1px;
+}
+.action-owner-tabs .nav-tabs > li > a{
+	padding: 3px 10px 1px;
+    background: #6f6f6f;
+    color: #fff;
+    font-size: 13px;
+	border-radius: 3px 3px 0 0;
+}
+.action-owner-tabs .nav-tabs{
+	border-bottom: 1px solid #6f6f6f;
+}
+.action-owner-tabs .nav-tabs > li.active > a, .action-owner-tabs .nav-tabs > li.active > a:focus, .action-owner-tabs .nav-tabs > li.active > a:hover{
+	background: #fff;
+	color: #383838;
+	border: 1px solid #6f6f6f;
+    border-bottom-color: transparent;
+}
+.action-owner-tabs .nav > li > a:hover{
+	background: linear-gradient(to right, #818286, #ac1e2e);
+	border: 1px solid transparent;
+}
+.action-owner-tabs .tab-content{
+	border: 1px solid #6f6f6f;
+    border-top: none;
+    padding: 15px;
+}
+.action-owner-tabs .filter-sort-wrapper{
+	background: #ac1e2e;
+	position: relative;
+	margin-bottom: 10px;
+}
+.action-owner-tabs .filter-sort-wrapper a i, .action-owner-tabs .filter-sort-wrapper a i:hover{
+	color: #fff;
+}
+.action-owner-tabs .outer-wrapper{
+	top: 24px;
+	min-width: 405px;
+}
+.filter-sort-wrapper .sort-wrapper a i {
+    color: #4d4d4f !important ;
+}
+.page-content-wrapper {
+    width: 90%;
+}
+.ellepsis{
+	width: 105px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+	cursor: pointer;
+}
+.ellepsis .popover-content{
+	max-height: 85px;
+    overflow-y: auto;
+}
+.popover-content{
+	position: relative;
+    max-width: 240px;
+    font-size: 13px;
+}
+.close-popover{
+	position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    color: #afafaf;
+}
+.legend{
+	display: inline-block;
+    height: 18px;
+    width: 4px;
+    margin: 0 10px 0 3px;
+    vertical-align: middle;
+}
+.overdue-actions{
+	background: #ac1e2e;
+}
+.approaching-due-dt{
+	background: #d6a228;
+}
+.legend-name{
+	font-size: 13px;
+    margin-left: -4px;
+    margin-right: 10px;
+}
+

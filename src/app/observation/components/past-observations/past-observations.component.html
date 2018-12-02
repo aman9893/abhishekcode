@@ -1,0 +1,217 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="top-heading center">
+        <h4>My Observations Dashboard</h4>
+      </div>
+      <div class="sub-wrapper">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Observations</li>
+            <li class="breadcrumb-item" aria-current="page">Past Observations</li>
+            <li class="filter-sort">
+              <div class="filter-sort-wrapper" (clickOutside)="onClickedOutside()">
+                <a class="settings" data-toggle="collapse" data-target="#filter" (click)="onTabOpen()">
+                  <i class="fa fa-filter" aria-hidden="true" pTooltip="Filter" tooltipPosition="top"></i>
+                </a>
+                <div class="outer-wrapper" *ngIf="hideFilter">
+                  <ul class="filter-section-wrapper collapse" id="filter">
+                    <li *ngIf="loggedInUserJSON.Company.CompanyName === 'B44'">
+                      <div class="leave-type">
+                        <h5>obervation type</h5>
+                        <div class="filter-scroll">
+                          <div class="checkbox" *ngFor="let observationType of observationTypeDetailsResponse; let i = index">
+                            <label>
+                              <input type="checkbox" [(ngModel)]="observationType.Checked" (change)="selectObservationType($event.target.checked, observationType)">{{observationType.ObservationTypeName}}</label>
+                          </div>
+                        </div>
+                        <span class="filter-scroll" *ngIf="observationTypeDetailsResponse.length == 0">Observation type Configuration is not set up for B44</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="leave-type">
+                        <h5>status</h5>
+                        <div class="filter-scroll">
+                          <div class="radio" *ngFor="let status  of statusList; let i = index">
+                            <label>
+                              <input type="radio" (change)="submitSelectedStatus(status,$event)" [(ngModel)]="defultStatus" [value]="status.StatusName"
+                                [name]="statusgroup">{{status.StatusName}}</label>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="leave-type" *ngIf="isRequestForDisplay">
+                        <h5>Request for</h5>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="reqtype" [(ngModel)]="requestType" value="Self" (change)="saveRequestToFilterList($event)"> Self
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="reqtype" [(ngModel)]="requestType" value="On Behalf" (change)="saveRequestToFilterList($event)"> On behalf
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="reqtype" [(ngModel)]="requestType" value="Contractor" (change)="saveRequestToFilterList($event)"> Contractor
+                          </label>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- <li class="margin-right-5">
+                      <div class="leave-type">
+                        <h5>Observation date</h5>
+                        <div class="calendar-wrapper">
+                          <p-calendar [showIcon]="true" [(ngModel)]="ObservationFromDate" [showTime]="true" placeholder="From Date" class="custom-datepicker"></p-calendar>
+                          <p-calendar [showIcon]="true" [(ngModel)]="ObservationToDate" [showTime]="true" placeholder="To Date" class="custom-datepicker"></p-calendar>
+                        </div>
+                      </div>
+                      <div class="leave-type margin-top-20">
+                        <h5>Observation submission date</h5>
+                        <div class="calendar-wrapper">
+                          <p-calendar [showIcon]="true" [(ngModel)]="ObsSubmissionFromDate" [showTime]="true" placeholder="From Date" class="custom-datepicker"></p-calendar>
+                          <p-calendar [showIcon]="true" [(ngModel)]="ObsSubmissionToDate" [showTime]="true" placeholder="To Date" class="custom-datepicker"></p-calendar>
+                        </div>
+                      </div>
+                    </li> -->
+                    <div class="clearfix"></div>
+                    <li class="filter-footer">
+                      <footer>
+                        <a (click)="resetValue()" role="button" class="btn btn-primary secondary-btn">
+                          <i class="fa fa-refresh"></i>reset</a>
+                        <a (click)="doneFilter()" role="button" class="btn btn-primary primary-btn">
+                          <i class="fa fa-check"></i>done</a>
+                      </footer>
+                    </li>
+                  </ul>
+                </div>
+
+                <a class="settings" data-toggle="collapse" data-target="#sort" (click)="onTabOpen()">
+                  <i class="fa fa-sort" aria-hidden="true" data-toggle="tooltip" pTooltip="Sort" tooltipPosition="top" data-original-title="Sort"></i>
+                </a>
+                <div class="outer-wrapper" *ngIf="hideSort">
+                  <ul class="filter-section-wrapper sort-section-wrapper collapse" id="sort">
+                    <li>
+                      <div class="sort-wrapper">
+                        <div class="dt-sort">
+                          <label>observation date</label>
+                          <a class="selected">
+                            <i (click)="ascObservationDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                          </a>
+                          <a>
+                          </a>
+                          <a class="">
+                            <i (click)="descObservationDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="no-margin-right">
+                      <div class="sort-wrapper">
+                        <div class="dt-sort">
+                          <label>submission date</label>
+                          <a class="">
+                            <i (click)="ascSubmissionDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                          </a>
+                          <a>
+                          </a>
+                          <a class="selected">
+                            <i (click)="descSubmissionDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <div class="clearfix"></div>
+                  </ul>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ol>
+        </nav>
+        <div class="section-wrapper">
+          <div class="col-lg-12 col-md-3 col-sm-3 no-padding">
+            <ul class="filter-details">
+              <li class="filters-applied">Filters applied</li>
+              <li *ngFor="let filter  of filterList">{{filter}}
+                <i class="fa fa-times dismiss-filter"></i>
+              </li>
+              <li (click)="resetValue()" class="pull-right no-margin-right clear-all">Clear all</li>
+            </ul>
+          </div>
+          <div class="clearfix"></div>
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-condensed fix-tablelayout">
+              <thead>
+                <tr>
+                  <th style="width: 100px">Observation ID</th>
+                  <th style="width: 86px" *ngIf="requestRaisedFor !== 'Self'">Raised for</th>
+                  <th style="width: 125px" >Observer name</th>
+                  <th style="width: 125px" *ngIf="loggedInUserJSON.Company.CompanyName === 'B44'">Observation Type</th>
+                  <th style="width: 80px">Location</th>
+                  <th style="width: 170px">Observation Date</th>
+                  <th style="width: 170px">Observation Submitted On</th>
+                  <th style="width: 80px" *ngIf="!(selectedFilter == closedStatus) && !(selectedFilter == acknowledgedStatus) && !(selectedFilter == cancelledStatus) && !(selectedFilter === deletedStatus)">Status</th>
+                  <th style="width: 170px" *ngIf="selectedFilter == closedStatus">Observation closure date</th>
+                  <th style="width: 140px" *ngIf="selectedFilter == closedStatus">Observation closed By</th>
+                  <th style="width: 170px" *ngIf="selectedFilter == acknowledgedStatus">Acknowledged date</th>
+                  <th style="width: 190px" *ngIf="selectedFilter == acknowledgedStatus">Observation Acknowledged By</th>
+                  <th style="width: 150px" *ngIf="selectedFilter == deletedStatus">Deletion date</th>
+                  <!-- <th style="width: 155px" *ngIf="selectedFilter == deletedStatus">Observation Deleted By</th> -->
+                  <th style="width: 160px" *ngIf="selectedFilter == cancelledStatus">Observation cancelled on</th>
+                  <th style="width: 70px">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let observation of observationData | paginate: { itemsPerPage: itemPerPage, currentPage: pageSize ,totalItems: rowCount}">
+                  <td>{{observation.ObservationRequests.DisplayId}}</td>
+                  <td *ngIf="requestRaisedFor !== 'Self'">{{observation.UserType}}</td>
+                  <td>{{observation.RaisedForFullName}}</td>
+                  <td *ngIf="loggedInUserJSON.Company.CompanyName === 'B44'">{{observation.ObservationRequests.ObservationType}}</td>
+                  <td>{{observation.ObservationRequests.LocationName}}</td>
+                  <td>{{observation.ObservationRequests.ObservationDate | date: dateFormatDDMMYYYYHHMMSS}}</td>
+                  <td>{{observation.ObservationRequests.CreatedDate | date: dateFormatDDMMYYYY}}</td>
+                  <td *ngIf="!(selectedFilter == closedStatus) && !(selectedFilter == acknowledgedStatus) && !(selectedFilter == cancelledStatus) && !(selectedFilter === deletedStatus)">{{observation.ObservationRequests.Status}}</td>
+                  <td *ngIf="(selectedFilter == cancelledStatus)">{{observation.ObservationRequests.CancellationDate | date: dateFormatDDMMYYYY}}</td>
+                  <td *ngIf="selectedFilter == acknowledgedStatus">{{observation.ObservationRequests.AcknowledgmentDate | date: dateFormatDDMMYYYY}}</td>
+                  <td *ngIf="selectedFilter == closedStatus">{{observation.ObservationRequests.ClosureDate | date: dateFormatDDMMYYYY}}</td>
+                  <td *ngIf="selectedFilter == deletedStatus">{{observation.ObservationRequests.DeletionDate | date: dateFormatDDMMYYYY}}</td>
+                  <td *ngIf="(selectedFilter == closedStatus) || (selectedFilter == acknowledgedStatus)">{{observation.RaisedForFullName}}</td>
+                  <td>
+                    <a *ngIf="!(selectedFilter === deletedStatus) && !observation.ObservationRequests.ObservationCategoryId " [routerLink]="['/observation/raise-observation', observation.ObservationRequests.ObservationId]"
+                      pTooltip="Edit details" tooltipPosition="top">
+                      <i class="fa fa-edit" aria-hidden="true"></i>
+                    </a>
+                    <a [routerLink]="['../view-requests',observation.ObservationRequests.ObservationId]" pTooltip="View details" tooltipPosition="top">
+                      <i class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                    <a *ngIf="!(selectedFilter === deletedStatus) && !observation.ObservationRequests.ObservationCategoryId " [routerLink]="['../cancel-observation', observation.ObservationRequests.ObservationId]"
+                      data-toggle="tooltip" pTooltip="Cancel details" tooltipPosition="top">
+                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <div style="width: 500px;margin-top:15px;color: red" *ngIf="!showPagination">{{noRecordsMsg}}</div>
+
+          <div style="width: 500px" *ngIf="showPagination">
+            <pagination-controls (pageChange)="getServerData($event)"></pagination-controls>
+          </div>
+          <!-- End table-responsive -->
+          <div class="clearfix"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+</div>

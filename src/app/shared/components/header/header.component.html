@@ -1,0 +1,45 @@
+<!--Start Common Loader  -->
+<div class="loader" *ngIf="baseService.showRootLoader">
+  <i class="fa fa-circle-o-notch fa-spin"></i>
+</div>
+<!-- End Common Laoder -->
+<nav class="navbar navbar-default navbar-fixed-top" *ngIf="isUserLoggedIn">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <!-- toggle button - responsive -->
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+        aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- toggle button - responsive -->
+      <a class="navbar-brand brand-logo">
+        <img [src]="'assets/images/ARA-Petroleum.png'"/>
+        <!--<img [src]="isDisplaylogobyCompany ? 'assets/images/ARA-Petroleum.png' : 'assets/images/ara-logo.png'" [class.b44-logo]="isDisplaylogobyCompany"/>-->
+      </a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active">
+          <a>
+            <span class="profile-pic">
+              <!-- <img src="assets/images/pro-pic.png" /> -->
+            </span>Welcome,
+            <span class="current" *ngIf="loggedinUserType == 'Employee'">{{adal4Service.adal4User.profile.name}}</span>
+            <span class="current" *ngIf="loggedinUserType == 'Contractor'">{{loggedInUser.FullName}}</span>
+            <ul class="sub-menu">
+              <li>
+                <a class="color-white" *ngIf="loggedinUserType == 'Contractor'" [routerLink]="['../contractorlogin']">Change Password</a>
+              </li>
+              <li>
+                <a class="color-white" (click)="logout()">Logout</a>
+              </li>
+            </ul>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

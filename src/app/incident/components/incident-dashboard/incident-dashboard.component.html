@@ -1,0 +1,125 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="top-heading center">
+        <h4>Incident Management Dashboard</h4>
+      </div>
+      <div class="sub-wrapper">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+              <a routerLink="../incident-dashboard">Incident Management Dashboard</a>
+            </li>
+            <li class="filter-sort">
+              <div class="filter-sort-wrapper" (clickOutside)="onClickedOutside()">
+                <a class="settings" data-toggle="collapse" data-target="#filter" (click)="onTabOpen()">
+                  <i class="fa fa-filter" aria-hidden="true" pTooltip="Filter" tooltipPosition="top"></i>
+                </a>
+                <div class="outer-wrapper" *ngIf="hideFilter">
+                  <ul class="filter-section-wrapper collapse" id="filter">
+                    <li>
+                      <div class="leave-type">
+                        <h5>status</h5>
+                        <div class="filter-scroll">
+                          <div class="radio" *ngFor="let status  of statusList; let i = index">
+                            <label>
+                              <input type="radio" (change)="submitSelectedStatus(status,$event)" [(ngModel)]="defaultStatus" [value]="status.StatusName"
+                                [name]="statusgroup">{{status.StatusName}}</label>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <div class="clearfix"></div>
+                  </ul>
+                </div>
+                <a class="settings" data-toggle="collapse" data-target="#sort" (click)="onTabOpen()">
+                  <i class="fa fa-sort" aria-hidden="true" data-toggle="tooltip" pTooltip="Sort" tooltipPosition="top" data-original-title="Sort"></i>
+                </a>
+                <div class="outer-wrapper" *ngIf="hideSort">
+                  <ul class="filter-section-wrapper sort-section-wrapper collapse" id="sort">
+                    <li class="no-margin-right">
+                      <div class="sort-wrapper">
+                        <div class="dt-sort">
+                          <label>Submission date</label>
+                          <a class="">
+                            <i (click)="descSubmissionDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                          </a>
+                          <a>
+                          </a>
+                          <a class="selected">
+                            <i (click)="ascSubmissionDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <div class="clearfix"></div>
+                  </ul>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ol>
+        </nav>
+        <div class="section-wrapper">
+          <div class="col-lg-12 col-md-3 col-sm-3 no-padding">
+            <ul class="filter-details">
+              <li class="filters-applied">Filters applied</li>
+              <li *ngFor="let filter  of filterList">{{filter}}
+                <i class="fa fa-times dismiss-filter"></i>
+              </li>
+              <li (click)="resetValue()" class="pull-right no-margin-right clear-all">Clear all</li>
+            </ul>
+          </div>
+          <div class="clearfix"></div>
+
+          <div class="table-responsive margin-top-20">
+            <table align="center" class="table table-bordered table-striped table-condensed">
+              <thead>
+                <tr>
+                  <th style="width: 80px">Incident ID</th>
+                  <th style="width: 90px">Incident Date</th>
+                  <th style="width: 130px">Incident Report By</th>
+                  <th style="width: 100px">Company</th>
+                  <th style="width: 80px">Location</th>
+                  <th style="width: 140px">Notification Submitted By</th>
+                  <th style="width: 110px">Notification Submitted On</th>
+                   <th style="width: 70px">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let incidentRequest of incidentRequestData | paginate: { itemsPerPage: itemPerPage, currentPage: pageSize ,totalItems: rowCount}'>
+                  <td>{{incidentRequest.DisplayId}}</td>
+                  <td>{{incidentRequest.IncidentDate | date: dateFormatDDMMYYYY}}</td>
+                  <td>{{incidentRequest.RaisedBy.FullName}}</td>
+                  <td>{{incidentRequest.Company.CompanyName}}</td>
+                  <td>{{incidentRequest.Location.LocationName}}</td>
+                  <td>{{incidentRequest.NotificationBy.FullName}}</td>
+                  <td>{{incidentRequest.CreatedDate | date: dateFormatDDMMYYYY}}</td>
+                <td>
+                    <a  [routerLink]="['/incident/raise-incident', incidentRequest.IncidentRequestId]"
+                      pTooltip="Edit details" tooltipPosition="top">
+                      <i class="fa fa-edit" aria-hidden="true"></i>
+                    </a>
+                    <a  [routerLink]="['../view-incident-request', incidentRequest.IncidentRequestId]" 
+                      pTooltip="View details" tooltipPosition="top">
+                      <i class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="width: 500px;margin-top:15px;color: red" *ngIf="(incidentRequestData.length == 0)">no record found</div>
+
+            <div style="width: 500px" *ngIf="(incidentRequestData.length > 1)">
+              <pagination-controls (pageChange)="getServerData($event)"></pagination-controls>
+            </div>
+          </div>
+          <!-- End table-responsive -->
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>

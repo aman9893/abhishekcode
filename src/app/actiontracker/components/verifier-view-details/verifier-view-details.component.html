@@ -1,0 +1,199 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div id="wrapper">
+  <div class="container-fluid">
+
+    <div class="page-content-wrapper">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="inner-wrapper">
+          <div class="sub-wrapper">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                  <a href="../../../actiontracker/verifier-dashboard">Verifier Dashboard</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Verify Action</li>
+              </ol>
+            </nav>
+            <div class="section-wrapper">
+              <span class="section-title">Action Assignment Details</span>
+              <div class="clearfix"></div>
+              <div class="sub-sections-wrapper">
+                <div class="row-wrapper">
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+                    <div>
+                      <label class="first-column-labels">Source</label>
+                    </div>
+                    <span class="label-details">{{actionDetails.Process.ProcessName}}</span>
+                  </div>
+                  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 no-padding-left">
+                    <div>
+                      <label class="middle-column-labels">Observtion Reference ID</label>
+                    </div>
+                    <span class="label-details">
+                      <a [routerLink]="['../../../observation/view-requests',actionDetails.RequestData.ObservationId]" >{{actionDetails.DisplayId}}</a>
+                    </span>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+                    <div>
+                      <label class="last-column-labels">Action ID</label>
+                    </div>
+                    <span class="label-details">{{actionDetails.ActionId}}</span>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="row-wrapper">
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+                    <div>
+                      <label class="first-column-labels">Action Owner</label>
+                    </div>
+                    <span class="label-details">{{actionDetails.ActionOwner.FullName}}</span>
+                  </div>
+                  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 no-padding-left">
+                    <div>
+                      <label class="middle-column-labels">Action Assigned On</label>
+                    </div>
+                    <span class="label-details">{{actionDetails.CreatedDate | date: dateFormatDDMMYYYY}}</span>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+                    <div>
+                      <label class="last-column-labels">Classification</label>
+                    </div>
+                    <span class="label-details">{{priority}}</span>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="row-wrapper">
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+                    <div>
+                      <label class="first-column-labels">Submission date</label>
+                    </div>
+                    <span class="label-details">{{actionDetails.RequestData.CreatedDate | date: dateFormatDDMMYYYY}}</span>
+                  </div>
+                  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 no-padding-left">
+                    <div>
+                      <label class="middle-column-labels">Action Status</label>
+                    </div>
+                    <span class="label-details">{{actionDetails.Status.StatusName}}</span>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="row-wrapper">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <div>
+                      <label class="first-column-labels">Action Description</label>
+                    </div>
+                    <span class="label-details description-details">{{actionDetails.ActionDetails}}</span>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <!-- This will get updated when documents user story will come -->
+                <!-- <div class="row-wrapper">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <div><label class="margin-bottom-10">Supporting Documents</label></div>
+                    <div class="docs-wrapper">
+                      <span class="label docs"><img src="images/ara-logo.png"/></span>
+                      <span class="download-option"><img src="images/ara-logo.png"/></span>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div> -->
+              </div>
+            </div>
+
+            <div class="breaker"></div>
+
+            <div class="section-wrapper">
+              <span class="section-title">Action Execution details</span>
+              <div class="clearfix"></div>
+              <div class="sub-sections-wrapper">
+                <div class="row-wrapper">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <div>
+                      <label class="">Remarks</label>
+                    </div>
+                    <span class="label-details description-details">{{actionHistoryRemarksForDocs}}</span>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="row-wrapper">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <div>
+                      <label class="margin-bottom-10">Documents Uploaded</label>
+                    </div>
+                    <div class="docs-wrapper">
+                      <div class="docs-wrapper" *ngFor="let document of actionDetails.UploadedDocument">
+                        <span class="label docs" (mouseenter)="displayImage($event)" (mouseleave)="displayImage($event)">
+                          <a href="{{document.Url}}"></a>
+                          <img src="{{document.Url}}" />
+                        </span>
+                        <span class="download-option" *ngIf="toggleImage">
+                          <img src="{{document.Url}}" />
+                        </span>
+                        <div *ngIf="document.length === 0">No Supporting document has been uploaded.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </div>
+            <div class="breaker"></div>
+
+            <div class="section-wrapper">
+              <span class="section-title">Verify Action</span>
+              <div class="clearfix"></div>
+              <div class="sub-sections-wrapper">
+                <div class="row-wrapper">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <label class="pull-left margin-top-5">Verification Date</label>
+                    <div class="col-lg-4 col-md-5 col-sm-4 col-xs-7 no-padding-right">
+                      <span class="label-details">
+                        <p-calendar [showIcon]="true" [minDate]="currentDate" [showTime]="false" placeholder="" [(ngModel)]="verificationDate" readonlyInput="true"
+                          required #timeOfUse="ngModel"></p-calendar>
+                      </span>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="row-wrapper">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <div>
+                      <label class="">Acceptance / Rejection remarks</label>
+                    </div>
+                    <textarea class="form-control margin-top-10" maxlength="200" rows="2" id="comment" [(ngModel)]="verifierRemark"></textarea>
+                  </div>
+                  <div *ngIf="showRemarkErrorMessage">
+                    <span class="color-red">Kindly enter rejection remarks.</span>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="breaker"></div>
+
+            <footer>
+              <a (click)="backToVerifierDashboard()" role="button" class="btn btn-primary secondary-btn">
+                <i class="fa fa-reply"></i>back to verifier dashboard</a>
+              <a (click)="submitVerifierAction(rejectedStatus)" role="button" class="btn btn-primary primary-btn">
+                <i class="fa fa-share-square"></i>Reject</a>
+              <a (click)="submitVerifierAction(acceptedStatus)" role="button" class="btn btn-primary primary-btn">
+                <i class="fa fa-share-square"></i>Accept</a>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+  <app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="backToVerifierDashboard()"
+              [confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,151 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+              <a href="action-Party-dashboard.html" target="_blank">Action Tracker Dashboard</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page">Action Details</li>
+          </ol>
+        </nav>
+        <div class="section-wrapper">
+          <span class="section-title">Action Assignment Details</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">Source</label>
+                </div>
+                <span class="label-details">{{actionGet.Process.ProcessName}}</span>
+              </div>
+              <div class="col-lg-5 col-md-8 col-sm-8 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Observtion Reference ID</label>
+                </div>
+                <span class="label-details">
+                  <a href="observation-card-details-readonly.html">{{actionGet.DisplayId}}</a>
+                </span>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="last-column-labels">Action ID</label>
+                </div>
+                <span class="label-details">{{actionGet.ActionId}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row-wrapper">
+              <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">Action Assigned By</label>
+                </div>
+                <span class="label-details">{{actionGet.CreatedBy.FullName}}</span>
+              </div>
+              <div class="col-lg-5 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Action Assigned On</label>
+                </div>
+                <span class="label-details">{{actionGet.CreatedDate | date: dateFormatDDMMYYYY}}</span>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="last-column-labels">Classification</label>
+                </div>
+                <span class="label-details">{{ actionGet.Priority | convertToPriority: 'actionGet.Priority' }}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row-wrapper">
+              <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">submission date</label>
+                </div>
+                <span class="label-details">{{actionGet.RequestData.CreatedDate | date: dateFormatDDMMYYYY}}</span>
+              </div>
+              <div class="col-lg-5 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Action Status</label>
+                </div>
+                <span class="label-details">{{actionGet.Status.StatusName}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-4 col-sm-4 no-padding">
+                <div>
+                  <label class="first-column-labels">Action Description</label>
+                </div>
+                <span class="label-details description-details">{{actionGet.ActionDetails}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-4 col-sm-4 no-padding">
+                <div>
+                  <label class="margin-bottom-10">Supporting Documents</label>
+                </div>
+                <div class="docs-wrapper" *ngFor="let document of uploadedDoucmentUrls">
+                  <span class="label docs">
+                    <img [src]="document.Url" />
+                  </span>
+                  <span class="download-option">
+                    <img [src]="document.Url" />
+                  </span>
+                </div>
+                <div *ngIf="uploadedDoucmentUrls?.length === 0">No Supporting document has been uploaded.</div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper">
+          <span class="section-title">Action Party : Execution details</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-4 col-sm-4 no-padding">
+                <label class="">
+                  Remarks
+                  <span class="mandatory">*</span>
+                </label>
+                <span class="label-details">
+                  <textarea class="form-control margin-top-10" rows="2" id="comment" [(ngModel)]="actionAssignmentDetails.Remarks" disabled></textarea>
+                </span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row-wrapper">
+              <label class="col-lg-6 col-md-4 col-sm-4 no-padding margin-bottom-10">Upload Documents</label>
+              <div class="col-lg-6 col-md-4 col-sm-4 no-padding" *ngFor="let file of uploadedDoucment">
+                <img [src]="file.Url" aria-disabled="true">
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <footer>
+          <a>
+            <button type="button" class="btn btn-primary secondary-btn" (click)="onClickBackToDashboard()">
+              <i class="fa fa-reply"></i>back to action dashboard</button>
+          </a>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>

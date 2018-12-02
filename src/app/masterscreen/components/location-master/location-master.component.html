@@ -1,0 +1,92 @@
+<div class="outer-box">
+  <h1>Fields marked in
+    <span class="mandatory">*</span> are mandatory</h1>
+  <div class="inner-box">
+    <div class="form-group" *ngIf='isLocationEdit'>
+      <label class="labelClass">Company Name
+        <span class="mandatory">*</span>
+      </label>
+      <p-dropdown [options]="companyList" placeholder="Select" [(ngModel)]="locationDetails.companyId" required #companyId="ngModel"></p-dropdown>
+      <span *ngIf="companyId.errors && (companyId.dirty || companyId.touched) && !companyId.valid">
+        <p style="color:red; margin-left: 160px">
+          <b>Atleast one company should be selected</b>
+        </p>
+      </span>
+    </div>
+    <div class="form-group" *ngIf='!isLocationEdit'>
+      <label class="labelClass">Company Name
+        <span class="mandatory">*</span>
+      </label>
+      <p-dropdown [options]="companyList" [(ngModel)]="locationDetails.companyId" required #companyId="ngModel"></p-dropdown>
+      <span *ngIf="companyId.errors && (companyId.dirty || companyId.touched) && !companyId.valid">
+        <p style="color:red; margin-left: 160px">
+          <b>Atleast one company should be selected</b>
+        </p>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label class="labelClass">Location Name
+        <span class="mandatory">*</span>
+      </label>
+
+      <input type="text" class="form-control inputWidth" maxlength="50" [(ngModel)]="locationDetails.locationName" required #locationName="ngModel"
+      />
+      <span *ngIf="locationName.errors && (locationName.dirty || locationName.touched) && !locationName.valid" class="section-Forerror">Kindly enter location name</span>
+    </div>
+    <div class="form-group" *ngIf='!isLocationEdit'>
+      <label class="labelClass">Status
+      </label>
+      <p-dropdown [options]="status" [(ngModel)]="locationDetails.InActive" (onChange)="selectStatus(locationDetails.InActive)"></p-dropdown>
+    </div>
+    <div class="text-center">
+      <button class="back-btn" (click)="navigateToWelcomePage()">
+        <i class="fa fa-reply"></i>Back to welcome page</button>
+      <button class="active-btn blue" *ngIf='isLocationEdit' [class.btn-disabled]="!locationDetails.locationName || !locationDetails.companyId"
+        [disabled]="!locationDetails.locationName || !locationDetails.companyId" (click)='checkIsCompanyactiveLocationDetails(0)'>
+        <i class="fa fa-check"></i> Save</button>
+      <button class="active-btn blue" *ngIf='!isLocationEdit' [class.btn-disabled]="!locationDetails.locationName || !locationDetails.companyId"
+        [disabled]="!locationDetails.locationName || !locationDetails.companyId" (click)='checkIsCompanyactiveLocationDetails(1)'>
+        <i class="fa fa-check"></i> Update </button>
+    </div>
+  </div>
+  <!-- End inner-box -->
+</div>
+<div class="table-responsive design-table">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Company Name</th>
+        <th>Location Name</th>
+        <th>Status</th>
+        <th width="12%">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let location of locationDetailsResponse; let i = index">
+        <td>{{location.CompanyName}}</td>
+        <td>{{location.LocationName}}</td>
+        <td>{{location.InActive}}</td>
+        <td>
+          <a class="inline actions pointer" pTooltip="Edit details" tooltipPosition="top" (click)="editLocationDetails(location ,i)">
+            <i class="fa fa-edit"></i>
+          </a>
+          <!-- <a class="inline actions pointer">
+                                                <i class="fa fa-trash"></i>
+                                            </a> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="norecordfound" *ngIf="locationDetailsResponse.length == 0">
+    <p>
+      <b>No record found</b>
+    </p>
+  </div>
+</div>
+<!-- End table-responsive -->
+<div class="clearfix"></div>
+<!-- End outer-box -->
+
+<app-alerts [alertType]="alertType" [confirmMessage]="confirmMessage" [successDetails]="successDetails" [errorDetails]="errorDetails"
+  (okClicked)="resetValue()" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>

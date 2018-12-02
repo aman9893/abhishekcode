@@ -1,0 +1,12 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper">
+        <h3 class="page-title obs-card-title">Incident View Details</h3>
+        <!-- Display view request for specific incident request id -->
+        <app-view-request-details [incidentRequestId]="incidentRequestId"></app-view-request-details>
+      </div>
+    </div>
+  </div>
+</div>

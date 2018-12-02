@@ -1,0 +1,67 @@
+<div class="outer-box">
+  <h1>Fields marked in
+    <span class="mandatory">*</span> are mandatory</h1>
+  <div class="inner-box">
+
+    <div class="form-group">
+      <label class="labelClass">Company Name
+        <span class="mandatory">*</span>
+      </label>
+
+      <input type="text" class="form-control inputWidth" maxlength="50" (input)="onSearchChange()" [(ngModel)]="companyDetails.companyName"
+      />
+      <span *ngIf="companyValidation" class="section-Forerror">Kindly enter company name</span>
+    </div>
+    <div class="form-group" *ngIf='!isCompanyEdit'>
+      <label class="labelClass">Status
+      </label>
+      <p-dropdown [options]="status" [(ngModel)]="companyDetails.InActive" (onChange)="selectStatus(companyDetails.InActive)"></p-dropdown>
+    </div>
+    <div class="text-center">
+      <button class="back-btn" (click)="navigateToWelcomePage()">
+        <i class="fa fa-reply"></i>Back to welcome page</button>
+      <button class="active-btn blue" *ngIf='isCompanyEdit' (click)='checkIsCompanyActive(0)'>
+        <i class="fa fa-check"></i> Save</button>
+      <button class="active-btn blue" *ngIf='!isCompanyEdit' (click)='checkIsCompanyActive(1)'>
+        <i class="fa fa-check"></i> Update</button>
+    </div>
+  </div>
+  <!-- End inner-box -->
+</div>
+<div class="table-responsive design-table">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Company Name</th>
+        <th>Status</th>
+        <th width="12%">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let company of companyDetailsResponse; let i = index">
+        <td>{{company.CompanyName}}</td>
+        <td>{{company.InActive}}</td>
+        <td>
+          <a class="inline actions pointer" pTooltip="Edit details" tooltipPosition="top" (click)="editCompanyDetails(company ,i)">
+            <i class="fa fa-edit"></i>
+          </a>
+          <!-- <a class="inline actions pointer">
+                                        <i class="fa fa-trash"></i>
+                                    </a> -->
+        </td>
+      </tr>
+      <!-- <tr *ngIf="companyDetailsResponse.length == 0">No record found</tr> -->
+    </tbody>
+  </table>
+  <div class="norecordfound" *ngIf="companyDetailsResponse.length == 0">
+    <p>
+      <b>No record found</b>
+    </p>
+  </div>
+</div>
+<!-- End table-responsive -->
+<div class="clearfix"></div>
+<!-- End outer-box -->
+
+<app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="resetValue()"
+  [confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>

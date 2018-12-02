@@ -1,0 +1,16 @@
+/* dialog box*/
+p-dialog{
+    text-align: left;
+}
+::ng-deep #wrapper p-dialog .ui-widget-content .ui-button, ::ng-deep #wrapper p-dialog .ui-widget-content .ui-button:hover, .ui-button{
+    border: 1px solid #808080;
+    color: #FFFFFF;
+    background: #808080;
+}
+::ng-deep p-dialog .ui-widget-content{
+    border-top: 1px solid #e2e2e2;
+}
+::ng-deep .ui-dialog-title{
+    font-family: "Roboto", "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1em;
+}

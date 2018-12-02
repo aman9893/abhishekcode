@@ -1,0 +1,71 @@
+import { SpilDetails } from './spilDetails.model';
+import { IncidentType } from './incidentType.model';
+import { PeopleInvolved } from './peopleInvolved.model';
+import { IncidentCategory } from './incidentCategory.model';
+import { LocationDetails } from './../../masterscreen/model/admin-master.model';
+import { User } from './../../shared/models/user.model';
+import { Location } from './location.model';
+import { Company } from '../../observation/model/company.model';
+
+export class IncidentRequestPost {
+    IncidentRequestId: number;
+    RaisedBy: number;
+    IncidentDate: Date;
+    LocationId: number;
+    SpecificLocation: string;
+    IncidentObserveBy: number;
+    CommunicationSource: number;
+    ActivityTakingAtIncident: string;
+    InitalFact: string;
+    IPStatus: string;
+    FileUrl: string;
+    Pear: string = '0';
+    Severity: number = 0;
+    RationaleClassification: string;
+    InitalClassification: string;
+    CaseOwnerAppointment: number;
+    ActionTaken: string;
+    ImmediateCause: string;
+    ActorId: number;
+    CreatedDate: Date;
+    StatusId: number;
+    InActive: boolean;
+    Location: Location;
+    SelectedIncidentTypeIds: number[];
+    SelectedIncidentCategoryIds: number[];
+}
+
+export class IncidentRequestGet {
+    IncidentRequestId: number;
+    DisplayId: string;
+    RaisedBy: User;
+    IncidentDate: Date;
+    LocationId: Location;
+    SpecificLocation: string;
+    IncidentObserveBy: User;
+    CreatedDate: Date;
+    CommunicationSource: number;
+    ActivityTakingAtIncident: string;
+    InitalFact: string;
+    IPStatus: string;
+    FileUrl: string;
+    Pear: string;
+    Severity: number;
+    RationaleClassification: string;
+    CaseOwnerAppointment: number;
+    ActionTaken: string;
+    ImmediateCause: string;
+    ActorId: number;
+    StatusId: number;
+    SelectedIncidentTypeIds: number[];
+    SelectedIncidentCategoryIds: number[];
+    InActive: boolean;
+    Location: LocationDetails;
+    Company: Company;
+    NotificationBy: User;
+    IncidentCategory: IncidentCategory[];
+    IncidentType: IncidentType[];
+    CaseOwner: User;
+    PeopleInvolvedDetails: PeopleInvolved[];
+    SpilDetails: SpilDetails[];
+}

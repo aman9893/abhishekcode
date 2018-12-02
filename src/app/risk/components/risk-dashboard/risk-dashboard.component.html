@@ -1,0 +1,616 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="modal fade" id="assigned-actions-details" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </button>
+        <h4 class="modal-title custom_align" id="Heading">Assigned actions details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="action-owner-tabs no-padding-top">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a data-toggle="tab" href="#completed">Completed</a>
+            </li>
+            <li>
+              <a data-toggle="tab" href="#pending">Pending</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div id="completed" class="tab-pane fade in active">
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped table-condensed">
+                  <thead>
+                    <tr>
+                      <th style="width: 35px">Sr. No.</th>
+                      <th style="width: 70px">Action details</th>
+                      <th style="width: 70px">Due date</th>
+                      <th style="width: 125px">Action assignment date</th>
+                      <th style="width: 70px">Risk Owner</th>
+                      <th style="width: 70px">Action party</th>
+                      <th style="width: 110px">Action party designation</th>
+                      <th style="width: 80px">Action execution</th>
+                      <th style="width: 80px">Execution details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor=" let action of closedAction ; let i= index">
+                      <td>{{i+1}}</td>
+                      <td>{{action.ActionDetails}}</td>
+                      <td>{{action.TargetDate | date: dateFormatDDMMYYYY}}</td>
+                      <td>{{action.CreatedDate | date: dateFormatDDMMYYYY}}</td>
+                      <td>{{action.ActionOwner.FullName}}</td>
+                      <td>{{action.ActionParty.FullName}}</td>
+                      <td>{{action.ActionParty.Designation}}</td>
+                      <td>{{action.ActionAssignment[0].UpdatedDate | date: dateFormatDDMMYYYY}}</td>
+                      <td>
+                        <span class="ellepsis" data-html="true" data-toggle="popover" pTooltip="{{action.ActionAssignment[0].Remarks}}" data-content="action.ActionAssignment[0].Remarks <i class='fa fa-times close-popover'></i>">{{action.ActionAssignment[0].Remarks}}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div id="pending" class="tab-pane fade">
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped table-condensed fix-tablelayout">
+                  <thead>
+                    <tr>
+                      <th style="width: 30px">Sr. No.</th>
+                      <th style="width: 80px">Action details</th>
+                      <th style="width: 70px">Due date</th>
+                      <th style="width: 60px">Action party</th>
+                      <th style="width: 70px">Action party designation</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor=" let action of pendingAction ; let i= index">
+                      <td>{{i+1}}</td>
+                      <td>{{action.ActionDetails}}</td>
+                      <td>{{action.TargetDate | date: dateFormatDDMMYYYY}}</td>
+                      <td>{{action.ActionParty.FullName}}</td>
+                      <td>{{action.ActionParty.Designation}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="modal-footer ">
+                  <button type="button" class="btn btn-success" onclick="window.location.href='Past-observations-dashboard.html'">&nbsp;Yes</button>
+                      <button type="button" class="btn btn-primary" onclick="window.location.href='delete-observation-details.html'">&nbsp;No</button>
+                   </div> -->
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="completed-actions-details" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </button>
+        <h4 class="modal-title custom_align" id="Heading">Assigned actions details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-condensed fix-tablelayout">
+            <thead>
+              <tr>
+                <th style="width: 35px">Sr. No.</th>
+                <th style="width: 70px">Action details</th>
+                <th style="width: 70px">Due date</th>
+                <th style="width: 110px">Action assignment date</th>
+                <th style="width: 70px">Action party</th>
+                <th style="width: 110px">Action party designation</th>
+                <th style="width: 80px">Action execution</th>
+                <th style="width: 80px">Execution details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor=" let action of closedAction ; let i= index">
+                <td>{{i+1}}</td>
+                <td>{{action.ActionDetails}}</td>
+                <td>{{action.TargetDate | date: dateFormatDDMMYYYY}}</td>
+                <td>{{action.CreatedDate | date: dateFormatDDMMYYYY}}</td>
+                <td>{{action.ActionParty.FullName}}</td>
+                <td>{{action.ActionParty.Designation}}</td>
+                <td>{{action.ActionAssignment[0].UpdatedDate | date: dateFormatDDMMYYYY}}</td>
+                <td>
+                  <span class="ellepsis" data-html="true" data-toggle="popover" pTooltip="{{action.ActionAssignment[0].Remarks}}" data-content="action.ActionAssignment[0].Remarks <i class='fa fa-times close-popover'></i>">{{action.ActionAssignment[0].Remarks}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- <div class="modal-footer ">
+                  <button type="button" class="btn btn-success" onclick="window.location.href='Past-observations-dashboard.html'">&nbsp;Yes</button>
+                      <button type="button" class="btn btn-primary" onclick="window.location.href='delete-observation-details.html'">&nbsp;No</button>
+                   </div> -->
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+<div id="wrapper">
+  <div class="container-fluid">
+    <!-- sidebar -->
+    <!-- <div class="sidebar">
+      <div id="mySidenav" class="sidenav">
+        <span class="close-wrapper">
+          <i class="fa fa-times closebtn" onclick="closeNav()"></i>
+        </span>
+        <div class="clearfix"></div>
+        <a href="health-safety-tiles.html" target="_blank" class="custom-margin">Home</a>
+        <a href="action-tracker-dashboard.html" target="_blank">Action tracker dashboard</a>
+        <a href="verifier-dashboard.html" target="_blank">Verifier dashboard</a>
+      </div>
+      <span onclick="openNav()" class="open">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </span>
+    </div> -->
+    <!-- sidebar -->
+    <div class="page-content-wrapper">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="inner-wrapper">
+          <div class="top-heading center">
+            <h4>Risk Dashboard</h4>
+          </div>
+          <div class="sub-wrapper">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <!-- <li class="breadcrumb-item active" aria-current="page">Action Owner</li> -->
+                <li class="breadcrumb-item" aria-current="page">Risk Dashboard</li>
+              </ol>
+            </nav>
+            <div class="section-wrapper">
+              <div class="action-owner-tabs">
+                <ul class="nav nav-tabs">
+                  <li class="active">
+                    <a data-toggle="tab" (click)="tabChange('Pending')" href="#risk-pending-for-closure">Risks pending for closure </a>
+                  </li>
+                  <li>
+                    <a data-toggle="tab" (click)="tabChange('New')" href="#risk-added-by-me">Risks added by me</a>
+                  </li>
+                  <li>
+                    <a data-toggle="tab" (click)="tabChange('Closed')" href="#residual-risks">Residual risks</a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div id="risk-pending-for-closure" class="tab-pane fade in active">
+                    <div class="filter-sort">
+                      <div class="filter-sort-wrapper">
+                        <a class="settings" data-toggle="collapse" data-target="#filter-closure">
+                          <i class="fa fa-filter" aria-hidden="true" data-toggle="tooltip" data-original-title="Filter"></i>
+                        </a>
+                        <div class="outer-wrapper">
+                          <ul class="filter-section-wrapper collapse" id="filter-closure">
+                            <li>
+                              <div class="leave-type">
+                                <h5>PEAR</h5>
+                                <div class="checkbox" *ngFor="let pear of pearMaster">
+                                  <label>
+                                    <input type="checkbox" value="" [(ngModel)]='pear.Checked' name="leavetype" (change)="selectPear($event.target.checked, pear)">{{pear.Id}}</label>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="status">
+                                <h5>risk identified</h5>
+                                <div class="checkbox" *ngFor="let riskIdentify of riskIdentified">
+                                  <label>
+                                    <input type="checkbox" value="" [(ngModel)]='riskIdentify.Check' (change)="selectRiskIdentified($event.target.checked, riskIdentify)">
+                                    <span class="legend {{riskIdentify.Colour}}"></span>
+                                    <span class="v-middle">{{riskIdentify.Id}}</span>
+                                  </label>
+                                </div>
+                              </div>
+                            </li>
+                            <div class="clearfix"></div>
+                            <li class="filter-footer">
+                              <footer>
+                                <a (click)="resetValue()" role="button" class="btn btn-primary secondary-btn">
+                                  <i class="fa fa-refresh"></i>reset</a>
+                                <a (click)="doneFilter()" role="button" class="btn btn-primary primary-btn">
+                                  <i class="fa fa-check"></i>done</a>
+                              </footer>
+                            </li>
+                          </ul>
+                        </div>
+                        <a class="settings" data-toggle="collapse" data-target="#sort-closure">
+                          <i class="fa fa-sort" aria-hidden="true" data-toggle="tooltip" data-original-title="Sort"></i>
+                        </a>
+                        <div class="outer-wrapper">
+                          <ul class="filter-section-wrapper sort-section-wrapper collapse" id="sort-closure">
+                            <li>
+                              <div class="sort-wrapper">
+                                <div class="dt-sort">
+                                  <label>risk added on</label>
+                                  <a (click)="ascRiskAddedOn()" class="selected">
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                  </a>
+                                  <a>
+                                  </a>
+                                  <a (click)="descRiskAddedOn()" class="">
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="sort-wrapper">
+                                <div class="dt-sort">
+                                  <label>risk ratings</label>
+                                  <a (click)="ascRiskRating()" class="selected">
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                  </a>
+                                  <a>
+                                  </a>
+                                  <a (click)="descRiskRating()" class="">
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </li>
+                            <div class="clearfix"></div>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-condensed fix-tablelayout">
+                        <thead>
+                          <tr>
+                            <th style="width: 55px">Sr. No.</th>
+                            <th style="width: 120px">Risk ID</th>
+                            <th style="width: 95px">Source</th>
+                            <th style="width: 140px">Hazards identified</th>
+                            <th style="width: 110px">PEAR</th>
+                            <th style="width: 70px">Likelihood</th>
+                            <th style="width: 60px">Severity</th>
+                            <th style="width: 95px">Risk identified</th>
+                            <th style="width: 100px">Risk added on</th>
+                            <th style="width: 120px">Actions completed</th>
+                            <th style="width: 90px">Residual risk</th>
+                            <th style="width: 50px">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let risk of riskData | paginate: { itemsPerPage: totalRow , currentPage: pageSize ,totalItems: rowCount} ; let i=index ">
+                            <td>{{i+1}}</td>
+                            <td>
+                              <span class="legend overdue-actions"></span>
+                              <span class="v-middle">{{risk.DisplayId}}</span>
+                            </td>
+                            <td>{{risk.Source}}</td>
+                            <td>
+                              <span class="ellepsis" data-html="true" data-toggle="popover" pTooltip="{{risk.HazardIdentified}}" data-content="Lorem Ipsum is simply dummy text of the printing <i class='fa fa-times close-popover'></i>">{{risk.HazardIdentified}}</span>
+                            </td>
+                            <td>{{risk.PotentialRiskPear}}</td>
+                            <td>{{risk.PotentialRiskLikelihood}}</td>
+                            <td>{{risk.PotentialRiskSeverity}}</td>
+                            <td>
+                              <span class="risk-band {{risk.RiskIdentified}} risk-band-dashboard"></span>
+                            </td>
+                            <td>{{risk.CreatedDate | date: dateFormatDDMMYYYY}}</td>
+                            <td class="center">
+                              <a class="pointer" data-toggle="modal" (click)="showAction(risk.RiskRequestId)" data-target="#completed-actions-details">{{risk.NoOfActionCompleted}}</a>
+                            </td>
+                            <td>
+                              <span class="risk-band {{risk.ResidualRisk}} risk-band-dashboard"></span>
+                            </td>
+                            <td>
+                              <a [routerLink]="['./../close-risk', risk.RiskRequestId]"  pTooltip="Close Risk"  tooltipPosition="top">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                              </a>
+                            </td>
+                          </tr>
+                          <div style="width: 500px;margin-top:15px;color: red" *ngIf="!showPagination">{{noRecordsMsg}}</div>
+                          <div style="width: 500px" *ngIf="showPagination">
+                            <pagination-controls (pageChange)="getServerData($event)"></pagination-controls>
+                          </div>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div id="risk-added-by-me" class="tab-pane fade">
+                    <div class="filter-sort">
+                      <div class="filter-sort-wrapper">
+                        <a class="settings" data-toggle="collapse" data-target="#filter-pending-for-assign">
+                          <i class="fa fa-filter" aria-hidden="true" data-toggle="tooltip" data-original-title="Filter"></i>
+                        </a>
+                        <div class="outer-wrapper">
+                          <ul class="filter-section-wrapper collapse" id="filter-pending-for-assign">
+                            <li>
+                              <div class="leave-type">
+                                <h5>PEAR</h5>
+                                <div class="checkbox" *ngFor="let pear of pearMaster">
+                                  <label>
+                                    <input type="checkbox" value="" [(ngModel)]='pear.Checked' name="leavetype" (change)="selectPear($event.target.checked, pear)">{{pear.Id}}</label>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="status">
+                                <h5>risk identified</h5>
+                                <div class="checkbox" *ngFor="let riskIdentify of riskIdentified">
+                                  <label>
+                                    <input type="checkbox" value="" [(ngModel)]='riskIdentify.Check' (change)="selectRiskIdentified($event.target.checked, riskIdentify)">
+                                    <span class="legend {{riskIdentify.Colour}}"></span>
+                                    <span class="v-middle">{{riskIdentify.Id}}</span>
+                                  </label>
+                                </div>
+                              </div>
+                            </li>
+                            <div class="clearfix"></div>
+                            <li class="filter-footer">
+                              <footer>
+                                <a (click)="resetValue()" role="button" class="btn btn-primary secondary-btn">
+                                  <i class="fa fa-refresh"></i>reset</a>
+                                <a (click)="doneFilter()" role="button" class="btn btn-primary primary-btn">
+                                  <i class="fa fa-check"></i>done</a>
+                              </footer>
+                            </li>
+                          </ul>
+                        </div>
+                        <a class="settings" data-toggle="collapse" data-target="#sort-pending-for-assign">
+                          <i class="fa fa-sort" aria-hidden="true" data-toggle="tooltip" data-original-title="Sort"></i>
+                        </a>
+                        <div class="outer-wrapper">
+                          <ul class="filter-section-wrapper sort-section-wrapper collapse" id="sort-pending-for-assign">
+                            <li>
+                              <div class="sort-wrapper">
+                                <div class="dt-sort">
+                                  <label>risk added on</label>
+                                  <a (click)="ascRiskAddedOn()" class="selected">
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                  </a>
+                                  <a>
+                                  </a>
+                                  <a (click)="descRiskAddedOn()" class="">
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="sort-wrapper">
+                                <div class="dt-sort">
+                                  <label>risk ratings</label>
+                                  <a (click)="ascRiskRating()" class="selected">
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                  </a>
+                                  <a>
+                                  </a>
+                                  <a (click)="descRiskRating()" class="">
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </li>
+                            <div class="clearfix"></div>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-condensed fix-tablelayout">
+                        <thead>
+                          <tr>
+                            <th style="width: 55px" rowspan="2">Sr. No.</th>
+                            <th style="width: 120px" rowspan="2">Risk ID</th>
+                            <th style="width: 95px" rowspan="2">Source</th>
+                            <th style="width: 135px" rowspan="2">Hazards identified</th>
+                            <th style="width: 110px" rowspan="2">PEAR</th>
+                            <th style="width: 70px" rowspan="2">Likelihood</th>
+                            <th style="width: 60px" rowspan="2">Severity</th>
+                            <th style="width: 95px" rowspan="2">Risk identified</th>
+                            <th style="width: 95px" rowspan="2">Risk added on</th>
+                            <th style="width: 115px" rowspan="2">Actions assigned</th>
+                            <th style="width: 160px" colspan="2" class="center custom-border">Action Status</th>
+                            <th style="width: 60px" rowspan="2" class="center">Action</th>
+                          </tr>
+                          <tr>
+                            <th style="width: 105px" class="center custom-border">Completed</th>
+                            <th style="width: 105px" class="center custom-border-right">Pending</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let risk of riskData | paginate: { itemsPerPage: totalRow , currentPage: pageSize ,totalItems: rowCount} ; let i=index ">
+                            <td>{{i+1}}</td>
+                            <td>
+                              <span class="legend overdue-actions"></span>
+                              <span class="v-middle">{{risk.DisplayId}}</span>
+                            </td>
+                            <td>{{risk.Source}}</td>
+                            <td>
+                              <span class="ellepsis" data-html="true" data-toggle="popover" pTooltip="{{risk.HazardIdentified}}" data-content="Lorem Ipsum is simply dummy text of the printing <i class='fa fa-times close-popover'></i>">{{risk.HazardIdentified}}</span>
+                            </td>
+                            <td>{{risk.PotentialRiskPear}}</td>
+                            <td>{{risk.PotentialRiskLikelihood}}</td>
+                            <td>{{risk.PotentialRiskSeverity}}</td>
+                            <td>
+                              <span class="risk-band {{risk.RiskIdentified}} risk-band-dashboard"></span>
+                            </td>
+                            <td>{{risk.CreatedDate | date: dateFormatDDMMYYYY}}</td>
+                            <td class="center">
+                              <a class="pointer" data-toggle="modal" data-target="#assigned-actions-details" (click)="showAction(risk.RiskRequestId)">{{risk.NoOfActionsAssigned}}</a>
+                            </td>
+                            <td class="center">{{risk.NoOfActionCompleted}}</td>
+                            <td class="center">{{risk.NoOfActionPending}}</td>
+                            <td class="center">
+                              <a *ngIf="risk.NoOfActionPending != 0" [routerLink]="['/risk/raise-risk', risk.RiskRequestId]" data-toggle="tooltip" data-original-title="Edit" pTooltip="Edit details"
+                                 tooltipPosition="top">
+                                <i class="fa fa-edit" aria-hidden="true"></i>
+                              </a>
+                              <a *ngIf="risk.NoOfActionPending != 0" [routerLink]="['../delete-risk',risk.RiskRequestId]" data-toggle="tooltip" data-original-title="Delete" pTooltip="Delete Risk"
+                                 tooltipPosition="top">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                              </a>
+                            </td>
+                          </tr>
+                          <div style="width: 500px;margin-top:15px;color: red" *ngIf="!showPagination">{{noRecordsMsg}}</div>
+                          <div style="width: 500px" *ngIf="showPagination">
+                            <pagination-controls (pageChange)="getServerData($event)"></pagination-controls>
+                          </div>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div id="residual-risks" class="tab-pane fade">
+                    <div class="filter-sort">
+                      <div class="filter-sort-wrapper">
+                        <a class="settings" data-toggle="collapse" data-target="#residual-risks-filter">
+                          <i class="fa fa-filter" aria-hidden="true" data-toggle="tooltip" data-original-title="Filter"></i>
+                        </a>
+                        <div class="outer-wrapper">
+                          <ul class="filter-section-wrapper collapse" id="residual-risks-filter">
+                            <li>
+                              <div class="leave-type">
+                                <h5>PEAR</h5>
+                                <div class="checkbox" *ngFor="let pear of pearMaster">
+                                  <label>
+                                    <input type="checkbox" value="" [(ngModel)]='pear.Checked' name="leavetype" (change)="selectPear($event.target.checked, pear)">{{pear.Id}}</label>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="status">
+                                <h5>risk identified</h5>
+                                <div class="checkbox" *ngFor="let riskIdentify of riskIdentified">
+                                  <label>
+                                    <input type="checkbox" value="" [(ngModel)]='riskIdentify.Check' (change)="selectRiskIdentified($event.target.checked, riskIdentify)">
+                                    <span class="legend {{riskIdentify.Colour}}"></span>
+                                    <span class="v-middle">{{riskIdentify.Id}}</span>
+                                  </label>
+                                </div>
+                              </div>
+                            </li>
+                            <div class="clearfix"></div>
+                            <li class="filter-footer">
+                              <footer>
+                                <a (click)="resetValue()" role="button" class="btn btn-primary secondary-btn">
+                                  <i class="fa fa-refresh"></i>reset</a>
+                                <a (click)="doneFilter()" role="button" class="btn btn-primary primary-btn">
+                                  <i class="fa fa-check"></i>done</a>
+                              </footer>
+                            </li>
+                          </ul>
+                        </div>
+                        <a class="settings" data-toggle="collapse" data-target="#residual-risks-sort">
+                          <i class="fa fa-sort" aria-hidden="true" data-toggle="tooltip" data-original-title="Sort"></i>
+                        </a>
+                        <div class="outer-wrapper">
+                          <ul class="filter-section-wrapper sort-section-wrapper collapse" id="residual-risks-sort">
+                            <li>
+                              <div class="sort-wrapper">
+                                <div class="dt-sort">
+                                  <label>risk added on</label>
+                                  <a (click)="ascRiskAddedOn()" class="selected">
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                  </a>
+                                  <a>
+                                  </a>
+                                  <a (click)="descRiskAddedOn()" class="">
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="sort-wrapper">
+                                <div class="dt-sort">
+                                  <label>risk ratings</label>
+                                  <a (click)="ascRiskRating()" class="selected">
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                  </a>
+                                  <a>
+                                  </a>
+                                  <a (click)="descRiskRating()" class="">
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </li>
+                            <div class="clearfix"></div>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-condensed fix-tablelayout">
+                        <thead>
+                          <tr>
+                            <th style="width: 50px">Sr. No.</th>
+                            <th style="width: 120px">Risk ID</th>
+                            <th style="width: 95px">Source</th>
+                            <th style="width: 135px">Hazards identified</th>
+                            <th style="width: 110px">PEAR</th>
+                            <th style="width: 50px">Score</th>
+                            <th style="width: 60px">Severity</th>
+                            <th style="width: 95px">Risk identified</th>
+                            <th style="width: 95px">Risk added on</th>
+                            <th style="width: 120px">Actions completed</th>
+                            <th style="width: 95px">Residual risk</th>
+                            <th style="width: 60px">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let risk of riskData | paginate: { itemsPerPage: totalRow , currentPage: pageSize ,totalItems: rowCount} ; let i=index ">
+                            <td>{{i+1}}</td>
+                            <td>
+                              <span class="legend overdue-actions"></span>
+                              <span class="v-middle">{{risk.DisplayId}}</span>
+                            </td>
+                            <td>{{risk.Source}}</td>
+                            <td>
+                              <span class="ellepsis" data-html="true" data-toggle="popover" pTooltip="{{risk.HazardIdentified}}" data-content="Lorem Ipsum is simply dummy text of the printing <i class='fa fa-times close-popover'></i>">{{risk.HazardIdentified}}</span>
+                            </td>
+                            <td>{{risk.PotentialRiskPear}}</td>
+                            <td>{{risk.PotentialRiskLikelihood}}</td>
+                            <td>{{risk.PotentialRiskSeverity}}</td>
+                            <td>
+                              <span class="risk-band {{risk.RiskIdentified}} risk-band-dashboard"></span>
+                            </td>
+                            <td>{{risk.CreatedDate | date: dateFormatDDMMYYYY}}</td>
+                            <td class="center">
+                              <a class="pointer" data-toggle="modal" (click)="showAction(risk.RiskRequestId)" data-target="#completed-actions-details">{{risk.NoOfActionCompleted}}</a>
+                            </td>
+                            <td>
+                              <span class="risk-band {{risk.ResidualRisk}} risk-band-dashboard"></span>
+                            </td>
+                            <td>
+                              <a [routerLink]="['../residual-risk-dashboard', risk.RiskRequestId]" pTooltip="View details"  tooltipPosition="top">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                              </a>
+                            </td>
+                          </tr>
+                          <div style="width: 500px;margin-top:15px;color: red" *ngIf="!showPagination">{{noRecordsMsg}}</div>
+                          <div style="width: 500px" *ngIf="showPagination">
+                            <pagination-controls (pageChange)="getServerData($event)"></pagination-controls>
+                          </div>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+

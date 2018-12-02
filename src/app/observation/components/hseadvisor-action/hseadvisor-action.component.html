@@ -1,0 +1,531 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+
+<!-- <div class="modal fade" id="closure-remarks" role="dialog">
+  <div class="modal-dialog modal-lg"> -->
+    <!-- Modal content-->
+   <!-- <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </button>
+        <h4 class="modal-title custom_align" id="Heading">Closure Remarks</h4>
+      </div>
+      <textarea class="form-control margin-top-10" rows="2" id="comment" [(ngModel)]="observationData.ClosureReason"></textarea>
+      <div *ngIf="isClosureRemarkErrorMsg && !observationData.ClosureReason ">
+        <span class="error-msg-colour">Kindly Enter Closure Remarks.</span>
+
+      </div>
+      <div class="modal-footer ">
+        <button type="button" (click)="closeAssignedObservation()" class="btn primary-btn">Ok</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+-->
+<p-dialog header="Closure Remarks" [(visible)]="commentsPopup" modal="modal" width="500" [responsive]="true">
+  <!-- <p>Kindly enter closure remarks</p> -->
+  <textarea pInputTextarea class="full-width" [(ngModel)]="observationData.ClosureReason"></textarea>
+  <div *ngIf="isClosureRemarkErrorMsg && !observationData.ClosureReason ">
+    <span class="error-msg-colour">Please Enter Closure Remarks.</span>
+
+  </div>
+  <p-footer>
+    <button type="button" pButton (click)="closeAssignedObservation()" label="Submit" class="active-btn orange-btn"></button>
+  </p-footer>
+</p-dialog>
+<!-- </div>
+</div> -->
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+              <a href="../../../observation/observation-card-dashboard" >Observation Card Dashboard</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page">Observation Details</li>
+          </ol>
+        </nav>
+        <div class="section-wrapper">
+          <div class="margin-top-15">
+            <div class="col-lg-2 col-md-2 col-sm-2 no-padding">
+              <div class="pro-pic-wrapper">
+                <img src=" ../../../../assets/images/pro-pic.png" alt="Profile Pic" class="profile-pic">
+              </div>
+              <p class="pro-pic-name">{{observationData.ObservationRaiseUser.FullName}}</p>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 no-padding-right">
+              <div class="row-wrapper">
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="first-column-labels">Department</label>
+                  </div>
+                  <span class="label-details" title="Human Resources &amp; Management">{{observationData.ObservationRaiseUser.DepartmentName}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="middle-column-labels">Working Location</label>
+                  </div>
+                  <span class="label-details">{{observationData.ObservationRaiseUser.Location.LocationName}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="last-column-labels">Contact No.</label>
+                  </div>
+                  <span class="label-details">{{observationData.ObservationRaiseUser.ContactNumber}}</span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="row-wrapper">
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="first-column-labels">Position</label>
+                  </div>
+                  <span class="label-details">{{observationData.ObservationRaiseUser.Designation}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="middle-column-labels">Reporting Manager</label>
+                  </div>
+                  <span class="label-details">{{observationData.ObservationRaiseUser.ReportingManager.FullName}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="last-column-labels">Email ID</label>
+                  </div>
+                  <span class="label-details">{{observationData.ObservationRaiseUser.Email}}</span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">Obseravtion Details</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-3 col-md-3 col-sm-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">Observtion Reference ID</label>
+                </div>
+                <span class="label-details">{{observationData.DisplayId}}</span>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Observtion Date &amp; Time</label>
+                </div>
+                <span class="label-details">{{observationData.ObservationDate | date: dateFormatDDMMYYYYHHMMSS}}</span>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="last-column-labels">Observation Submitted On</label>
+                </div>
+                <span class="label-details">{{observationData.CreatedDate | date: dateFormatDDMMYYYY}}</span>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">Location</label>
+                </div>
+                <span class="label-details">{{observationData.LocationName}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Observation Type</label>
+                </div>
+                <span class="label-details">{{observationData.ObservationType}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">What did you observe</span>
+          <p class="readonly">{{observationData.WhatObserved}}</p>
+          <div class="margin-top-20">
+            <div class="docs-wrapper" *ngIf="observationData.WhatObservedFileURL">
+              <div class="label docs" (mouseenter)="displayImage($event,'didYouSee')" (mouseleave)="displayImage($event,'didYouSee')">
+                <a href="{{observationData.WhatObservedFileURL}}">
+                  <img src="{{observationData.WhatObservedFileURL}}" />
+                </a>
+              </div>
+              <div class="download-option" *ngIf="didYouSeeCheck">
+                <img src="{{observationData.WhatObservedFileURL}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">What did you do about it?</span>
+          <p class="readonly">{{observationData.WhatYouDid}}</p>
+          <div class="margin-top-20">
+            <div class="docs-wrapper" *ngIf="observationData.WhatYouDidFileURL">
+              <div class="label docs" (mouseenter)="displayImage($event, 'didYouDo')" (mouseleave)="displayImage($event, 'didYouDo')">
+                <a href="{{observationData.WhatYouDidFileURL}}">
+                  <img src="{{observationData.WhatYouDidFileURL}}" />
+                </a>
+              </div>
+              <div class="download-option" *ngIf="didYouDoCheck">
+                <img src="{{observationData.WhatYouDidFileURL}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">What could we do about it?</span>
+          <p class="readonly">{{observationData.WhatWeCouldDo}}</p>
+          <div class="margin-top-20">
+            <div class="docs-wrapper" *ngIf="observationData.WhatWeCouldDoFileURL">
+              <div class="label docs" (mouseenter)="displayImage($event, 'improvedType')" (mouseleave)="displayImage($event, 'improvedType')">
+                <a href="{{observationData.WhatWeCouldDoFileURL}}">
+                  <img src="{{observationData.WhatWeCouldDoFileURL}}" />
+                </a>
+              </div>
+              <div class="download-option" *ngIf="improvedTypeCheck">
+                <img src="{{observationData.WhatWeCouldDoFileURL}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">Indivitual / Team / Organization feedback</span>
+          <div class="clearfix"></div>
+          <textarea class="form-control margin-top-10" rows="2" id="comment" [(ngModel)]="observationData.Feedback" readonly></textarea>
+          <div class="clearfix"></div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper hazards-wrapper">
+          <span class="section-title">
+            Hazard(s) identified
+            <span class="info">(Select Atleast One)</span>
+          </span>
+          <div class="clearfix"></div>
+
+          <div *ngFor="let hazard of hazards; let i = index;">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="hazard" (change)="SubmitCheckedHazardValue(hazard, $event)" [checked]="hazard.checked" [disabled]="hazard.checked">
+                <img src="{{hazard.FileURL}}" class="hazard-img" pTooltip="{{hazard.HazardName}}" tooltipPosition="top" />
+              </label>
+            </div>
+          </div>
+            <div class="clearfix" *ngIf="(i+1) % 4 == 0"></div>
+          </div>
+
+          <div class="clearboth">
+            <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6  no-padding-left margin-top-20">
+              <label>Not listed :</label>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-8 margin-top-20">
+              <input type="text" class="form-control" id="usr" [(ngModel)]="observationData.NotListed" readonly>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 no-padding-left margin-top-20" *ngIf="isObservationStatusdisplay">
+              <label class="labelClass">Observation Category
+                <span class="mandatory">*</span> :
+              </label>
+              <p-dropdown [options]="observationCategoryList" placeholder="Select" [(ngModel)]="observationCategoryId" (onChange)="resetValidatiionForCategory()" required></p-dropdown>
+              <div class="margin-top-10"  *ngIf="isObservationCategorySelected && !observationCategoryId">
+                <span class="error-msg-colour">Kindly Select Observation Category.</span>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+             <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 no-padding-left margin-top-20" *ngIf="isObservationStatusdisplay">
+              <label>Observation Status
+                <span class="mandatory">*</span> :
+              </label>
+              <select class="form-control" id="sel1" [disabled] ="!observationCategoryId"  [(ngModel)]="status" style="width:167px" (change)="selectActionToPerform($event.target.value)">
+                <option value="Delete">Delete</option>
+                <option value="Close">Close</option>
+                <option value="Acknowledge">Acknowledge</option>
+                <option value="Add Action">Add Action</option>
+              </select>
+              <div *ngIf="isObservationStatusSelected ">
+                <span class="error-msg-colour">Kindly Select Observation Status.</span>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper" *ngIf="showReasonToDeleteObsSection">
+          <span class="section-title">Reason for deleting obseravtion</span>
+          <div class="clearfix"></div>
+          <textarea class="form-control margin-top-10" rows="2" id="comment" maxlength="200" [(ngModel)]="observationData.DeletionReason"></textarea>
+          <span *ngIf="isDeletionreason && !observationData.DeletionReason">
+            <span class="error-msg-colour">Kindly enter the deletion reason.</span>
+          </span>
+          <div class="clearfix"></div>
+        </div>
+        <div class="section-wrapper" *ngIf="showReasonToCloseObsSection">
+          <span class="section-title">Closure remarks
+            <span class="mandatory">*</span>
+          </span>
+          <div class="clearfix"></div>
+          <textarea class="form-control margin-top-10" rows="2" id="comment" maxlength="200" [(ngModel)]="observationData.ClosureReason"></textarea>
+          <span *ngIf="isClosurereason && !observationData.ClosureReason">
+            <span class="error-msg-colour">Kindly Enter the Closure Remarks</span>
+          </span>
+          <div class="clearfix"></div>
+        </div>
+        <div class="section-wrapper" *ngIf="showReasonToAcknowledgeObsSection">
+          <span class="section-title">Acknowledge remarks</span>
+          <div class="clearfix"></div>
+          <textarea class="form-control margin-top-10" rows="2" id="comment" maxlength="200" [(ngModel)]="observationData.AcknowledgmentReason"></textarea>
+          <span *ngIf="isAcknowledgereason && !observationData.AcknowledgmentReason">
+            <span class="error-msg-colour">Kindly Enter the Acknowledge Remarks</span>
+          </span>
+          <div class="clearfix"></div>
+        </div>
+        <!--<div class="breaker"></div>-->
+        <div class="section-wrapper add-action-wrapper" *ngIf="showAddActionSection">
+          <span class="section-title">Add Action you want to take</span>
+          <div class="table-responsive margin-bottom-20 add-action-table">
+            <table align="center" class="table table-bordered table-striped table-condensed tableheader table-red fix-tablelayout">
+              <thead>
+                <tr>
+                  <th style="width: 162px">
+                    Action
+                    <span class="mandatory">*</span>
+                  </th>
+                  <th style="width: 160px">
+                    Action Owner
+                    <span class="mandatory">*</span>
+                  </th>
+                  <th style="width: 130px">Designation</th>
+                  <th style="width: 160px">Action Party</th>
+                  <th style="width: 160px">Action Verifier</th>
+                  <th style="width: 140px">
+                    Priority
+                    <span class="mandatory">*</span>
+                  </th>
+                  <th style="width: 110px">
+                    Target Date
+                    <span class="mandatory">*</span>
+                  </th>
+                  <th style="width: 88px">Delete Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let action of actionList; let i = index">
+                  <td>
+                    <textarea class="form-control" rows="2" id="comment" [(ngModel)]="action.ActionDetails">{{action.ActionDetails}}</textarea>
+                    <div class="margin-top-10" *ngIf="!action.ActionDetails && action.displayActionListErrorMessages.ActionDetails">
+                      <span style="color: red">{{actionListErrorMessages.ActionDetails}}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <p-autoComplete [(ngModel)]="action.selectedActionOwner" [suggestions]="userResults" (completeMethod)="getUsersOnSearch($event)"
+                      (onSelect)="selectActionOwner($event)" (change)="selectActionOwner($event)" placeholder="Action Owner"
+                      field="FullName" [minLength]="1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
+                      <ng-template let-actionowner pTemplate="item">
+                        {{actionowner.FullName}}
+                      </ng-template>
+                    </p-autoComplete>
+                    <div class="margin-top-10" *ngIf="!action.selectedActionOwner && action.displayActionListErrorMessages.ActionOwner">
+                      <span style="color: red">{{actionListErrorMessages.ActionOwner}}</span>
+                    </div>
+                    <div class="margin-top-10" *ngIf="action.displayActionListErrorMessages.CorrectActionOwner">
+                      <span style="color: red">{{actionListErrorMessages.CorrectActionOwner}}</span>
+                    </div>
+                  </td>
+
+                  <td>{{action.selectedActionOwner?action.selectedActionOwner.Designation:''}}</td>
+                  <td>
+                    <p-autoComplete [(ngModel)]="action.selectedActionParty" [suggestions]="userResults" (completeMethod)="getUsersOnSearch($event)"
+                      (onSelect)="selectActionParty($event)" (change)="selectActionParty($event)" placeholder="Action Party"
+                      field="FullName" [minLength]="1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
+                      <ng-template let-actionparty pTemplate="item">
+                        {{actionparty.FullName}}
+                      </ng-template>
+                    </p-autoComplete>
+                    <div class="margin-top-10" *ngIf="action.displayActionListErrorMessages.CorrectActionParty">
+                      <span style="color: red">{{actionListErrorMessages.CorrectActionParty}}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <p-autoComplete [(ngModel)]="action.selectedActionVerifier" [suggestions]="userResults" (completeMethod)="getUsersOnSearch($event)"
+                      (onSelect)="selectActionVerifier($event)" (change)="selectActionVerifier($event)" placeholder="Action Verifier"
+                      field="FullName" [minLength]="1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
+                      <ng-template let-actionVerifier pTemplate="item">
+                        {{actionVerifier.FullName}}
+                      </ng-template>
+                    </p-autoComplete>
+                    <div class="margin-top-10" *ngIf="action.displayActionListErrorMessages.CorrectActionVerifier">
+                      <span style="color: red">{{actionListErrorMessages.CorrectActionVerifier}}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <select class="form-control" id="sel1" [(ngModel)]="action.Priority">
+                      <option selected [ngValue]=0>Select</option>
+                      <option [ngValue]=1>High</option>
+                      <option [ngValue]=2>Medium</option>
+                      <option [ngValue]=3>Low</option>
+                    </select>
+                    <div class="margin-top-10" *ngIf="!action.Priority && action.displayActionListErrorMessages.Priority">
+                      <span style="color: red">{{actionListErrorMessages.Priority}}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <p-calendar [showIcon]="true" [minDate]="dateTime" [showTime]="false" placeholder="" [(ngModel)]="action.TargetDate" readonlyInput="true"
+                                  required #timeOfUse="ngModel" appendTo="body"></p-calendar>
+                      <div *ngIf="action.displayActionListErrorMessages.TargetDate && !action.TargetDate">
+                        <span class="error-msg-colour">{{actionListErrorMessages.TargetDate}}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="center">
+                    <a (click)="removeActionFromActionList(i)">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- End table-responsive -->
+          <a (click)="addAction()" class="pull-right margin-top-10" style="cursor: pointer;">
+            <i class="fa fa-plus" aria-hidden="true" style="padding-right:6px;"></i>Add Action
+          </a>
+          <div class="clearfix"></div>
+        </div>
+        <div class="section-wrapper" *ngIf="isAdvisorActiondisplay">
+          <span class="section-title">HSE Advisor Section</span>
+          <div class="clearfix"></div>
+          <div class="section-wrapper">
+            <span class="section-title">Acknowledgment Details</span>
+            <div class="clearfix"></div>
+            <span>Acknowledge by You on {{observationData.AcknowledgmentDate | date: dateFormatDDMMYYYY}}</span>
+            <div class="clearfix"></div>
+            <span>Acknowledge remarks</span>
+            <div class="clearfix"></div>
+            <textarea class="form-control margin-top-10" rows="2" id="comment" [(ngModel)]="observationData.AcknowledgmentReason" readonly></textarea>
+            <div class="clearfix"></div>
+
+          </div>
+          <div class="section-wrapper">
+            <span class="section-title">Action Details</span>
+            <div class="clearfix"></div>
+            <div class="section-wrapper add-action-wrapper">
+              <div class="table-responsive margin-bottom-20" style="overflow-x:auto;overflow-y:auto">
+                <table align="center" class="table table-bordered table-striped table-condensed tableheader table-red fix-tablelayout">
+                  <thead>
+                    <tr>
+                      <th style="width: 162px">Action Details</th>
+                      <th style="width: 190px">Action added on</th>
+                      <th style="width: 130px">Action Owner</th>
+                      <th style="width: 160px">Action Party</th>
+                      <th style="width: 160px">Action Verifier</th>
+                      <th style="width: 100px">Priority</th>
+                      <th style="width: 188px">Target Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let action of actions">
+                      <td>
+                        <textarea class="form-control margin-top-10" rows="2" id="comment" disabled>{{action.ActionDetails}}</textarea>
+                        <div>
+                        </div>
+                      </td>
+                      <td>
+                        {{action.CreatedDate | date: dateFormatDDMMYYYY}}
+                      </td>
+                      <td>
+                          {{action.FullName}}
+                        <!-- <p-autoComplete [(ngModel)]="action.FullName" [suggestions]="userResults" [minLength]="1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" disabled>
+                          <ng-template let-actionowner pTemplate="item">
+                            {{action.FullName}}
+                          </ng-template>
+                        </p-autoComplete> -->
+                      </td>
+                      <td>
+                        {{action.ActionParty}}
+                        <!-- <p-autoComplete [(ngModel)]="action.ActionParty" [minLength]="1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" disabled>
+                          <ng-template let-actionparty pTemplate="item">
+                            {{action.ActionParty}}
+                          </ng-template>
+                        </p-autoComplete> -->
+                      </td>
+                      <td>
+                          {{action.ActionVerifier}}
+                        <!-- <p-autoComplete [(ngModel)]="action.ActionVerifier" [minLength]="1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" disabled>
+                          <ng-template let-actionVerifier pTemplate="item">
+                            {{action.ActionVerifier}}
+                          </ng-template>
+                        </p-autoComplete> -->
+                      </td>
+                      <td>
+                        {{action.PriorityName}}
+                      </td>
+                      <td>
+                        {{action.TargetDate | date: dateFormatDDMMYYYY}}
+
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- End table-responsive -->
+            </div>
+          </div>
+          <div class="section-wrapper" *ngIf="isClosureSectionDisplay">
+            <span class="section-title">Closure Details</span>
+            <div class="clearfix"></div>
+            <span>Closed by You on {{observationData.ClosureDate | date: dateFormatDDMMYYYY}}</span>
+            <div class="clearfix"></div>
+            <span>Closure remarks</span>
+            <div class="clearfix"></div>
+            <textarea class="form-control margin-top-10" rows="2" id="comment" [(ngModel)]="observationData.ClosureReason" readonly></textarea>
+            <div class="clearfix"></div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="section-wrapper" *ngIf="isDeleteSectionDisplay">
+          <span class="section-title">HSE Advisor Section</span>
+          <div class="clearfix"></div>
+          <div class="section-wrapper">
+            <span class="section-title">Deletion Details</span>
+            <div class="clearfix"></div>
+            <span>Deleted by You on {{observationData.DeletionDate | date: dateFormatDDMMYYYY}}</span>
+            <div class="clearfix"></div>
+            <span>Reason for Deletion</span>
+            <div class="clearfix"></div>
+            <textarea class="form-control margin-top-10" rows="2" id="comment" [(ngModel)]="observationData.DeletionReason" readonly></textarea>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="breaker add-action-wrapper"></div>
+        <footer>
+          <a role="button" class="btn btn-primary secondary-btn" (click)="onClickBackToDashboard()">
+            <i class="fa fa-reply"></i>back to observation dashboard
+          </a>
+          <a role="button" class="btn btn-primary primary-btn" (click)="validateActionDetails()" *ngIf="isObservationStatusdisplay && !observationData.ClosureDate">
+            <i class="fa fa-share-square"></i>submit
+          </a>
+          <a role="button" class="btn btn-primary primary-btn" (click)="closeAssigned()"
+            *ngIf="isCloseObservationdisplay">
+            <i class="fa fa-share-square"></i>Close Observation
+          </a>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="onOkClickedOnPopup()"
+    [confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>
+  <div class="clearfix"></div>
+</div>

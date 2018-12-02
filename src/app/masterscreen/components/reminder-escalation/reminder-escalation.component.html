@@ -1,0 +1,69 @@
+<!-- <div class="page-content-wrapper" *ngIf="masterscreenService.isAppAdminLoggedIn"> -->
+<div class="outer-box">
+  <h1>Fields marked in
+    <span class="mandatory">*</span> are mandatory</h1>
+  <div class="inner-box">
+    <div class="form-group">
+      <label class="labelClass">Company Name
+        <span class="mandatory">*</span>
+      </label>
+      <p-dropdown class="reminder-company-name" [options]="companyList" placeholder="Select" [(ngModel)]="reminderEscalationDetails.CompanyId" required #companyId="ngModel"></p-dropdown>
+      <span *ngIf="companyId.errors && (companyId.dirty || companyId.touched) && companyId.valid">
+        <p style="color:red; margin-left: 160px">
+          <b>Atleast one company should be selected</b>
+        </p>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <div>
+        <!-- Reminder Configuration -->
+        <div>
+          <h2 class="reminder-escalation-title">
+            Reminder Configuration
+          </h2>
+          <div class="reminder-escalation">
+            <span>Send a reminder mail
+              <input (keypress)="numberOnly($event)" type="text" [(ngModel)]="reminderEscalationDetails.ConfigurationValue" required #ConfigurationValue="ngModel"
+              placeholder="enter days" class="enter-days-input" size="6" />
+              <span class="mandatory">*</span>
+              <span *ngIf="ConfigurationValue.errors && (ConfigurationValue.dirty || ConfigurationValue.touched) && ConfigurationValue.valid"><b class="days-error">Please enter number of days</b></span>
+              days to action party before action due date, only if action is not completed.</span>
+          </div>
+
+          <div *ngIf="isValidNoOfdaysErrorMsg && reminderEscalationDetails.ConfigurationValue != ''">
+                <span style="color: red">No. of days can not be 0. Please enter valid no. of days.</span>
+          </div>    
+
+        </div>
+        <!-- END:: Reminder Configuration -->
+        <!-- Escalation Matrix Configuration -->
+        <div>
+          <h2 class="reminder-escalation-title">
+            Escalation Matrix Configuration
+          </h2>
+          <div class="reminder-escalation">
+            Escalation notification will be triggered in case action party is enable to complete action by action due date. Escalation mail
+            will go to HSE adviser on the next day of action due date, in case action is not completed by action owner.
+          </div>
+        </div>
+        <!-- END:: Escalation Matirx Configuration -->
+      </div>
+      <!-- End setupContent -->
+    </div>
+    <div class="text-center">
+      <button class="back-btn" (click)="navigateToWelcomePage()">
+        <i class="fa fa-reply"></i>Back to welcome page</button>
+      <button class="active-btn blue" [class.btn-disabled]="!(reminderEscalationDetails.CompanyId && reminderEscalationDetails.ConfigurationValue)"
+        [disabled]="!(reminderEscalationDetails.CompanyId && reminderEscalationDetails.ConfigurationValue)" (click)="saveConfigurationDetails()">
+        <i class="fa fa-check"></i> Save</button>
+    </div>
+  </div>
+  <!-- End inner-box -->
+</div>
+<!-- End table-responsive -->
+<div class="clearfix"></div>
+<!-- End outer-box -->
+
+<app-alerts [alertType]="alertType" [confirmMessage]="confirmMessage" [successDetails]="successDetails" [errorDetails]="errorDetails"
+  (okClicked)="resetValue()" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>

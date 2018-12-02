@@ -1,0 +1,36 @@
+<div class="col-lg-12 col-md-12 col-sm-12 middle-content no-padding" *ngIf="masterscreenService.isAppAdminLoggedIn">
+
+  <div class="welcome-wrapper">
+    <div class="welcome-bg" style="background-image: url('assets/images/welcome-bg.jpg');"></div>
+    <div class="welcome-content">
+      <p class="thank-you">Thank you for making us a part of your corporate journey!</p>
+    </div>
+    <div class="configuration-content">
+      <p class="config-wizard">Each step has additional sub-steps. Not to worry though, the configuration wizard will guide you through it, all the
+        way to the finish line. All you have to do, is, follow the simple instructions given to you. If you cannot or do
+        not wish to complete all the steps in one go, feel free to logout and come back in later. The wizard will pick up
+        where you left off. And that’s why we call it a wizard!</p>
+    </div>
+    <div class="welcome-content">
+      <p class="thank-you">With this simple welcome note, we are ready to begin whenever you are!</p>
+    </div>
+    <footer>
+      <a [routerLink]="['../admin-master']">
+        <button class="active-btn blue">
+          <i class="fa fa-eye"></i>Configure Observation Process</button>
+      </a>
+      <a [routerLink]="['../risk-admin-master']">
+        <button class="active-btn blue">
+          <i class="fa fa-eye"></i>Configure Risk Process</button>
+      </a>
+      <div>
+        <a class="staus-class pending-setup" *ngIf="!isConfigurationComplete">Observation setup is pending!!!</a>
+        <a class="staus-class successful-setup" *ngIf="isConfigurationComplete">Observation setup is completed!!!</a>
+      </div>
+    </footer>
+  </div>
+  <!-- End welcome-wrapper -->
+
+</div>
+<!-- End col-md-12 -->
+<div class="clearfix"></div>

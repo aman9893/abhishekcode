@@ -1,0 +1,404 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+              <a [routerLink]="['../../past-observations-dashboard']">Observation Dashboard</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page">Observation View Details</li>
+          </ol>
+        </nav>
+        <div class="section-wrapper">
+          <div class="margin-top-15">
+            <div class="col-lg-2 col-md-2 col-sm-2 no-padding">
+              <div class="pro-pic-wrapper">
+                <!--<img src=" ../../../../assets/images/pro-pic.png" alt="Profile Pic" class="profile-pic">-->
+              </div>
+              <p class="pro-pic-name">{{loggedInUserJSON.FullName}}</p>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 no-padding-right">
+                 <div class="row-wrapper" *ngIf ="isShowOnBehalfDetails" >
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="first-column-labels">Raised By</label>
+                  </div>
+                  <span class="label-details" title="Human Resources &amp; Management">{{raiseBy.FullName}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="middle-column-labels">Raised on behalf of</label>
+                  </div>
+                  <span class="label-details">{{loggedInUserJSON.FullName}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="last-column-labels">Observer type</label>
+                  </div>
+                  <span class="label-details">{{loggedInUserJSON.UserTypes.UserType}}</span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="row-wrapper">
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="first-column-labels">Department</label>
+                  </div>
+                  <span class="label-details" title="Human Resources &amp; Management">{{loggedInUserJSON.DepartmentName}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="middle-column-labels">Working Location</label>
+                  </div>
+                  <span class="label-details">{{loggedInUserJSON.Location.LocationName}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="last-column-labels">Contact No.</label>
+                  </div>
+                  <span class="label-details">{{loggedInUserJSON.ContactNumber}}</span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="row-wrapper">
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="first-column-labels">Position</label>
+                  </div>
+                  <span class="label-details">{{loggedInUserJSON.Designation}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="middle-column-labels">Reporting Manager</label>
+                  </div>
+                  <span class="label-details">{{reportingTo.FullName}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="last-column-labels">Email ID</label>
+                  </div>
+                  <span class="label-details">{{loggedInUserJSON.Email}}</span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">Obseravtion Details</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-4 col-md-3 col-sm-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">Observtion Reference ID</label>
+                </div>
+                <span class="label-details">{{observationData.ObservationRequests.DisplayId}}</span>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Observtion Date &amp; Time</label>
+                </div>
+                <span class="label-details">{{observationData.ObservationRequests.ObservationDate | date: dateFormatDDMMYYYYHHMMSS}}</span>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="last-column-labels">Observation Submitted On</label>
+                </div>
+                <span class="label-details">{{observationData.ObservationRequests.CreatedDate | date: dateFormatDDMMYYYY}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper">
+              <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">Location</label>
+                </div>
+                <span class="label-details">{{observationData.ObservationRequests.LocationName}}</span>
+              </div>
+              <div class="col-lg-4 col-md-12 col-sm-12 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Observation Type</label>
+                </div>
+                <span class="label-details">{{observationData.ObservationRequests.ObservationType}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">What did you observe</span>
+          <p class="readonly">{{observationData.ObservationRequests.WhatObserved}}</p>
+          <div class="margin-top-20">
+            <div class="docs-wrapper" *ngIf="observationData.ObservationRequests.WhatObservedFileURL">
+              <div class="label docs" (mouseenter)="displayImage($event,'didYouSee')" (mouseleave)="displayImage($event,'didYouSee')">
+                <a href="{{observationData.ObservationRequests.WhatObservedFileURL}}">
+                  <img src="{{observationData.ObservationRequests.WhatObservedFileURL}}" />
+                </a>
+              </div>
+              <div class="download-option" *ngIf="didYouSeeCheck">
+                <img src="{{observationData.ObservationRequests.WhatObservedFileURL}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">What did you do about it?</span>
+          <p class="readonly">{{observationData.ObservationRequests.WhatYouDid}}</p>
+          <div class="margin-top-20">
+            <div class="docs-wrapper" *ngIf="observationData.ObservationRequests.WhatYouDidFileURL">
+              <div class="label docs" (mouseenter)="displayImage($event, 'didYouDo')" (mouseleave)="displayImage($event, 'didYouDo')">
+                <a href="{{observationData.ObservationRequests.WhatYouDidFileURL}}">
+                  <img src="{{observationData.ObservationRequests.WhatYouDidFileURL}}" />
+                </a>
+              </div>
+              <div class="download-option" *ngIf="didYouDoCheck">
+                <img src="{{observationData.ObservationRequests.WhatYouDidFileURL}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">What could we do about it?</span>
+          <p class="readonly">{{observationData.ObservationRequests.WhatWeCouldDo}}</p>
+          <div class="margin-top-20">
+            <div class="docs-wrapper" *ngIf="observationData.ObservationRequests.WhatWeCouldDoFileURL">
+              <div class="label docs" (mouseenter)="displayImage($event, 'improvedType')" (mouseleave)="displayImage($event, 'improvedType')">
+                <a href="{{observationData.ObservationRequests.WhatWeCouldDoFileURL}}">
+                  <img src="{{observationData.ObservationRequests.WhatWeCouldDoFileURL}}" />
+                </a>
+              </div>
+              <div class="download-option" *ngIf="improvedTypeCheck">
+                <img src="{{observationData.ObservationRequests.WhatWeCouldDoFileURL}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+<div class="section-wrapper">
+  <span class="section-title">Individual or Team / Organisation Feedback</span>
+  <p class="readonly">{{observationData.ObservationRequests.Feedback}}</p>
+ </div>
+
+<div class="breaker"></div>
+
+        <div class="section-wrapper hazards-wrapper">
+          <span class="section-title">Hazard(s) identified
+            <span class="info">(Select Atleast One)</span>
+          </span>
+          <div class="clearfix"></div>
+
+          <div *ngFor="let hazard of hazards; let i = index;">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" value="hazard" (change)="SubmitCheckedHazardValue(hazard, $event)" [checked]="hazard.Checked" disabled>
+                  <img src="{{hazard.FileURL}}" class="hazard-img" pTooltip="{{hazard.HazardName}}" tooltipPosition="top" />
+                </label>
+              </div>
+            </div>
+            <div class="clearfix" *ngIf="(i+1) % 4 == 0"></div>
+          </div>
+
+          <div class="clearboth">
+            <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6  no-padding-left margin-top-20">
+              <label>Not listed :</label>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-8 margin-top-20">
+              <input type="text" class="form-control" id="usr" [(ngModel)]="observationData.ObservationRequests.NotListed" readonly>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <!-- Observation category section -->
+          <div class="clearboth" *ngIf = "observationData.ObservationCategoryDetails.ObservationCategoryName">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6  no-padding-left margin-top-20">
+              <label>Observation category :</label>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-8 margin-top-20">
+              <span class="label-details">{{observationData.ObservationCategoryDetails.ObservationCategoryName}}</span>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <!-- Observation category section -->
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="observationData.ObservationRequests.CancellationReason">
+          <div class="section-wrapper no-margin" *ngIf="observationData.ObservationRequests.CancellationReason">
+            <span class="section-title">Cancellation Details</span>
+            <div class="clearfix"></div>
+            <div class="sub-sections-wrapper">
+              <div class="row-wrapper">
+                <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left">
+                  <div>
+                    <label>Cancelled by</label>
+                    <span class="label-details">{{observationData.HseAdviserUsersDetails.FullName}}</span> on
+                    <span>{{observationData.ObservationRequests.CancellationDate | date: dateFormatDDMMYYYY}}</span>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left">
+                  <div>
+                    <label class="">Cancellation Remarks</label>
+                  </div>
+                  <span class="label-details">
+                    <textarea class="form-control margin-top-10" rows="2" id="comment" readonly>{{observationData.ObservationRequests.CancellationReason}}</textarea>
+                  </span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--START -  HSE ADVISER SECTION -->
+        <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="observationData.ObservationRequests.AcknowledgmentReason || observationData.ActionRequests.ActionDetails || observationData.ObservationRequests.ClosureReason || observationData.ObservationRequests.DeletionReason">
+          <h4>HSE Adviser Section</h4>
+          <!-- <div class="section-wrapper no-margin" *ngIf="observationData.ObservationRequests.CancellationReason">
+            <span class="section-title">Cancellation Details</span>
+            <div class="clearfix"></div>
+            <div class="sub-sections-wrapper">
+              <div class="row-wrapper">
+                <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left">
+                  <div>
+                    <label>Cancelled by</label>
+                    <span class="label-details">{{observationData.HseAdviserUsersDetails.FullName}}</span> on
+                    <span>{{observationData.ObservationRequests.CancellationDate | date: dateFormatDDMMYYYYHHMMSS}}</span>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left">
+                  <div>
+                    <label class="">Cancellation Remarks</label>
+                  </div>
+                  <span class="label-details">
+                    <textarea class="form-control margin-top-10" rows="2" id="comment" readonly>{{observationData.ObservationRequests.CancellationReason}}</textarea>
+                  </span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div> -->
+          <div class="section-wrapper no-margin" *ngIf="observationData.ObservationRequests.AcknowledgmentReason">
+            <span class="section-title">Acknowledgement Details</span>
+            <div class="clearfix"></div>
+            <div class="sub-sections-wrapper">
+              <div class="row-wrapper">
+                <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left">
+                  <div>
+                    <label class="no-margin-bottom">Acknowledgement by</label>
+                    <span class="label-details acknowledge-label-details">{{observationData.HseAdviserUsersDetails.FullName}}</span> on
+                    <span class="acknwldge-dt-time">{{observationData.ObservationRequests.AcknowledgmentDate | date: dateFormatDDMMYYYYHHMMSS}}</span>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left margin-top-10 margin-bottom-10">
+                  <div>
+                    <label class="no-margin-bottom">Acknowledgement Remarks</label>
+                  </div>
+                  <span class="label-details">
+                    <textarea class="form-control margin-top-10" rows="2" id="comment" readonly>{{observationData.ObservationRequests.AcknowledgmentReason}}</textarea>
+                  </span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+          <div class="section-wrapper no-margin" *ngIf="observationData.ActionRequests.ActionDetails">
+            <span class="section-title">Action Details</span>
+            <div class="clearfix"></div>
+            <div class="sub-sections-wrapper">
+              <div class="row-wrapper">
+                <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left">
+                  <div>
+                    <label>Action Assigned to</label>
+                    <span class="label-details">{{observationData.ActionRequests.ActionOwner.FullName}}</span> on
+                    <span>{{observationData.ActionRequests.TargetDate | date: dateFormatDDMMYYYY}}</span>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left">
+                  <div>
+                    <label class="">Action Remarks</label>
+                  </div>
+                  <span class="label-details">
+                    <textarea class="form-control margin-top-10" rows="2" id="comment" readonly>{{observationData.ActionRequests.ActionDetails}}</textarea>
+                  </span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+          <div class="section-wrapper no-margin" *ngIf="observationData.ObservationRequests.ClosureReason">
+            <span class="section-title">Closure Details</span>
+            <div class="clearfix"></div>
+            <div class="sub-sections-wrapper">
+              <div class="row-wrapper">
+                <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left">
+                  <div>
+                    <label class="">Closed by</label>
+                    <span class="label-details">{{observationData.HseAdviserUsersDetails.FullName}}</span> on
+                    <span>{{observationData.ObservationRequests.ClosureDate | date: dateFormatDDMMYYYYHHMMSS}}</span>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left">
+                  <div>
+                    <label class="">Closure Remarks</label>
+                  </div>
+                  <span class="label-details">
+                    <textarea class="form-control margin-top-10" rows="2" id="comment" readonly>{{observationData.ObservationRequests.ClosureReason}}</textarea>
+                  </span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+          <div class="section-wrapper no-margin" *ngIf="observationData.ObservationRequests.DeletionReason">
+            <span class="section-title">Deletion Details</span>
+            <div class="clearfix"></div>
+            <div class="sub-sections-wrapper">
+              <div class="row-wrapper">
+                <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left">
+                  <div>
+                    <label class="">Deleted by</label>
+                    <span class="label-details">{{observationData.HseAdviserUsersDetails.FullName}}</span> on
+                    <span>{{observationData.ObservationRequests.DeletionDate | date: dateFormatDDMMYYYYHHMMSS}}</span>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 no-padding">
+                  <div>
+                    <label class="">Deletion Remarks</label>
+                  </div>
+                  <span class="label-details">
+                    <textarea class="form-control margin-top-10 margin-bottom-10" rows="2" id="comment" readonly>{{observationData.ObservationRequests.DeletionReason}}</textarea>
+                  </span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <!-- END- HSE ADVISER SECTION  -->
+
+        <div class="breaker"></div>
+        <div class="add-action-wrapper"></div>
+        <!-- <footer>
+          <a [routerLink]="['../../past-observations-dashboard']" role="button" class="btn btn-primary secondary-btn">
+            <i class="fa fa-reply"></i>back to observation dashboard</a>
+        </footer> -->
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>

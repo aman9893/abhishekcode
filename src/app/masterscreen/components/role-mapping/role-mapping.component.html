@@ -1,0 +1,93 @@
+<div class="outer-box">
+        <h1>Fields marked in
+          <span class="mandatory">*</span> are mandatory</h1>
+        <div class="inner-box">
+          <div class="form-group">
+            <label class="labelClass">Company Name
+              <span class="mandatory">*</span>
+            </label>
+            <p-dropdown class="company-name-dropdown" [options]="companyList" placeholder="Select" [(ngModel)]="roleMappingDetails.companyId" required #companyId="ngModel"></p-dropdown>
+            <span *ngIf="companyId.errors && (companyId.dirty || companyId.touched) && !companyId.valid">
+              <p style="color:red; margin-left: 160px">
+                <b>Atleast one company should be selected</b>
+              </p>
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="labelClass">Role Name
+              <span class="mandatory">*</span>
+            </label>
+            <p-dropdown [options]="roleList" [(ngModel)]="roleMappingDetails.roleId" placeholder="Select" required #roleId="ngModel"
+              [disabled]="!roleMappingDetails.companyId" (onChange)="checkNoOfRoleAssignedToUser($event)"></p-dropdown>
+            <label class="labelFor" *ngIf="noOfRoleAssignedToUser">Total Employee Added to role = {{noOfRoleAssignedToUser}}</label>
+            <span *ngIf="noOfRoleAssignedToUser >= 1 && selectedRoleName === hseAdvisorRole">
+              <p style="color:red; margin-left: 160px">
+                <b>You can't add two HSEAdvisor for same Company</b>
+              </p>
+            </span>
+          </div>
+      
+          <div class="form-group">
+            <label class="labelClass">Employee Name
+              <span class="mandatory">*</span>
+            </label>
+            <p-autoComplete class="auto-complete" [(ngModel)]="selectedUserEmp" [suggestions]="userResults" (completeMethod)="getUsersOnSearch($event)"
+              (onSelect)="selectUser($event)" (onKeyUp)="resetPeoplePicker()" placeholder="Employee Name" field="FullName" [minLength]="1"
+              [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [disabled]="!roleMappingDetails.companyId || !roleMappingDetails.roleId">
+              <ng-template let-employee pTemplate="item">
+                {{employee.FullName}}
+              </ng-template>
+            </p-autoComplete>
+            <span *ngIf="isUserSelected" class="section-Forerror">Kindly enter employee name</span>
+          </div>
+          <div class="text-center">
+            <button class="back-btn" (click)="navigateToWelcomePage()">
+              <i class="fa fa-reply"></i>Back to welcome page</button>
+            <button class="active-btn blue" [class.btn-disabled]="!roleMappingDetails.companyId || !roleMappingDetails.roleId || (noOfRoleAssignedToUser >= 1  && selectedRoleName === hseAdvisorRole)"
+              [disabled]="!roleMappingDetails.roleId || !roleMappingDetails.companyId || (noOfRoleAssignedToUser >= 1 && selectedRoleName === hseAdvisorRole)"
+              (click)="saveRoleMapping()">
+              <i class="fa fa-check"></i> Save</button>
+          </div>
+        </div>
+        <!-- End inner-box -->
+      </div>
+      <!-- End table-responsive -->
+      <div class="clearfix"></div>
+      <!-- End outer-box -->
+      
+      <!-- Display into Grid -->
+      <div class="table-responsive design-table">
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th>Employee Id</th>
+              <th>Employee Name</th>
+              <th>Role Name</th>
+              <th>Company Name</th>
+              <th width="12%">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let roleDetails of roleMappingDetailsResponse; let i = index">
+              <td>{{roleDetails.UserDetails.UserId}}</td>
+              <td>{{roleDetails.UserDetails.FullName}}</td>
+              <td>{{roleDetails.RoleDetails.RoleName}}</td>
+              <td>{{roleDetails.CompanyDetails.CompanyName}}</td>
+              <td>
+                <a class="inline actions pointer" pTooltip="Remove employee" tooltipPosition="top" (click)="deleteUserRoleMappingDetails(roleDetails ,i)">
+                  <i class="fa fa-trash anchor-pointer"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="norecordfound" *ngIf="roleMappingDetailsResponse.length == 0">
+          <p>
+            <b>No record found</b>
+          </p>
+        </div>
+      </div>
+      <!-- End to display into grid  -->
+      
+      <app-alerts [alertType]="alertType" [confirmMessage]="confirmMessage" [successDetails]="successDetails" [errorDetails]="errorDetails"
+        (okClicked)="resetValue()" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>

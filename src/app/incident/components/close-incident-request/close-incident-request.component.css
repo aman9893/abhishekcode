@@ -1,0 +1,10 @@
+.page-content-wrapper{
+	width: 70%;
+}
+.section-title{
+	border-radius: 2px 12px 2px 12px;
+}
+.section-wrapper .docs-wrapper {
+    display: inline-block;
+    position: relative;
+}

@@ -1,0 +1,18 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper">
+        <h3 class="page-title obs-card-title">View risk</h3>
+        <!-- display view details based on risk request id -->
+        <app-view-risk [riskRequestId]='riskRequestId'></app-view-risk>
+        <!-- display view details based on risk request id -->
+        <div class="breaker"></div>
+        <footer>
+          <a (click)="backToRiskDashboard()" role="button" class="btn btn-primary secondary-btn">
+            <i class="fa fa-reply"></i>back to risk dashboard</a>
+        </footer>
+      </div>
+    </div>
+  </div>
+</div>

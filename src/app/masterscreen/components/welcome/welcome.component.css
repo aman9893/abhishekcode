@@ -1,0 +1,194 @@
+/*common property for pop up*/
+.padding-left-5 {
+    padding-left: 5px;
+}
+.no-padding {
+    padding: 0 !important;
+}
+
+/* middle content */
+.title-wrapper{
+	border-bottom: 1px solid #ececec;
+}
+.breadcrumb{
+	margin: 0;
+	background-color: #fff;
+}
+.breadcrumb > li{
+	text-transform: capitalize;
+}
+.breadcrumb > li + li:before {
+    content: "\00bb";
+    padding: 0 7px;
+    color: #7b7b7b;
+    font-size: 17px;
+    line-height: 0;
+    font-weight: 600;
+}
+.breadcrumb > li > a{
+	color: #333;
+	text-decoration: none;
+	font-size: 20px;
+}
+#wrapper{
+	padding-top: 43px;
+}
+.middle-content{
+	background: #fff;
+    /* box-shadow: 2px 1px 30px #989898; */
+	border-radius: 2px;
+	padding: 10px;
+}
+.breaker{
+	border-top: 1px solid #c7c7c7;
+    margin: 20px 0 10px;
+}
+.show-more-wrapper{
+	text-align: center;
+	padding: 0 15px;
+}
+/* media queries */
+@media screen and (min-width: 480px) and (max-width: 960px){
+	#wrapper{	
+		width: 100%;
+	}
+}
+@media screen and (min-width: 768px) and (max-width: 1024px){
+	
+}
+@media only screen and (width: 1366px){
+	
+}
+@media only screen and (width: 768px){
+	
+	.filter-sort-wrapper .filter-section-wrapper{
+		font-size: 11px;
+	}
+	.filter-sort-wrapper .filter-section-wrapper li{
+		margin-right: 16px;
+	}
+	.filter-sort-wrapper .filter-section-wrapper .date-span-wrapper {
+		width: 34%;
+		margin-right: 7px;
+	}
+	.leave-wrapper .leave-count-wrapper{
+		width: 20%;
+	}
+	.leave-wrapper .leave-details-wrapper{
+		width: 77%;
+	}
+}
+@media only screen and (width: 1024px) and (orientation : landscape){
+	
+}
+
+@media screen and (min-width: 768px) and (max-width: 1366px) and (orientation : landscape){
+	.middle-content{
+		min-height: 725px;
+	}	
+}
+@media screen and (min-width: 768px) and (max-width: 1366px) and (orientation : portrait){
+	.middle-content{
+		height: 1366px;
+	}
+}
+
+
+/* ============================================================================ */
+.welcome-wrapper .inner-wrapper h5{
+	margin: 0px 0 10px;
+	font-weight: 600;
+}
+.welcome-wrapper{
+    padding: 80px 0 0 5px;
+    width: 70%;
+    margin: 0px auto;
+}
+.welcome-wrapper .welcome-bg{
+	height: 160px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.welcome-wrapper .welcome-content{
+	text-align: center;
+    margin: 15px 10px;
+}
+.welcome-wrapper .welcome-content p.thank-you{
+	color: #ac1e2e;    
+    font-size: 16px;
+	margin-bottom: 0;
+	line-height: 21px;
+}
+.welcome-wrapper .configuration-content{
+	margin: 26px 10px;
+	/* background: azure; */
+	padding: 5px;
+}
+.welcome-wrapper .configuration-content p.config-info{
+	font-size: 13px;
+    margin-bottom: 0;
+    line-height: 21px;
+	color: #525252;
+}
+.welcome-wrapper .configuration-content p.config-wizard{
+	font-size: 13px;
+    margin: 10px 0;
+    line-height: 21px;
+    color: #444444;
+    text-align: justify;
+}
+.welcome-wrapper .config-steps{
+	padding-left: 0;
+	margin-bottom: 0;
+}
+.welcome-wrapper .config-steps li{
+	float: left;
+	list-style-type: none;
+	width: 33.33333333%;	
+	text-align: center;
+	margin: 10px 0;
+	padding: 5px 0 0;
+}
+.welcome-wrapper .config-steps li img{
+	height: 46px;	
+}
+.welcome-wrapper .config-steps li span{
+	display: block;
+	text-transform: uppercase;
+	font-size: 11px;
+    margin: 7px 0px;
+	font-weight: 600;
+}
+::ng-deep .welcome-wrapper footer{
+	text-align: center !important;
+	margin: 20px 0 0 !important;
+}
+.welcome-wrapper footer .active-btn {
+	color: #fff;
+    text-transform: capitalize;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0px 0px 2px #c1c1c1;
+    padding: 5px 10px;
+    font-size: 13px;	
+	font-weight: normal;
+}
+.welcome-wrapper footer .active-btn.blue{
+	background: #ac1e2e;
+}
+.welcome-wrapper footer .active-btn.blue i{
+	margin-right: 5px;
+}
+.welcome-wrapper footer .staus-class{
+	display: inline-block;
+    padding: 5px 0;
+	font-size: small;
+	font-weight: 600;
+	margin-top: 5px;
+}
+.welcome-wrapper footer .staus-class.pending-setup{
+	color: #696969;
+}
+.welcome-wrapper footer .staus-class.successful-setup{
+	color: #008000;
+}

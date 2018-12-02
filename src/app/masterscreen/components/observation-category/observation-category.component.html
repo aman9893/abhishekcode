@@ -1,0 +1,80 @@
+<div class="outer-box">
+  <h1>Fields marked in
+    <span class="mandatory">*</span> are mandatory</h1>
+  <div class="inner-box">
+    <div class="form-group">
+      <label class="labelClass">Observation Category
+        <span class="mandatory">*</span>
+      </label>
+      <input type="text" class="form-control inputWidth" autofocus [(ngModel)]="observationCategoryDetails.observationCategoryName"
+        maxlength="50" required #observationCategoryName="ngModel" />
+      <span class="section-Forerror" *ngIf="(observationCategoryName.errors && (observationCategoryName.dirty || observationCategoryName.touched))">Kindly enter observation category
+      </span>
+    </div>
+    <div class="form-group" *ngIf='!isObservationCategoryEdit'>
+      <label class="labelClass">Status
+      </label>
+      <p-dropdown [options]="status" [(ngModel)]="observationCategoryDetails.InActive" (onChange)="selectStatus(observationCategoryDetails.InActive)"></p-dropdown>
+    </div>
+    <div class="form-group groupClass">
+      <p-pickList [source]="sourceCompanyList" [target]="targetCompanyList" sourceHeader="Available Company" targetHeader="Selected Company"
+        [responsive]="true" dragdrop="true" [sourceStyle]="{'height':'200px'}" [targetStyle]="{'height':'200px'}" (onMoveToTarget)="onMoveToTargetDetails($event)"
+        (onMoveToSource)="onMoveToSourceDetails($event)">
+        <ng-template let-company pTemplate="item">
+          <div class="ui-helper-clearfix">
+            <div class="pickListClass">{{company.companyName}}</div>
+          </div>
+        </ng-template>
+      </p-pickList>
+    </div>
+    <span class="section-Forerror leftsidemargin" *ngIf="validationforPickList">Kindly select at least one company type
+    </span>
+    <div class="text-center">
+      <button class="back-btn" (click)="navigateToWelcomePage()">
+        <i class="fa fa-reply"></i>Back to welcome page</button>
+      <button class="active-btn blue" *ngIf='isObservationCategoryEdit' (click)='CheckIsObservationCategoryActive(0);' [class.btn-disabled]="!observationCategoryDetails.observationCategoryName"
+        [disabled]="!observationCategoryDetails.observationCategoryName">
+        <i class="fa fa-check"></i> Save</button>
+      <button class="active-btn blue" *ngIf='!isObservationCategoryEdit' [class.btn-disabled]="!observationCategoryDetails.observationCategoryName"
+        [disabled]="!observationCategoryDetails.observationCategoryName" (click)='CheckIsObservationCategoryActive(1)'>
+        <i class="fa fa-check"></i> Update </button>
+    </div>
+  </div>
+</div>
+
+<!-- Display into Grid -->
+<div class="table-responsive design-table">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Observation Category</th>
+        <th>Company Name</th>
+        <th>Status</th>
+        <th width="12%">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let observationCategory of observationCategoryDetailsResponse; let i = index">
+        <td>{{observationCategory.ObservationCategoryName}}</td>
+        <td>{{observationCategory.CompanyDetails.CompanyName}}</td>
+        <td>{{observationCategory.InActive}}</td>
+        <td>
+          <a class="inline actions pointer" pTooltip="Edit details" tooltipPosition="top" (click)="editObservationCategoryDetails(observationCategory ,i)">
+            <i class="fa fa-edit anchor-pointer"></i>
+          </a>
+          <a class="inline actions pointer" pTooltip="Delete details" *ngIf="observationCategory.InActive == 'Active'" tooltipPosition="top" (click)="deleteObservationCategoryDetails(observationCategory ,i)">
+            <i class="fa fa-trash anchor-pointer"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="norecordfound" *ngIf="observationCategoryDetailsResponse.length == 0">
+    <p>
+      <b>No record found</b>
+    </p>
+  </div>
+</div>
+<!-- End to display into grid  -->
+<app-alerts [alertType]="alertType" [confirmMessage]="confirmMessage" [successDetails]="successDetails" [errorDetails]="errorDetails"
+  (okClicked)="resetValue()" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>

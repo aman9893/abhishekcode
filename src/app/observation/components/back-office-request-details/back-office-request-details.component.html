@@ -1,0 +1,131 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper no-padding-bottom">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+              <a [routerLink]="['../../back-office-dashboard']">Back-Office Dashboard</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page">Back-Office Request Details</li>
+          </ol>
+        </nav>
+
+        <!-- START -Employee Section -->
+        <div class="section-wrapper">
+          <div class="margin-top-15">
+            <div class="col-lg-12 col-md-10 col-sm-10 no-padding-right">
+              <div class="row-wrapper">
+                <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="first-column-labels">User Id</label>
+                  </div>
+                  <span class="label-details" title="Human Resources &amp; Management">{{userDetails.UserId}}</span>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="first-column-labels">User Name</label>
+                  </div>
+                  <span class="label-details" title="Human Resources &amp; Management">{{userDetails.FullName}}</span>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="first-column-labels">Department</label>
+                  </div>
+                  <span class="label-details" title="Human Resources &amp; Management">{{userDetails.DepartmentName}}</span>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="last-column-labels">Contact No.</label>
+                  </div>
+                  <span class="label-details">{{userDetails.ContactNumber}}</span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="row-wrapper">
+                <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                  <div>
+                    <label class="last-column-labels">Email ID</label>
+                  </div>
+                  <span class="label-details">{{userDetails.Email}}</span>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 no-padding-left">
+                  <div>
+                    <label class="first-column-labels">Employee Uploaded Image</label>
+                  </div>
+                  <div class="docs-wrapper" *ngFor="let tempObservation of tempObservationData;let i = index">
+                    <div class="label docs" (mouseenter)="displayImage($event, i)" (mouseleave)="displayImage($event, i)">
+                      <a href="{{tempObservation.TempObservationFileURL}}">
+                        <img src="{{tempObservation.TempObservationFileURL}}" />
+                      </a>
+                    </div>
+                    <!-- <div class="download-option" *ngIf="showImage">
+                      <img src="{{tempObservation.TempObservationFileURL}}" />
+                    </div>
+                    <div class="download-option" *ngIf="hideImage">
+                      <img src="{{tempObservation.TempObservationFileURL}}" />
+                    </div> -->
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+
+        <div class="breaker"></div>
+        <!-- END - -Employee Section -->
+
+        <!-- START - Delete Section for Back-office -->
+        <div class="section-wrapper no-margin-bottom">
+          <span class="section-title">Back office section</span>
+          <div class="col-lg-12 col-md-12 col-sm-12 no-padding">
+            <span>Do you want to delete the request?</span>
+            <p-radioButton name="deleted" [value]="true" label="Yes" [(ngModel)]="isDeleteSelected" inputId="preopt1"></p-radioButton>
+            <p-radioButton name="deleted" [value]="false" label="No" [(ngModel)]="isDeleteSelected" inputId="preopt2"></p-radioButton>
+          </div>
+          <div class="clearfix"></div>
+
+          <div class="col-lg-5 col-md-3 col-sm-3 no-padding-left margin-top-20" *ngIf="isDeleteSelected">
+            <label class="labelClass">Reason for deletion
+              <span class="mandatory">*</span>
+            </label>
+            <p-dropdown [options]="deletionReason" placeholder="select" [(ngModel)]="selectedReason" (onChange)="selectedReasonValue()"></p-dropdown>
+            <div class="marginLeftClass" *ngIf="validationOnReason">
+              <span class="error-msg-colour">Please select reason for deletion</span>
+            </div>
+          </div>
+
+          <div class="col-lg-7 col-md-3 col-sm-3 no-padding-left margin-top-20 additional-delete-remarks-wrapper" *ngIf="isDeleteSelected">
+            <label class="labelClass">Deletion remarks
+            </label>
+            <textarea class="form-control textboxalign" maxlength="200" [(ngModel)]="deletionRemarks" rows="2" id="comment"></textarea>
+          </div>
+          <div class="clearfix"></div>
+
+          <footer class="margin-bottom-10">
+            <a>
+              <button type="button" class="btn btn-primary primary-btn" *ngIf="isDeleteSelected" (click)="checkConfirmationForDeletion()">
+                <i class="fa fa-share-square"></i>Delete request</button>
+            </a>
+          </footer>
+          <div class="clearfix"></div>
+        </div>
+        <div class="breaker"></div>
+        <div class="clearfix"></div>
+        <!-- START - Delete Section for Back-office -->
+
+        <!-- START - Raise Observation Section -->
+        <app-raise-observation [isBackOfficeViewDetailsPage]="isBackOfficeViewDetailsPage" (submitRequestforBackOffice)="submitRequestforBackOffice()"
+          class="back-ofc-obs-card" *ngIf="!isDeleteSelected"></app-raise-observation>
+        <!-- END - Raise Observation Section -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section to display pop up -->
+<app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="navigateToBackOfficeDashboard()"
+  [confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>

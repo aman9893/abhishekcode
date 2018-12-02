@@ -1,0 +1,108 @@
+<div id="wrapper">
+  <div class="container-fluid">
+    <div class="page-content-wrapper">
+      <div class="col-lg-5 col-md-8 col-sm-10 col-xs-12 no-float">
+        <div class="login-wrapper">
+          <div class="login-details">
+            <div class="logo-wrapper">
+              <img src="../../../../assets/images/contractor/logo.png" />
+            </div>
+            <div class="credentials-wrapper" *ngIf="isLoginDisplay">
+              <div class="form-group">
+                <div>
+                  <input type="text" class="form-control" id="usr" placeholder="Enter your email" name="credentials" [(ngModel)]="login.userName">
+                  <img src="../../../../assets/images/contractor/user.png" class="input-img" />
+                </div>
+              </div>
+              <div class="form-group">
+                <div>
+                  <input type="password" class="form-control" placeholder="Password" name="credentials" [(ngModel)]="login.password">
+                  <img src="../../../../assets/images/contractor/password.png" class="input-img" />
+                </div>
+              </div>
+              <div class="login-btn">
+                <button type="button" class="btn btn-success primary-btn" (click)="authenticateContractor()">
+                  <span>Login</span>
+                  <img src="../../../../assets/images/contractor/login.png" class="input-img" />
+                </button>
+              </div>
+              <div *ngIf="isLoginFailed">
+                <span class="color-red">Please enter valid username or password.</span>
+              </div>
+              <div class="actions-wrapper">
+                <div class="pull-left">
+                  <div class="checkbox remember-me">
+                    <label><input type="checkbox" value="" checked>Remember Me</label>
+                  </div>
+                </div>
+                <div class="pull-right">
+                  <a (click)="onClickForgotPassword()" class="forgot-password">Forgot Password?</a>
+                </div>
+              </div>
+            </div>
+            <div class="credentials-wrapper" *ngIf="isChangePasswordDisplay">
+              <div class="form-group">
+                <div>
+                  <input type="password" class="form-control" id="usr" placeholder="New password" name="credentials" [(ngModel)]="newPassword">
+                  <img src="../../../../assets/images/contractor/user.png" class="input-img" />
+                </div>
+              </div>
+              <div *ngIf="isNewPasswordSubmit && !newPassword">
+                <span class="color-red">Please enter new password.</span>
+              </div>
+              <div class="form-group">
+                <div>
+                  <input type="password" class="form-control" placeholder="Confirmed password" name="credentials" [(ngModel)]="confirmPassword">
+                  <img src="../../../../assets/images/contractor/password.png" class="input-img" />
+                </div>
+              </div>
+              <div *ngIf="isConfirmPasswordSubmit && !confirmPassword">
+                <span class="color-red">Please enter confirm password.</span>
+              </div>
+              <div *ngIf="isPasswordMatch">
+                <span class="color-red">New password and Confirmed password does not match. Kindly ensure both passwords are same.</span>
+              </div>
+              <div *ngIf="isPasswordSize ">
+                <span class="color-red"> Password should be at least 6 Character long.</span>
+              </div>
+              <div class="login-btn">
+                <button type="button" class="btn btn-success primary-btn" (click)="changePassword()">
+                  <span>Submit</span>
+                  <img src="../../../../assets/images/contractor/login.png" class="input-img" />
+                </button>
+              </div>
+              <div class="login-btn">
+                <button type="button" class="btn btn-success primary-btn" (click)="backToHome()">
+                  <span>Back to Home </span>
+                </button>
+              </div>
+            </div>
+            <div class="credentials-wrapper" *ngIf="isForgotPasswordDisplay">
+              <div class="form-group">
+                <div>
+                  <input type="text" class="form-control" id="email" placeholder="Email Id" name="credentials" [(ngModel)]="emailId" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                  <img src="../../../../assets/images/contractor/user.png" class="input-img" />
+                </div>
+              </div>
+              <div *ngIf="email.errors && email.errors.pattern">
+                <span class="color-red">Kindly enter valid email id.</span>
+              </div>
+              <div *ngIf="">
+                <span class="color-red">This email id is not registered with us. You are not a valid user. Kindly enter email id which is registered with us.</span>
+              </div>
+              <div class="login-btn">
+                <button type="button" class="btn btn-success primary-btn" (click)="forgotPassword()">
+                  <span>Submit</span>
+                  <img src="../../../../assets/images/contractor/login.png" class="input-img" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="onYesClickedForConfirmation()"
+                  [confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

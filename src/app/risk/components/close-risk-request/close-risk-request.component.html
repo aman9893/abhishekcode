@@ -1,0 +1,111 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper risk-view-details-wrapper">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="inner-wrapper">
+            <div class="top-heading center">
+                <h4>Close risk details</h4>
+            </div>
+            <div class="sub-wrapper">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item" aria-current="page">Risk Details</li>
+                    </ol>
+                </nav>
+                <div class="section-wrapper">
+                    <div class="action-owner-tabs">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#risk-added-by-me">Risks details</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#residual-risks" (click)="getCompletedAction()">Completed actions</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="risk-added-by-me" class="tab-pane fade in active">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                    <!-- START - Close Section for closure -->
+                                    <div class="section-wrapper no-margin">
+                                        <span class="section-title">Closure Details</span>
+                                        <div class="col-lg-9 col-md-3 col-sm-3 no-padding margin-top-10">
+                                            <label class="labelClass">Closure remarks
+                                                <span class="mandatory">*</span>
+                                            </label>
+                                            <textarea class="form-control textboxalign" maxlength="200" [(ngModel)]="closureDetails" (input)="onSearchChange()"></textarea>
+                                            <div class="marginLeftClass" *ngIf="validationOnReason">
+                                                <span class="error-msg-colour">Please enter closure remarks</span>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-3 col-md-2 col-sm-2">
+                                            <footer class="margin-bottom-10 btn-alignment-left">
+                                                <a>
+                                                    <button type="button" class="btn btn-primary primary-btn" (click)="closeRiskRequest()">
+                                                        <i class="fa fa-share-square"></i>Close request</button>
+                                                </a>
+                                            </footer>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="breaker margin-top-10"></div>
+                                    <div class="clearfix"></div>
+                                    <!-- START - Close Section for closure -->
+                                    <div class="sub-wrapper margin-top-10">
+                                        <!-- display view details based on risk request id -->
+                                        <app-view-risk [riskRequestId]='riskRequestId'></app-view-risk>
+                                        <!-- display view details based on risk request id -->
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div id="residual-risks" class="tab-pane fade">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-condensed fix-tablelayout">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 35px">Sr. No.</th>
+                                                <th style="width: 70px">Action details</th>
+                                                <th style="width: 70px">Due date</th>
+                                                <th style="width: 115px">Action assignment date</th>
+                                                <th style="width: 70px">Risk Owner</th>
+                                                <th style="width: 70px">Action party</th>
+                                                <th style="width: 110px">Action party designation</th>
+                                                <th style="width: 80px">Action execution</th>
+                                                <th style="width: 80px">Execution details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let completedAction of completedActionDetails;let i =index ">
+                                                <td>{{i+1}}</td>
+                                                <td>
+                                                    <span class="ellepsis" data-html="true" data-toggle="popover" pTooltip="{{completedAction.ActionDetails}}">{{completedAction.ActionDetails}}</span>
+                                                </td>
+                                                <td>{{completedAction.DueDate | date:dateFormatDDMMYYYY}}</td>
+                                                <td>{{completedAction.ActionAssignmentDate | date:dateFormatDDMMYYYY}}</td>
+                                                <td>{{completedAction.RiskOwner.FullName}}</td>
+                                                <td>{{completedAction.ActionParty.FullName}}</td>
+                                                <td>{{completedAction.ActionParty.Designation}}</td>
+                                                <td>{{completedAction.ActionAssignmentHistory.UpdatedDate | date:dateFormatDDMMYYYY}}</td>
+                                                <td>
+                                                    <span class="ellepsis" data-html="true" data-toggle="popover" pTooltip="{{completedAction.ActionAssignmentHistory.Remarks}}">{{completedAction.ActionAssignmentHistory.Remarks}}</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+<app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="onYesClickedSuccess()"
+    [confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>

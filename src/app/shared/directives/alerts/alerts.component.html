@@ -1,0 +1,28 @@
+<p-dialog *ngIf="alertType == 'Success'" header='Success' [(visible)]="display" modal="modal" width="500" [responsive]="true">
+  <p>{{successDetails}}</p>
+  <p-footer>
+    <button type="button" pButton label="Ok" (click)="onOkClick()" class="active-btn orange-btn"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog *ngIf="alertType == 'Error'" header='Error' [(visible)]="display" modal="modal" width="500" [responsive]="true">
+  <p *ngFor="let errormessage of errorDetails; let i = index">{{errormessage.Message}}</p>
+  <p-footer>
+    <button type="button" pButton (click)="onOkClick()" label="Ok" class="active-btn orange-btn"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog *ngIf="alertType == 'Warning'" header='Warning' [(visible)]="display" modal="modal" width="500" [responsive]="true">
+  <p>{{warningMessage}}</p>
+  <p-footer>
+    <button type="button" pButton (click)="onOkClick()" label="Ok" class="active-btn orange-btn"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog *ngIf="alertType == 'Confirm'" header='Confirm' [(visible)]="display" modal="modal" width="500" [responsive]="true">
+  <p>{{confirmMessage}}</p>
+  <p-footer>
+    <button type="button" pButton (click)="onYesClick()" label="Yes" class="active-btn orange-btn"></button>
+    <button type="button" pButton (click)="onNoClick()" label="No" class="active-btn grey-btn"></button>
+  </p-footer>
+</p-dialog>

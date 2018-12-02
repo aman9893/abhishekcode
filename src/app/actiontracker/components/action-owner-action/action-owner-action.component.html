@@ -1,0 +1,240 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="../../../actiontracker/action-owner-dashboard">Observation Card Dashboard</a></li>
+            <li class="breadcrumb-item" aria-current="page">Observation Details</li>
+          </ol>
+        </nav>
+        <div class="section-wrapper">
+          <div class="margin-top-15">
+            <div class="col-lg-2 col-md-2 col-sm-2 no-padding">
+              <div class="pro-pic-wrapper"><img src=" ../../../../assets/images/pro-pic.png" alt="Profile Pic" class="profile-pic"></div>
+              <p class="pro-pic-name">{{user.FullName}}</p>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 no-padding-right">
+              <div class="row-wrapper">
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div><label class="first-column-labels">Department</label></div>
+                  <span class="label-details" title="Human Resources &amp; Management">{{user.Department}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div><label class="middle-column-labels">Working Location</label></div>
+                  <span class="label-details">{{user.LocationName}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div><label class="last-column-labels">Contact No.</label></div>
+                  <span class="label-details">{{user.ContactNumber}}</span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="row-wrapper">
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div><label class="first-column-labels">Position</label></div>
+                  <span class="label-details">{{user.Position}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div><label class="middle-column-labels">Reporting Manager</label></div>
+                  <span class="label-details">{{user.Reporting}}</span>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                  <div><label class="last-column-labels">Email ID</label></div>
+                  <span class="label-details">{{user.Email}}</span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">Obseravtion Details</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-3 col-md-3 col-sm-4 no-padding-left">
+                <div><label class="first-column-labels">Observtion Reference ID</label></div>
+                <span class="label-details">{{observationData.DisplayId}}</span>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                <div><label class="middle-column-labels">Observtion Date &amp; Time</label></div>
+                <span class="label-details">{{observationData.ObservationDate | date: dateFormatDDMMYYYY}}</span>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                <div><label class="last-column-labels">Observation Submitted On</label></div>
+                <span class="label-details">{{observationData.CreatedDate | date: dateFormatDDMMYYYY}}</span>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                <div><label class="first-column-labels">Location</label></div>
+                <span class="label-details">{{observationData.LocationName}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 no-padding-left">
+                <div><label class="middle-column-labels">Observation Type</label></div>
+                <span class="label-details">{{observationData.ObservationType}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">What did you observe</span>
+          <p class="readonly">{{observationData.WhatObserved}}</p>
+          <div class="margin-top-20">
+            <div class="docs-wrapper" *ngIf="observationData.WhatObservedFileURL">
+              <div class="label docs" (mouseenter)="displayImage($event,'didYouSee')" (mouseleave)="displayImage($event,'didYouSee')">
+                <a href="{{observationData.WhatObservedFileURL}}">
+                  <img src="{{observationData.WhatObservedFileURL}}" />
+                </a>
+              </div>
+              <div class="download-option" *ngIf="didYouSeeCheck">
+                <img src="{{observationData.WhatObservedFileURL}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">What did you do about it?</span>
+          <p class="readonly">{{observationData.WhatYouDid}}</p>
+          <div class="margin-top-20">
+            <div class="docs-wrapper" *ngIf="observationData.WhatYouDidFileURL">
+              <div class="label docs" (mouseenter)="displayImage($event, 'didYouDo')" (mouseleave)="displayImage($event, 'didYouDo')">
+                <a href="{{observationData.WhatYouDidFileURL}}">
+                  <img src="{{observationData.WhatYouDidFileURL}}" />
+                </a>
+              </div>
+              <div class="download-option" *ngIf="didYouDoCheck">
+                <img src="{{observationData.WhatYouDidFileURL}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">What could we do about it?</span>
+          <p class="readonly">{{observationData.WhatWeCouldDo}}</p>
+          <div class="margin-top-20">
+            <div class="docs-wrapper" *ngIf="observationData.WhatWeCouldDoFileURL">
+              <div class="label docs" (mouseenter)="displayImage($event, 'improvedType')" (mouseleave)="displayImage($event, 'improvedType')">
+                <a href="{{observationData.WhatWeCouldDoFileURL}}">
+                  <img src="{{observationData.WhatWeCouldDoFileURL}}" />
+                </a>
+              </div>
+              <div class="download-option" *ngIf="improvedTypeCheck">
+                <img src="{{observationData.WhatWeCouldDoFileURL}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper hazards-wrapper">
+          <span class="section-title">Hazard(s) identified<span class="info">(Select Atleast One)</span></span>
+          <div class="clearfix"></div>
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left" *ngFor="let hazard of hazards">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="hazard" [checked]="hazard.checked" disabled>
+                <img class="hazard-img" src="{{hazard.FileURL}}" pTooltip="{{hazard.HazardName}}" tooltipPosition="top" />
+              </label>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6  no-padding-left margin-top-20"><label>Not listed :</label></div>
+          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-8 margin-top-20">
+            <input type="text" class="form-control" id="usr" [(ngModel)]="observationData.NotListed" disabled>
+          </div>
+        <div class="clearfix"></div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6  no-padding-left margin-top-20"><label>Observation category :</label></div>
+          <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 margin-top-20">
+            <span>{{observationData.ObservationCategoryName }}</span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper">
+          <span class="section-title">Indivitual / Team / Organization feedback</span>
+          <div class="clearfix"></div>
+          <textarea class="form-control margin-top-10" rows="2" id="comment" [(ngModel)]="observationData.Feedback" disabled></textarea>
+          <div class="clearfix"></div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper add-action-wrapper">
+          <span class="section-title">Add Action you want to take</span>
+          <div class="table-responsive margin-bottom-20">
+            <table align="center" class="table table-bordered table-striped table-condensed tableheader table-red fix-tablelayout">
+              <thead>
+                <tr>
+                  <th style="width: 162px">Action Details</th>
+                  <th style="width: 100px">Priority</th>
+                  <th style="width: 190px">Target Date</th>
+                  <th style="width: 190px">Action Party</th>
+                  <th style="width: 180px">Action Verifier</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><textarea class="form-control margin-top-10" rows="2" id="comment" [(ngModel)]="action.ActionDetails" disabled></textarea></td>
+                  <td>
+                    <select class="form-control" id="sel1" disabled>
+
+                      <option>{{priority}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <div class="dt-time-wrapper">
+                      <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' class="form-control" [ngModel]="action.TargetDate | date: dateFormatDDMMYYYY" disabled />
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <p-autoComplete [(ngModel)]="selectedActionParty" [suggestions]="userResults" [disabled] = "isActionAssigned" (completeMethod)="getUsersOnSearch($event)"
+                                    placeholder="Action Party" (change)="selectActionOwner($event)" field="FullName" [minLength]="1" [style]="{'width':'100%'}"
+                                    [inputStyle]="{'width':'100%'}">
+                      <ng-template let-actionowner pTemplate="item">
+                        {{actionowner.FullName}}
+                      </ng-template>
+                    </p-autoComplete>
+                  </td>
+                  <td>
+                    <p-autoComplete [(ngModel)]="selectedActionVerifier" [disabled] = "isActionAssigned" [suggestions]="userResults" (completeMethod)="getUsersOnSearch($event)"
+                                    placeholder="Action Verifier" (change)="selectActionOwner($event)" field="FullName" [minLength]="1" [style]="{'width':'100%'}"
+                                    [inputStyle]="{'width':'100%'}">
+                      <ng-template let-actionowner pTemplate="item">
+                        {{actionowner.FullName}}
+                      </ng-template>
+                    </p-autoComplete>
+                  </td>
+                </tr>
+              </tbody>
+              <div style="width: 500px" *ngIf="isActionOwnerAndVerifierSame">
+                <span class="error-msg-colour">Action Party and Verifier should not be same.</span>
+              </div>
+            </table>
+          </div>
+          <!-- End table-responsive -->
+          <div class="clearfix"></div>
+        </div>
+        <div class="breaker add-action-wrapper"></div>
+        <footer>
+          <a (click)="backToDashboard()" role="button" class="btn btn-primary secondary-btn"><i class="fa fa-reply"></i>back to observation dashboard</a>
+          <a (click)="submit()" *ngIf="!isActionAssigned" role="button" class="btn btn-primary primary-btn"><i class="fa fa-share-square"></i>submit</a>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="onOkClickedForConfirmation()"
+              [confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>
+  <div class="clearfix"></div>
+</div>

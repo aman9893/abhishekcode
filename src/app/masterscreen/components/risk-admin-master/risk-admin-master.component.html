@@ -1,0 +1,102 @@
+<div class="page-content-wrapper">
+  <div class="inner-wrapper">
+      <div class="sub-wrapper">
+          <div class="col-lg-12 col-md-12 col-sm-12 middle-content no-padding">
+              <h2 class="page-title">
+                  <i class="fa fa-desktop"></i>Setup your HSE</h2>
+
+              <div class="setupTabsToggle">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
+                  <div class="clearfix"></div>
+              </div>
+              <ul class="nav nav-tabs setupTabs collapse navbar-collapse" id="myNavbar">
+                  <li class="active">
+                      <a data-toggle="tab" href="#start">
+                          <span class="tab-no">0</span>
+                          <span class="tabs-title">Start</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a data-toggle="tab" href="#project-details">
+                          <span class="tab-no">1</span>
+                          <span class="tabs-title">Project Master</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a data-toggle="tab" href="#finish">
+                          <span class="tab-no">2</span>
+                          <span class="tabs-title">Finish</span>
+                      </a>
+                  </li>
+              </ul>
+              <!-- End setupTabs -->
+
+              <div class="tab-content setupContent">
+                  <!-- START:: start -->
+                  <div id="start" class="tab-pane fade in active">
+                      <div class="outer-box">
+                          <div class="inner-box">
+                              <p>The first step in configuring HSE. This step comprises of the following sub-steps :</p>
+                              <ol>
+                                  <li>
+                                      <span>Project Master</span>
+                                  </li>                                  
+                                  <li>
+                                      <span>Finish</span>
+                                  </li>
+                              </ol>
+                              <button class="back-btn" (click)="navigateToWelcomePage()">
+                                  <i class="fa fa-reply"></i>Back to welcome page</button>
+                          </div>
+
+                          <!-- End inner-box -->
+                      </div>
+                      <!-- End outer-box -->
+                  </div>
+                  <!-- END:: start -->
+
+                  <!-- START:: Poject Master -->
+                  <div id="project-details" class="tab-pane fade">
+                      <app-risk-project-master></app-risk-project-master>
+                      <!-- End outer-box -->
+                  </div>
+                  <!-- END:: Project Master -->
+
+                  <div id="finish" class="tab-pane fade">
+                      <div class="outer-box">
+                          <div class="inner-box">
+                              <p>The first step in configuring HSE. This step comprises of the following sub-steps :</p>
+                              <ol>
+                                  <li>
+                                      <i class="fa fa-check success"></i>
+                                      <span>Project Master</span>
+                                  </li>
+                                  <li>
+                                      <i class="fa fa-check success"></i>
+                                      <span>Finish</span>
+                                  </li>
+                              </ol>                              
+                              <button class="back-btn" (click)="navigateToWelcomePage()">
+                                  <i class="fa fa-reply"></i>Back to welcome page</button>
+                              <button routerLink="../../home" class="active-btn blue">
+                                  <i class="fa fa-caret-right"></i> Proceed with HSE app</button>
+                          </div>
+                          <!-- End inner-box -->
+                      </div>
+                      <!-- End outer-box -->
+                  </div>
+                  <!-- END:: finish -->
+
+              </div>
+              <!-- End setupContent -->
+
+          </div>
+          <div class="clearfix"></div>
+      </div>
+  </div>
+</div>
+<!-- End col-md-9 -->

@@ -1,0 +1,196 @@
+<div class="outer-box">
+  <h1>Fields marked in
+    <span class="mandatory">*</span> are mandatory</h1>
+  <div class="inner-box">
+    <!-- <div class="form-group">
+      <label class="labelClass">User Name
+        <span class="mandatory">*</span>
+      </label>
+
+      <input type="text" class="form-control inputWidth" [(ngModel)]="contractorDetails.userName" required />
+    </div> -->
+    <!-- <div class="form-group">
+      <label class="labelClass">Password
+        <span class="mandatory">*</span>
+      </label>
+
+      <input type="password" class="form-control inputWidth" [(ngModel)]="contractorDetails.password" required />
+    </div> -->
+    <div class="form-group">
+      <label class="labelClass">Contractor full name
+        <span class="mandatory">*</span>
+      </label>
+
+      <input type="text" maxlength="100" class="form-control inputWidth" [(ngModel)]="contractorDetails.fullName" required #fullName="ngModel"
+      />
+      <span *ngIf="fullName.errors && (fullName.dirty || fullName.touched) && !fullName.valid">
+        <p class="validation-color" *ngIf="hideValidationMessage">
+          <b>Kindly enter Contractor Full name</b>
+        </p>
+      </span>
+    </div>
+    <div class="form-group">
+      <label class="labelClass">Gender
+        <span class="mandatory">*</span>
+      </label>
+      <p-dropdown [options]="masterScreenContants.GenderList" placeholder="Select" [(ngModel)]="contractorDetails.gender" required
+        #gender="ngModel"></p-dropdown>
+      <span *ngIf="gender.errors && (gender.dirty || gender.touched) && !gender.valid">
+        <p class="validation-color" *ngIf="hideValidationMessage">
+          <b>Please Select the Gender</b>
+        </p>
+      </span>
+
+    </div>
+    <div class="form-group">
+      <label class="labelClass">Contractor agency
+        <span class="mandatory">*</span>
+      </label>
+
+      <input type="text" maxlength="100" class="form-control inputWidth" [(ngModel)]="contractorDetails.agency" required #agency="ngModel"
+      />
+      <span *ngIf="agency.errors && (agency.dirty || agency.touched) && !agency.valid">
+        <p class="validation-color" *ngIf="hideValidationMessage">
+          <b>Kindly enter the Contractor agency name</b>
+        </p>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label class="labelClass">Contractor designation
+        <span class="mandatory">*</span>
+      </label>
+
+      <input type="text" class="form-control inputWidth" [(ngModel)]="contractorDetails.designation" required #designation="ngModel"
+        maxlength="50" />
+      <span *ngIf="designation.errors && (designation.dirty || designation.touched) && !designation.valid">
+        <p class="validation-color" *ngIf="hideValidationMessage">
+          <b>Kindy enter the Contractor designation</b>
+        </p>
+      </span>
+    </div>
+    <div class="form-group">
+      <label class="labelClass">Registration Id
+        <span class="mandatory">*</span>
+      </label>
+
+      <input type="text" class="form-control inputWidth" [(ngModel)]="contractorDetails.registrationId" required #registrationId="ngModel"
+        maxlength="30" />
+      <span *ngIf="registrationId.errors && (registrationId.dirty || registrationId.touched) && !registrationId.valid">
+        <p class="validation-color" *ngIf="hideValidationMessage">
+          <b>Kindy enter the Contractor Registration Id</b>
+        </p>
+      </span>
+
+    </div>
+    <div class="form-group">
+      <label class="labelClass">Company Name
+        <span class="mandatory">*</span>
+      </label>
+      <p-dropdown [options]="companyList" [(ngModel)]="contractorDetails.companyId" placeholder="Select" required #companyId="ngModel"></p-dropdown>
+      <span *ngIf="companyId.errors && (companyId.dirty || companyId.touched) && !companyId.valid">
+        <p class="validation-color" *ngIf="hideValidationMessage">
+          <b>Atleast one company should be selected</b>
+        </p>
+      </span>
+
+    </div>
+    <div class="form-group">
+      <label class="labelClass">Contact number
+        <span class="mandatory">*</span>
+      </label>
+
+      <input type="text" appNumberOnly maxlength="13" class="form-control inputWidth" [(ngModel)]="contractorDetails.contactNumber"
+        pInputText required #contactNumber="ngModel" />
+      <span *ngIf="contactNumber.errors && (contactNumber.dirty || contactNumber.touched) && !contactNumber.valid">
+        <p class="validation-color" *ngIf="hideValidationMessage">
+          <b>Kindly enter the Contact number</b>
+        </p>
+      </span>
+
+
+    </div>
+    <div class="form-group">
+      <label class="labelClass">Email id
+        <span class="mandatory">*</span>
+      </label>
+
+      <input type="text" appEmailvalidator maxlength="50" class="form-control inputWidth" [(ngModel)]="contractorDetails.email"
+        pInputText required #email="ngModel" />
+      <span *ngIf="email.errors && (email.dirty || email.touched)">
+        <p class="validation-color" *ngIf="email.errors.required && hideValidationMessage">
+          <b>Email is required</b>
+        </p>
+        <p class="validation-color" *ngIf="email.errors.emailvalidator && hideValidationMessage">
+          <b>Please provide a valid email address</b>
+        </p>
+
+      </span>
+    </div>
+    <div class="form-group" *ngIf='!isContractorEdit'>
+      <label class="labelClass">Status
+      </label>
+      <p-dropdown [options]="status" [(ngModel)]="contractorDetails.InActive" (onChange)="selectStatus(contractorDetails.InActive)"></p-dropdown>
+    </div>
+
+    <!-- End edit part -->
+
+    <div class="text-center">
+      <button class="back-btn" (click)="navigateToWelcomePage()">
+        <i class="fa fa-reply"></i>Back to welcome page</button>
+
+      <button class="active-btn blue" *ngIf='isContractorEdit' [class.btn-disabled]="!contractorDetails.fullName || !contractorDetails.gender || !contractorDetails.agency || !contractorDetails.designation || !contractorDetails.registrationId || !contractorDetails.companyId || !contractorDetails.contactNumber || (!contractorDetails.email) || email.invalid"
+        [disabled]="!contractorDetails.fullName || !contractorDetails.gender || !contractorDetails.agency || !contractorDetails.designation || !contractorDetails.registrationId || !contractorDetails.companyId || !contractorDetails.contactNumber || (!contractorDetails.email) || (email.invalid)"
+        (click)='CheckIsContractorActiveSaveContratorDetails(0)'>
+        <i class="fa fa-check"></i> Save</button>
+      <button class="active-btn blue" *ngIf='!isContractorEdit' [class.btn-disabled]="!contractorDetails.fullName || !contractorDetails.gender || !contractorDetails.agency || !contractorDetails.designation || !contractorDetails.registrationId || !contractorDetails.companyId || !contractorDetails.contactNumber || (!contractorDetails.email) || email.invalid"
+        [disabled]="!contractorDetails.fullName || !contractorDetails.gender || !contractorDetails.agency || !contractorDetails.designation || !contractorDetails.registrationId || !contractorDetails.companyId || !contractorDetails.contactNumber || (!contractorDetails.email) || (email.invalid)"
+        (click)='CheckIsContractorActiveSaveContratorDetails(1)'>
+        <i class="fa fa-check"></i> Update</button>
+      <button class="active-btn blue" (click)='resetValue()'>
+        <i class="fa fa-check"></i> Reset</button>
+    </div>
+  </div>
+  <!-- End inner-box -->
+</div>
+<div class="table-responsive design-table">
+  <table class="table table-hover table-striped fix-tablelayout">
+    <thead>
+      <tr>
+        <th style="width: 150px;">Contractor full name</th>
+        <th style="width: 150px;">Agency name</th>
+        <th style="width: 250px;">Email Id</th>
+        <th style="width: 110px;">Contact number</th>
+        <th style="width: 70px;">Status</th>
+        <th style="width: 60px;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let contractor of conractorDetailsResponse; let i = index">
+        <td>{{contractor.FullName}}</td>
+        <td>{{contractor.Agency}}</td>
+        <td>{{contractor.Email}}</td>
+        <td>{{contractor.ContactNumber}}</td>
+        <td>{{contractor.InActive}}</td>
+        <td>
+          <a class="inline actions pointer" pTooltip="Edit details" tooltipPosition="top" (click)="editContractorDetails(contractor ,i)">
+            <i class="fa fa-edit"></i>
+          </a>
+          <a class="inline actions pointer" pTooltip="Delete details" tooltipPosition="top" (click)="deleteContractorDetails(contractor ,i)">
+            <i class="fa fa-trash"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="norecordfound" *ngIf="conractorDetailsResponse.length == 0">
+    <p>
+      <b>No record found</b>
+    </p>
+  </div>
+</div>
+
+
+
+<app-alerts [alertType]="alertType" [confirmMessage]="confirmMessage" [successDetails]="successDetails" [errorDetails]="errorDetails"
+  (okClicked)="resetValue()" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>

@@ -1,0 +1,41 @@
+
+.docs {
+    font-size: 13px;
+    margin-right: 7px;
+    display: inline-block;
+    width: 50px;
+    height: 33px;
+    line-height: 30px;
+    padding: 0 5px;
+    cursor: pointer;
+    border: 1px solid #848484;
+    overflow: hidden;
+}
+.docs img{
+	width: 100%;
+	cursor: pointer;
+}
+.docs-wrapper {
+    display: inline-block;
+    position: relative;
+}
+.docs-wrapper .download-option{
+	display: table;
+    width: auto;
+    height: auto;
+    position: absolute;
+	bottom: 4px;
+    left: 60px;
+    background: #fff;
+    box-shadow: 0px 1px 3px #4d4d4f;
+    border-radius: 4px;
+    padding: 10px;
+	z-index: 9;
+}
+.docs-wrapper .download-option img{
+	width: 200px;
+}
+.hazards-wrapper img{
+    max-width: 100%;
+    width: 50px;
+}

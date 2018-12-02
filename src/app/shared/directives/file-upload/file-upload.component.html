@@ -1,0 +1,22 @@
+<!-- <label class="apply-title">{{controlLabel}}</label> -->
+<!-- <span class="colon">:</span> -->
+
+<p-fileUpload class="file-upload-box"
+              customUpload="true"
+              (uploadHandler)="customOnFileUpload($event)"
+              (onSelect)="onFileSelect($event)"
+              (onClear)="onClearAll()"
+              (onRemove)="onFileRemove($event)"
+              [chooseLabel]="chooseLabel"
+              [uploadLabel]="uploadLabel"
+              [cancelLabel]="cancelLabel"
+              [showUploadButton]="showUploadButton"
+              [showCancelButton]="showCancelButton"
+              [multiple]="multiple"
+              [accept]="accept"
+              [maxFileSize]="maxFileSize"
+              [previewWidth]="previewWidth"
+              [disabled]="disabled"
+              [files]="inputFiles"
+              (ngModelChange)="onInputFilesUpdated($event)">
+</p-fileUpload>

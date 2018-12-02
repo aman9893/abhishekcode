@@ -1,0 +1,393 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+	<div class="col-lg-12 col-md-12 col-sm-12">
+		<div class="inner-wrapper">
+			<div class="sub-wrapper">
+				<h3 class="page-title obs-card-title">ARA Initial Notification Form</h3>
+				<div class="section-wrapper right">
+					<span class="mandatory-info">Fields marked with
+						<span class="mandatory">*</span> are mandatory.</span>
+				</div>
+				<div class="section-wrapper personal-details">
+					<div class="form-group">
+						<div class="col-lg-3 col-md-2 col-sm-2 col-xs-4 no-padding-left">
+							<label for="name">Incident reported by
+								<span class="mandatory">*</span>
+							</label>
+						</div>
+						<div class="col-lg-9 col-md-9 col-sm-8 col-xs-8 no-padding">
+							<p-autoComplete [(ngModel)]="selectedUserEmp" [suggestions]="userResults" (completeMethod)="getUsersOnSearch($event)" placeholder="Employee Name"
+							 field="FullName" [minLength]="1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
+								<ng-template let-employee pTemplate="item">
+									{{employee.FullName}}
+								</ng-template>
+              </p-autoComplete>
+              <div *ngIf="isIncidentReportErrorMsg && !selectedUserEmp ">
+                <span style="color: red">Kindly select employee name.</span>
+              </div>
+</div>
+<div class="clearfix"></div>
+</div>
+<div class="form-group">
+	<div class="col-lg-3 col-md-2 col-sm-2 col-xs-4 no-padding-left"><label for="name">Reported via<span class="mandatory">*</span></label></div>
+	<div class="col-lg-9 col-md-10 col-sm-10 col-xs-8 no-padding">
+		<select class="form-control" id="sel1" [(ngModel)]="incidentRequest.IncidentRequest.CommunicationSource">
+												<option [ngValue]=0>Select</option>
+												<option [ngValue]=1>Email</option>
+												<option [ngValue]=2>Phone</option>
+												<option [ngValue]=3>Fax</option>
+                      </select>
+                      <div *ngIf="isReportedviamsg && !incidentRequest.IncidentRequest.CommunicationSource">
+                          <span class="error-msg-colour">Kindly select the communication source.</span>
+                        </div>
+  </div>
+
+	<div class="clearfix"></div>
+</div>
+<div class="form-group">
+	<div class="col-lg-3 col-md-2 col-sm-2 col-xs-4 no-padding-left"><label for="name">Date &amp; Time<span class="mandatory">*</span></label></div>
+	<div class="col-lg-9 col-md-10 col-sm-10 col-xs-8 no-padding">
+		<p-calendar [showIcon]="true" [maxDate]="dateTime" [showTime]="true" placeholder="" [(ngModel)]="incidentRequest.IncidentRequest.IncidentDate"
+      class="custom-datepicker" readonlyInput="true"></p-calendar>
+      <div *ngIf="isIncidentDateErrorMsg && !incidentRequest.IncidentRequest.IncidentDate">
+        <span class="error-msg-colour">Kindly enter date and time of the Incident.</span>
+      </div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+<div class="form-group">
+	<div class="col-lg-3 col-md-2 col-sm-2 col-xs-4 no-padding-left"><label for="sel1">Location<span class="mandatory">*</span></label></div>
+	<div class="col-lg-9 col-md-10 col-sm-10 col-xs-8 no-padding">
+    <p-dropdown [options]="locations" placeholder="Select" [(ngModel)]="incidentRequest.IncidentRequest.LocationId" [style]="{'width':'100%'}"></p-dropdown>
+    <div *ngIf="isLocationMsg && !incidentRequest.IncidentRequest.LocationId">
+      <span class="error-msg-colour">Kindly select location.</span>
+    </div>
+		<input type="text" maxlength="50" value="" class="form-control margin-top-10" id="name" [(ngModel)]="incidentRequest.IncidentRequest.SpecificLocation"
+      placeholder="Specific Location">
+      <div *ngIf="isSpecificLocationMsg && !incidentRequest.IncidentRequest.SpecificLocation">
+        <span class="error-msg-colour">Kindly enter specific location.</span>
+      </div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+					<div class="form-group">
+						<div class="col-lg-3 col-md-2 col-sm-2 col-xs-4 no-padding-left">
+							<label for="name">Companies directly involved</label>
+						</div>
+						<p class="col-lg-9 col-md-10 col-sm-10 col-xs-8 no-padding">{{company.CompanyName}}</p>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+
+				<div class="breaker"></div>
+
+<div class="section-wrapper">
+	<span class="section-title">Activity taking place at the time of the incident<span class="mandatory">*</span></span>
+	<textarea maxlength="200" [(ngModel)]="incidentRequest.IncidentRequest.ActivityTakingAtIncident" class="form-control" rows="2" id="comment"></textarea>
+  <div *ngIf="isIncidenttakingErrorMsg && !incidentRequest.IncidentRequest.ActivityTakingAtIncident">
+    <span class="error-msg-colour">Kindly enter the activity taking place at the time of the incident.</span>
+  </div>
+</div>
+
+				<div class="breaker"></div>
+
+<div class="section-wrapper">
+	<span class="section-title">Initial known facts<span class="mandatory">*</span></span>
+	<textarea maxlength="200" [(ngModel)]="incidentRequest.IncidentRequest.InitalFact" class="form-control" rows="2" id="comment"></textarea>
+  <div *ngIf="isInitialKnownMsg && !incidentRequest.IncidentRequest.InitalFact">
+    <span class="error-msg-colour">Kindly enter the initial known facts. </span>
+    </div>
+</div>
+
+				<div class="breaker"></div>
+
+				<div class="section-wrapper">
+					<span class="section-title">Pictures/ diagrams attached to explain incident</span>
+					<div class="margin-top-20">
+						<div class="col-lg-6 col-md-4 col-sm-4 no-padding">
+							<label class="margin-bottom-10">Upload Documents</label>
+							<div class="col-lg-9 col-md-3 col-sm-4 col-xs-5 no-padding raise-obs-upload">
+								<app-file-upload [accept]="accept" [(inputFiles)]="inputFile">
+								</app-file-upload>
+							</div>
+						</div>
+
+						<div class="clearfix"></div>
+					</div>
+				</div>
+
+				<div class="breaker"></div>
+
+<div class="section-wrapper">
+	<span class="section-title">Incident category<span class="mandatory">*</span></span>
+	<div class="margin-top-10">
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left incident-checkbox-wrapper" *ngFor="let category of incidentCategory">
+			<div class="checkbox">
+				<label><input type="checkbox" [checked]="category.Checked" (click)="SubmitCheckedIncidentCategory(category, $event)" value="category"><span>{{category.IncidentCategory}}</span></label>
+      </div>
+  </div>
+    <div *ngIf="isIncidentCategory && !selectedincidentCategoryId.length">
+        <span class="error-msg-colour">Kindly select at least one incident category. </span>
+        </div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+
+				<div class="breaker"></div>
+
+<div class="section-wrapper">
+	<span class="section-title ram-title">Initial Classification<span class="mandatory">*</span><span class="risk-matrix" data-toggle="modal" data-target="#risk-matrix">RAM</span></span>
+	<div class="margin-top-10">
+		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+			<div class="form-group">
+				<label for="sel1">PEAR<span class="mandatory">*</span></label>
+				<select class="form-control" id="sel1" [(ngModel)]="incidentRequest.IncidentRequest.Pear">
+													<option>Select</option>
+													 <option *ngFor="let pear of pearMaster" value={{pear}} >{{pear}}</option>
+												</select>
+      </div>
+      <div *ngIf="(incidentRequest.IncidentRequest.Pear === 0 || incidentRequest.IncidentRequest.Pear === '0') && isShowpearErrorMsg">
+          <span class="error-msg-colour">Kindly select pear.</span>
+        </div>
+		</div>
+		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-4">
+			<div class="form-group">
+				<label for="sel1">Severity<span class="mandatory">*</span></label>
+				<select class="form-control" (change)="getIncidentColorClass()" [(ngModel)]="incidentRequest.IncidentRequest.Severity" id="sel1">
+													<option>Select</option>
+												 <option *ngFor="let severity of severityMaster" value={{severity}} >{{severity}}</option>
+												</select>
+      </div>
+      <div *ngIf="(incidentRequest.IncidentRequest.Severity === 0 || incidentRequest.IncidentRequest.Severity === '0') && isSeverityErrorMsg">
+          <span class="error-msg-colour">Kindly select severity.</span>
+        </div>
+		</div>
+		<div class="col-lg-6 col-md-4 col-sm-4 col-xs-4">
+			<div class="form-group">
+				<label for="sel1">Incident<span class="mandatory"></span></label>
+				<div class="incident-type">{{incidet}}</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+
+				<div class="breaker"></div>
+
+<div class="section-wrapper">
+	<span class="section-title">Rationale for initial classification<span class="mandatory">*</span></span>
+	<textarea maxlength="200" [(ngModel)]="incidentRequest.IncidentRequest.RationaleClassification" class="form-control" rows="2" id="comment"></textarea>
+  <div *ngIf="isClassificationErrorMsg && !incidentRequest.IncidentRequest.RationaleClassification">
+      <span class="error-msg-colour">Kindly enter initial classification.</span>
+    </div>
+	<div class="margin-top-20">
+		<div><label class="margin-bottom-10 label-border">Appoint Case Owner<span class="mandatory">*</span></label></div>
+		<div class="margin-top-10">
+			<label>General manager :</label>
+			<p-autoComplete [(ngModel)]="selectedGeneralManager" [suggestions]="userResults" (completeMethod)="getUsersOnSearch($event)"
+				placeholder="Employee Name" field="FullName" [minLength]="1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
+				<ng-template let-employee pTemplate="item">
+					{{employee.FullName}}
+				</ng-template>
+      </p-autoComplete>
+      <div *ngIf="isOwnerErrorMsg && !selectedGeneralManager ">
+          <span style="color: red">Kindly select manager name.</span>
+        </div>
+		</div>
+	</div>
+</div>
+
+				<div class="breaker"></div>
+
+<div class="section-wrapper">
+	<span class="section-title">Actions taken<span class="mandatory">*</span></span>
+	<textarea maxlength="200" [(ngModel)]="incidentRequest.IncidentRequest.ActionTaken" class="form-control" rows="2" id="comment"></textarea>
+  <div *ngIf="isActiontakenMsg && !incidentRequest.IncidentRequest.ActionTaken">
+      <span class="error-msg-colour">Kindly enter the actions.</span>
+    </div>
+</div>
+
+				<div class="breaker"></div>
+
+<div class="section-wrapper">
+	<span class="section-title">Immediate causes<span class="mandatory">*</span></span>
+	<textarea maxlength="200" [(ngModel)]="incidentRequest.IncidentRequest.ImmediateCause" class="form-control" rows="2" id="comment"></textarea>
+  <div *ngIf="isCauseMsg && !incidentRequest.IncidentRequest.ImmediateCause">
+      <span class="error-msg-colour">Kindly enter the immediate causes.</span>
+    </div>
+</div>
+
+				<div class="breaker"></div>
+
+<div class="section-wrapper">
+	<span class="section-title">IP status<span class="mandatory">*</span></span>
+	<textarea maxlength="200" [(ngModel)]="incidentRequest.IncidentRequest.IPStatus" class="form-control" rows="2" id="comment"></textarea>
+  <div *ngIf="isIPStatusMsg && !incidentRequest.IncidentRequest.IPStatus">
+      <span class="error-msg-colour">Kindly enter the IP status.</span>
+    </div>
+</div>
+
+				<div class="breaker"></div>
+
+<div class="section-wrapper">
+	<span class="section-title">Incident type<span class="mandatory">*</span></span>
+	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left incident-checkbox-wrapper" *ngFor="let type of incidentType">
+		<div class="checkbox">
+			<label><input type="checkbox"  [checked]="type.Checked" (click)="SubmitCheckedIncidentType(type, $event)" value=""><span>{{type.IncidentType}}</span></label>
+		</div>
+  </div>
+  <div *ngIf="isIncidentType && !selectedincidentTypeId.length">
+      <span class="error-msg-colour">Kindly select at least one incident type. </span>
+      </div>
+	<div class="clearfix"></div>
+</div>
+
+				<div class="breaker"></div>
+
+<div class="section-wrapper hazards-wrapper">
+	<span class="section-title">Initial classification<span class="mandatory">*</span></span>
+	<textarea maxlength="200" [(ngModel)]="incidentRequest.IncidentRequest.InitalClassification" class="form-control" rows="2" id="comment"></textarea>
+  <div *ngIf="isInitialClassification && !incidentRequest.IncidentRequest.InitalClassification">
+      <span class="error-msg-colour">Kindly enter classification.</span>
+    </div>
+</div>
+
+				<div class="breaker"></div>
+
+<div class="section-wrapper add-action-wrapper">
+	<span class="section-title">People involved</span>
+	<div class="table-responsive margin-bottom-20 add-action-table">
+		<table align="center" class="table table-bordered table-striped table-condensed tableheader table-red fix-tablelayout">
+			<thead>
+				<tr>
+					<th style="width: 162px"> General manager
+<span class="mandatory">*</span>
+</th>
+<th style="width: 165px"> Job
+<span class="mandatory">*</span>
+</th>
+<th style="width: 130px"> Injury
+<span class="mandatory">*</span>
+</th>
+<th style="width: 90px">Delete Action</th>
+</tr>
+</thead>
+<tbody>
+	<tr *ngFor="let people of peopleInvolved; let i = index">
+		<td>
+			<p-autoComplete [(ngModel)]="people.User" [suggestions]="userResults" (completeMethod)="getUsersOnSearch($event)" placeholder="Employee Name"
+				field="FullName" [minLength]="1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
+				<ng-template let-employee pTemplate="item">
+					{{employee.FullName}}
+				</ng-template>
+      </p-autoComplete>
+      <div *ngIf="isemployeeErrorMsg && !people.User.UserId ">
+          <span style="color: red">Kindly select manager name.</span>
+        </div>
+		</td>
+		<td>
+			<div class="margin-top-10">
+				<select class="form-control" id="sel1" [(ngModel)]="people.Job">
+												<option [ngValue]=0>Select</option>
+												<option [ngValue]=1>aa</option>
+												<option [ngValue]=2>ac</option>
+												<option [ngValue]=3>ab</option>
+											</select>
+      </div>
+      <div *ngIf="isJobErrorMsg && !people.Job ">
+          <span style="color: red">Kindly enter job.</span>
+        </div>
+		</td>
+		<td>
+      <div class="margin-top-10"><textarea maxlength="200" [(ngModel)]="people.Injury" class="form-control" rows="2" id="comment"></textarea>
+        <div *ngIf="isInjuryErrorMsg && !people.Injury ">
+            <span style="color: red">Kindly enter injury.</span>
+          </div>
+      </div>
+		</td>
+		<td class="center">
+			<a (click)="removePeople(i)">
+				<i class="fa fa-trash"></i>
+			</a>
+		</td>
+	</tr>
+</tbody>
+</table>
+</div>
+<!-- End table-responsive -->
+<a (click)="addPeople()" class="pull-right margin-top-10">
+            <i class="fa fa-plus" aria-hidden="true" style="padding-right:6px;"></i>Add
+</a>
+<div class="clearfix"></div>
+</div>
+<div class="breaker"></div>
+
+<div class="section-wrapper add-action-wrapper">
+	<span class="section-title">Spill details</span>
+	<div class="table-responsive margin-bottom-20 add-action-table">
+		<table align="center" class="table table-bordered table-striped table-condensed tableheader table-red fix-tablelayout">
+			<thead>
+				<tr>
+					<th style="width: 162px"> Equipment
+<span class="mandatory">*</span>
+</th>
+<th style="width: 165px"> Tag
+<span class="mandatory">*</span>
+</th>
+<th style="width: 110px">Description</th>
+<th style="width: 90px">Delete Action</th>
+</tr>
+</thead>
+<tbody>
+	<tr *ngFor="let spilDetail of spilDetails; let i = index">
+		<td>
+      <div class="margin-top-10"><input type="text" maxlength="50" [(ngModel)]="spilDetail.Equip" class="form-control">
+        <div *ngIf="isEquipmentErrorMsg && !spilDetail.Equip ">
+            <span style="color: red">Kindly enter equipment.</span>
+          </div>
+      </div>
+		</td>
+		<td>
+      <div class="margin-top-10"><input type="text" maxlength="50" [(ngModel)]="spilDetail.Tag" class="form-control">
+        <div *ngIf="istagErrorMsg && !spilDetail.Tag ">
+            <span style="color: red">Kindly enter tag.</span>
+          </div>
+      </div>
+		</td>
+		<td>
+      <div class="margin-top-10"><textarea maxlength="200" class="form-control" [(ngModel)]="spilDetail.Description" rows="2" id="comment"></textarea>
+        <div *ngIf="isDescriptionMsg && !spilDetail.Description ">
+            <span style="color: red">Kindly enter description.</span>
+          </div>
+      </div>
+		</td>
+		<td class="center">
+			<a (click)="removespilDetails(i)">
+				<i class="fa fa-trash"></i>
+			</a>
+		</td>
+	</tr>
+</tbody>
+</table>
+</div>
+<!-- End table-responsive -->
+<a (click)="addspilDetails()" class="pull-right margin-top-10">
+            <i class="fa fa-plus" aria-hidden="true" style="padding-right:6px;"></i>Add
+</a>
+<div class="clearfix"></div>
+</div>
+
+				<div class="breaker"></div>
+
+<footer>
+	<a routerLink="../../../home" class="btn btn-primary secondary-btn" role="button"><i class="fa fa-reply"></i>back</a>
+	<a (click)="reset()" class="btn btn-primary secondary-btn" role="button"><i class="fa fa-refresh"></i>reset</a>
+	<a (click)="checkValidation()" class="btn btn-primary primary-btn" role="button"><i class="fa fa-share-square"></i>submit</a>
+</footer>
+</div>
+</div>
+</div>
+<app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="onYesClickedForConfirmation()"
+	[confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>
+</div>

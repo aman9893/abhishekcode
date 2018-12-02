@@ -1,0 +1,76 @@
+/* fixed navbar */
+ .navbar-default {
+    background-color: #818286;
+	border: none;
+	margin-bottom: 0;
+	height: 51px;
+	background: #fff;
+	border-bottom: 1px solid #d6d6d6;
+}
+ .navbar-default .navbar-brand{
+	padding: 1px 15px;
+}
+ .navbar-default .navbar-nav > .active > a .profile-pic{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+	border: 1px solid #a8a9ad;
+	border-radius: 40px;
+    background: #fff;
+    margin-right: 10px;
+    vertical-align: middle;
+    overflow: hidden;
+}
+ .navbar-default .navbar-nav > .active > a .profile-pic img{
+	width: 100%;
+}
+ .navbar-default .navbar-nav > .active > a  .current{
+	margin: 0 5px 0 3px;
+	text-transform: capitalize;
+}
+ .navbar-default .navbar-nav > li > a{
+	padding: 5px 10px 6px;
+	background-color: #4d4d4f;
+    border-left: 1px solid #a8a9ad;
+	color: #fff;
+	font-family: roboto;
+	font-size: 12px;
+}
+ .brand-logo > img{
+	max-width: 100%;
+    width: 82px;
+}
+/* .brand-logo > img.b44-logo{
+	max-width: 100%;
+    width: 82px;
+} */
+.navbar-default .navbar-nav > li > a .sub-menu{
+	position: absolute;
+    background: #5a5a5d;
+    right: 0;
+    padding: 5px 15px;
+    top: 50px;
+    border-radius: 2px;
+	box-shadow: 2px 4px 5px #a7a7a7;
+	display: none;
+}
+.navbar-default .navbar-nav > li > a .sub-menu li{
+	list-style-type: none;
+    border-bottom: 1px solid #777;
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+}
+.navbar-default .navbar-nav > li > a .sub-menu li a{
+	cursor: pointer;
+}
+.navbar-default .navbar-nav > li > a .sub-menu li:last-child{
+	border-bottom: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.navbar-default .navbar-nav > .active > a:hover .sub-menu{
+	display: block;
+}
+.color-white{
+	color: #fff;
+}

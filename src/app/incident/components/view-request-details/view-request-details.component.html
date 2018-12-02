@@ -1,0 +1,286 @@
+<div class="section-wrapper personal-details">
+  <div class="sub-sections-wrapper">
+    <div class="row-wrapper">
+      <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+        <div>
+          <label class="first-column-labels">Incident ID</label>
+        </div>
+        <span class="label-details">{{incidentRequestData.DisplayId}}</span>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+        <div>
+          <label class="first-column-labels">Incident reported by</label>
+        </div>
+        <span class="label-details">{{incidentRequestData.RaisedBy.FullName}}</span>
+      </div>
+      <div class="col-lg-3 col-md-8 col-sm-8 no-padding-left">
+        <div>
+          <label class="middle-column-labels">Reported via</label>
+        </div>
+        <span class="label-details">{{CommunicationSourceName}}</span>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+        <div>
+          <label class="last-column-labels">Date & Time</label>
+        </div>
+        <span class="label-details">{{incidentRequestData.IncidentDate | date: dateFormatDDMMYYYYHHMMSS}}</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="row-wrapper">
+      <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+        <div>
+          <label class="last-column-labels">Location</label>
+        </div>
+        <span class="label-details">{{incidentRequestData.Location.LocationName}}</span>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+        <div>
+          <label class="last-column-labels">Specific Location</label>
+        </div>
+        <span class="label-details">{{incidentRequestData.SpecificLocation}}</span>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+        <div>
+          <label class="last-column-labels">Companies directly involved</label>
+        </div>
+        <span class="label-details">{{incidentRequestData.Company.CompanyName}}</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<div class="breaker"></div>
+
+<div class="section-wrapper">
+  <span class="section-title">Activity taking place at the time of the incident
+    <span class="mandatory">*</span>
+  </span>
+  <p class="readonly">{{incidentRequestData.ActivityTakingAtIncident}}
+  </p>
+</div>
+
+<div class="breaker"></div>
+
+<div class="section-wrapper">
+  <span class="section-title">Initial known facts
+    <span class="mandatory">*</span>
+  </span>
+  <p class="readonly">{{incidentRequestData.InitalFact}}
+  </p>
+</div>
+
+<div class="breaker"></div>
+
+<div class="section-wrapper">
+  <span class="section-title">Pictures/diagrams attached to explain incident</span>
+  <div class="margin-top-20">
+    <div class="docs-wrapper" *ngIf="incidentRequestData.FileURL">
+      <div class="label docs">
+        <a href="{{incidentRequestData.FileURL}}">
+          <img src="{{incidentRequestData.FileURL}}" />
+        </a>
+      </div>
+      <div class="download-option">
+        <img src="{{incidentRequestData.ObservationRequests.FileURL}}" />
+      </div>
+    </div>
+    <div class="docs-wrapper" *ngIf="!(incidentRequestData.FileURL)"> No supported documents uploaded</div>
+  </div>
+</div>
+
+<div class="breaker"></div>
+
+<div class="section-wrapper">
+  <span class="section-title">Incident category
+    <span class="mandatory">*</span>
+  </span>
+  <div class="margin-top-10">
+    <p class="readonly" *ngFor="let incidentCategory of incidentRequestData.IncidentCategory">{{incidentCategory.IncidentCategory}}
+  </div>
+</div>
+<div class="breaker"></div>
+
+<div class="section-wrapper">
+  <span class="section-title ram-title">Initial Classification
+    <span class="mandatory">*</span>
+    <span class="risk-matrix" data-toggle="modal" data-target="#risk-matrix">RAM</span>
+  </span>
+  <div class="margin-top-10">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+      <div class="form-group">
+        <label for="sel1">PEAR
+          <span class="mandatory">*</span>
+        </label>
+        <select disabled>
+          <option>{{incidentRequestData.Pear}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4">
+      <div class="form-group">
+        <label for="sel1">Severity
+          <span class="mandatory">*</span>
+        </label>
+        <select disabled>
+          <option>{{incidentRequestData.Severity}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4">
+      <div class="form-group">
+        <label for="sel1">Incident
+          <span class="mandatory"></span>
+        </label>
+        <p class="readonly">{{incident}}</p>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+<div class="breaker"></div>
+
+<div class="section-wrapper hazards-wrapper">
+  <span class="section-title">Incident type</span>
+  <p class="readonly" *ngFor="let incidentType of incidentRequestData.IncidentType">{{incidentType.IncidentType}}
+  </p>
+</div>
+
+<div class="breaker"></div>
+
+<div class="section-wrapper hazards-wrapper">
+  <span class="section-title">Initial classification</span>
+  <p class="readonly">{{incidentRequestData.InitalClassification}}
+  </p>
+</div>
+
+<div class="breaker"></div>
+
+<div class="section-wrapper">
+  <span class="section-title">Rationale for initial classification
+    <span class="mandatory">*</span>
+  </span>
+  <p class="readonly">{{incidentRequestData.InitalClassification}}
+    <div class="margin-top-20">
+      <div>
+        <label class="margin-bottom-10 label-border">Appoint Case Owner
+          <span class="mandatory">*</span>
+        </label>
+      </div>
+      <div class="margin-top-10">
+        <label>General manager :</label>
+        <span>{{incidentRequestData.CaseOwner.FullName}}</span>
+      </div>
+    </div>
+</div>
+
+<div class="breaker"></div>
+
+<div class="section-wrapper">
+  <span class="section-title">Actions taken</span>
+  <p class="readonly">{{incidentRequestData.ActionTaken}}
+  </p>
+</div>
+<div class="breaker"></div>
+
+<div class="section-wrapper">
+  <span class="section-title">Immediate causes</span>
+  <p class="readonly">{{incidentRequestData.ImmediateCause}}</p>
+</div>
+<div class="breaker"></div>
+
+<div class="section-wrapper">
+  <span class="section-title">IP status</span>
+  <p class="readonly">{{incidentRequestData.IPStatus}}</p>
+</div>
+
+<div class="breaker"></div>
+
+<div class="section-wrapper hazards-wrapper">
+  <span class="section-title">Initial classification</span>
+  <p class="readonly">{{incidentRequestData.InitalClassification}}</p>
+</div>
+
+<div class="breaker"></div>
+
+<div class="section-wrapper add-action-wrapper">
+  <span class="section-title">People involved</span>
+  <div class="table-responsive margin-bottom-20 add-action-table">
+    <table align="center" class="table table-bordered table-striped table-condensed tableheader table-red fix-tablelayout">
+      <thead>
+        <tr>
+          <th style="width: 162px"> General manager
+            <span class="mandatory">*</span>
+          </th>
+          <th style="width: 165px"> Job
+            <span class="mandatory">*</span>
+          </th>
+          <th style="width: 130px"> Injury
+            <span class="mandatory">*</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let peopleInvolved of incidentRequestData.PeopleInvolved">
+          <td>
+            {{peopleInvolved.User.FullName}}
+          </td>
+          <td>
+            <div class="margin-top-10">
+              {{peopleInvolved.Job}}
+            </div>
+          </td>
+          <td>
+            <div class="margin-top-10">
+              {{peopleInvolved.Injury}}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="breaker"></div>
+
+<div class="section-wrapper add-action-wrapper">
+  <span class="section-title">Spill details</span>
+  <div class="table-responsive margin-bottom-20 add-action-table">
+    <table align="center" class="table table-bordered table-striped table-condensed tableheader table-red fix-tablelayout">
+      <thead>
+        <tr>
+          <th style="width: 162px"> Equipment
+            <span class="mandatory">*</span>
+          </th>
+          <th style="width: 165px"> Tag
+            <span class="mandatory">*</span>
+          </th>
+          <th style="width: 110px">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let spilDetails of incidentRequestData.SpilDetails">
+          <td>
+            <div class="margin-top-10">
+              {{spilDetails.Equip}}
+            </div>
+          </td>
+          <td>
+            <div class="margin-top-10">
+              {{spilDetails.Tag}}
+            </div>
+          </td>
+          <td>
+            <div class="margin-top-10">
+              {{spilDetails.Description}}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- End table-responsive -->
+  <div class="clearfix"></div>
+</div>
+
+<div class="breaker"></div>

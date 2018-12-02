@@ -1,0 +1,126 @@
+.sidenav {
+    min-height: 190px;
+    /*height: 135px;*/
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 50%;
+    /*left: 0;*/
+    left: -200px;
+    background-color: #4d4d4f;
+    transition: 0.2s;
+    padding-top: 0px;
+    overflow: hidden;
+    border-radius: 0 0 4px 0;
+}
+
+.sidenav a {
+	display: block;
+    /*padding: 7px 10px;*/
+    text-decoration: none;
+    font-size: 13px;
+    color: #fff;
+    transition: 0.3s;
+    padding: 5px 10px;
+	font-family: roboto;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+/*.sidenav .links-wrapper{
+    margin-top: -15px;
+}*/
+
+.sidenav .closebtn {
+    vertical-align: top;
+}
+.open {
+	position: fixed;
+    top: 50%;
+    left: 0;
+    background: #ac1e2e;
+    cursor: pointer;
+    font-size: 18px;
+    color: #fff;
+    border-radius: 0 7px 7px 0;
+    width: 26px;
+    height: 35px;
+    padding: 6px 4px;
+    z-index: 1;
+    transition: 0.2s;
+}
+.close-wrapper{
+	display: inline-block;
+    color: #a8a9ad;
+	float: right;
+    margin-right: 10px;
+    margin-top: 5px;
+    height: 13px;
+    cursor: pointer;
+}
+
+.expandWidth {
+    width: 200px;
+    left: 0;
+}
+
+.expandLeft {
+    left: 200px;
+}
+
+.collapseWidth {
+    width: 0px;
+}
+
+.collapseLeft {
+    left: 0px;
+}
+
+/* submenu */
+.sidebar-menu{
+    padding: 0;
+    margin-bottom: 0;
+}
+.sidebar-menu li{
+	list-style: none;
+}
+.sidebar a.sub-menu i{
+	font-size: 15px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+.sidebar a.sub-menu + ul{
+    padding: 0;
+    background: #6d6d6d;
+    border-radius: 4px;
+    margin: 0 10px 10px;
+    max-height: 90px;
+    overflow-y: auto;
+}
+.sidebar a.sub-menu + ul li{
+	list-style: none;
+    text-transform: capitalize;
+    font-size: 12px;
+	margin: 0;
+	border-bottom: 1px solid #4d4d4f;
+    padding-bottom: 3px;
+}
+.sidebar a.sub-menu + ul li:last-child{
+	padding-bottom: 0;
+}
+.sidebar a.sub-menu + ul li a{
+	padding: 5px 7px 0;
+}
+.sidebar a.sub-menu + ul li:last-child a{
+	padding-bottom: 5px;
+}
+.sidebar a.sub-menu + ul.expandHeight{
+    transition: 0.2s;
+    display: block;
+}
+.sidebar a.sub-menu + ul.collapseHeight{
+    transition: 0.2s;
+    /* display: none;  */
+}

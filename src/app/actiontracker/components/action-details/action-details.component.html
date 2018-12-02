@@ -1,0 +1,354 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+              <a [routerLink]="['../../action-party-dashboard']" target="_blank">Action Tracker Dashboard</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page">Action Details</li>
+          </ol>
+        </nav>
+        <div class="section-wrapper">
+          <span class="section-title">Action Assignment Details</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">Source</label>
+                </div>
+                <span class="label-details">{{actionInfo.SourceText}}</span>
+              </div>
+              <div class="col-lg-5 col-md-8 col-sm-8 no-padding-left" *ngIf="actionInfo.SourceText === ObservationProcess">
+                <div>
+                  <label class="middle-column-labels">Observtion Reference ID</label>
+                </div>
+                <span class="label-details">
+                  <a [routerLink]="['../../../observation/view-requests',observtionData.ObservationId]">{{actionInfo.DisplayId}}</a>
+                </span>
+              </div>
+              <div class="col-lg-5 col-md-8 col-sm-8 no-padding-left" *ngIf="actionInfo.SourceText === RiskProcess">
+                <div>
+                  <label class="middle-column-labels">Risk Reference ID</label>
+                </div>
+                <span class="label-details">
+                  <a [routerLink]="['../../../risk/view-risk-request', riskRequestData.RiskRequestId, actionInfo.ActionId]">{{riskRequestData.RiskRequestId}}</a>
+                </span>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="last-column-labels">Action ID</label>
+                </div>
+                <span class="label-details">{{actionInfo.ActionId}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper">
+              <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">Action Assigned By</label>
+                </div>
+                <span class="label-details">{{actionOwner.FullName}}</span>
+              </div>
+              <div class="col-lg-5 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Action Assigned On</label>
+                </div>
+                <span *ngIf="actionInfo.SourceText === ObservationProcess" class="label-details">{{observtionData.CreatedDate | date: dateFormatDDMMYYYY}}</span>
+                <span *ngIf="actionInfo.SourceText === RiskProcess" class="label-details">{{riskRequestData.CreatedDate | date: dateFormatDDMMYYYY}}</span>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="last-column-labels">Classification</label>
+                </div>
+                <span class="label-details">{{actionInfo.ActionPriority}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper">
+              <div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">submission date</label>
+                </div>
+                <span *ngIf="actionInfo.SourceText === ObservationProcess" class="label-details">{{observtionData.CreatedDate | date: dateFormatDDMMYYYY}}</span>
+                <span *ngIf="actionInfo.SourceText === RiskProcess" class="label-details">{{riskRequestData.CreatedDate | date: dateFormatDDMMYYYY}}</span>
+              </div>
+              <div class="col-lg-5 col-md-4 col-sm-4 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Action Status</label>
+                </div>
+                <span class="label-details">{{status.StatusName}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-4 col-sm-4 no-padding">
+                <div>
+                  <label class="first-column-labels">Action Description</label>
+                </div>
+                <span class="label-details description-details">{{actionInfo.ActionDetails}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper" *ngIf="actionInfo.SourceText === ObservationProcess">
+              <div class="col-lg-12 col-md-4 col-sm-4 no-padding">
+                <div>
+                  <label class="margin-bottom-10">Supporting Documents</label>
+                </div>
+                <div class="docs-wrapper" *ngFor="let document of uploadedDoucmentUrls">
+                  <span class="label docs">
+                    <img [src]="document.Url" />
+                  </span>
+                  <span class="download-option">
+                    <img [src]="document.Url" />
+                  </span>
+                </div>
+                <div *ngIf="uploadedDoucmentUrls?.length === 0">No Supporting document has been uploaded.</div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper" *ngIf="showEnterExecutionDetail">
+          <span class="section-title">Action Party : Enter Execution details</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-4 col-sm-4 no-padding">
+                <label class="">
+                  Remarks
+                  <span class="mandatory">*</span>
+                </label>
+                <span class="label-details">
+                  <textarea class="form-control margin-top-10" rows="2" id="comment" maxlength="200" [(ngModel)]="actionAssignmentHistory.Remarks"
+                    placeholder="Enter remarks here.." required></textarea>
+                </span>
+                <div *ngIf="isRemarkErrorMsg && !actionInfo.Remarks">
+                  <span class="error-msg-colour">Kindly enter remarks.</span>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper">
+              <div class="col-lg-6 col-md-4 col-sm-4 no-padding">
+                <label class="margin-bottom-10">Upload Documents</label>
+                <app-file-upload [accept]="accept" [(inputFiles)]="actionAssignmentHistory.files">
+                </app-file-upload>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper" *ngIf="showExecutionDetail">
+          <span class="section-title">Action Execution details</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="">Action Execution Date</label>
+                </div>
+                <span class="label-details description-details">{{actionHistoryExecuted.UpdatedDate | date:dateFormatDDMMYYYY}}</span>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="">Remarks</label>
+                </div>
+                <span class="label-details description-details">{{actionHistoryExecuted.Remarks}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="margin-bottom-10">Documents Uploaded</label>
+                </div>
+                <div class="docs-wrapper">
+                  <div class="docs-wrapper" *ngFor="let document of actionInfo.UploadedDocument">
+                    <span class="label docs" (mouseenter)="displayImage($event)" (mouseleave)="displayImage($event)">
+                      <a href="{{document.Url}}"></a>
+                      <img src="{{document.Url}}" />
+                    </span>
+                    <span class="download-option" *ngIf="toggleImage">
+                      <img src="{{document.Url}}" />
+                    </span>
+                  </div>
+                </div>
+                <span *ngIf="actionInfo.UploadedDocument.length === 0">No Supporting document has been uploaded.</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <div class="section-wrapper" *ngIf="showVerification && actionInfo.SourceText === ObservationProcess">
+          <span class="section-title"> Action Verification Details</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <label class="pull-left margin-top-5">Verified By</label>
+              <span class="pull-left margin-top-5">{{actionVerifier.FullName}}</span>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <label class="pull-left margin-top-5">Verification Date</label>
+                <div class="col-lg-4 col-md-5 col-sm-4 col-xs-7 no-padding-right">
+                  <span class="label-details">
+                    <div class='input-group date' id='datetimepicker1'>
+                      <input type='text' class="form-control" value="{{actionInfo.VerificationDate | date: dateFormatDDMMYYYY}}" disabled/>
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
+                  </span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="">Remarks</label>
+                </div>
+                <textarea class="form-control margin-top-10" value="{{actionHistoryVerifier.Remarks}}" rows="2" id="comment" disabled></textarea>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="section-wrapper" *ngIf="showClosureDetails">
+          <span class="section-title"> Action Owner Section (Your Section)</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <label class="pull-left margin-top-5">Action closed on</label>
+                <div class="col-lg-4 col-md-5 col-sm-4 col-xs-7 no-padding-right">
+                  <span class="label-details">
+                    <div class='input-group date' id='datetimepicker1'>
+                      <input type='text' class="form-control" value="{{actionClosedDetails.UpdatedDate  | date: dateFormatDDMMYYYY}}" readonly/>
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
+                  </span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="">Remarks</label>
+                </div>
+                <textarea class="form-control margin-top-10" value="{{actionClosedDetails.Remarks}}" rows="2" id="comment" disabled></textarea>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-wrapper" *ngIf="showToReassignAction && showActionParty">
+          <span class="section-title" *ngIf="actionInfo.SourceText === ObservationProcess"> Action Owner Section (Your Section)</span>
+          <span class="section-title" *ngIf="actionInfo.SourceText === RiskProcess"> Action Owner Section (Your Section)</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 no-padding-left margin-top-20">
+                <tr>
+                  <td>
+                    <label>Observation Status :</label>
+                    <span class="mandatory">*</span>
+                    <select class="form-control" id="sel1" [(ngModel)]="selectedStatus" style="width:167px" (change)="selectActionToPerform($event.target.value)">
+                      <option value="Reassign">Reassign</option>
+                      <option value="Closed">Close</option>
+                    </select>
+                    <div style="width: 500px" *ngIf="isObservationStatus">
+                      <span class="error-msg-colour"> Kindly enter observation status.</span>
+                    </div>
+                  </td>
+                  <td *ngIf="ShowReassignmentRemark">
+                    <label>Reassign to Action Party :</label>
+                    <span class="mandatory">*</span>
+                    <p-autoComplete [(ngModel)]="selectedActionParty" [suggestions]="userResults" (completeMethod)="getUsersOnSearch($event)"
+                      placeholder="Action Party" (change)="selectActionOwner($event)" field="FullName" [minLength]="1" [style]="{'width':'100%'}"
+                      [inputStyle]="{'width':'100%'}">
+                      <ng-template let-actionowner pTemplate="item">
+                        {{actionowner.FullName}}
+                      </ng-template>
+                    </p-autoComplete>
+
+                  </td>
+                </tr>
+              </div>
+
+              <div class="clearfix"></div>
+              <div style="width: 500px ;margin-left: 217px" *ngIf="isReassignActionPartyEmpty && !selectedActionParty">
+                <span class="error-msg-colour"> Kindly enter Action party.</span>
+              </div>
+            </div>
+            <div class="row-wrapper" *ngIf="ShowCloseRemark">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="">Closure Remark</label>
+                  <span class="mandatory">*</span>
+                </div>
+                <textarea class="form-control margin-top-10" [(ngModel)]="closeRemark" maxlength="200" rows="2" id="comment"></textarea>
+                <div style="width: 500px" *ngIf="isCloseRemarkEmpty && !closeRemark">
+                  <span class="error-msg-colour"> Kindly enter closure remarks.</span>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper" *ngIf="ShowReassignmentRemark ">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="">Reassignment Remark</label>
+                  <span class="mandatory">*</span>
+                </div>
+                <textarea class="form-control margin-top-10" [(ngModel)]="reassignRemark" maxlength="200" rows="2" id="comment"></textarea>
+                <div style="width: 500px" *ngIf="isReassignRemarkEmpty && !reassignRemark">
+                  <span class="error-msg-colour"> Kindly enter reassignment remarks.</span>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <footer *ngIf="showEnterExecutionDetail">
+          <a>
+            <button type="button" class="btn btn-primary secondary-btn" (click)="onClickBackToDashboard()">
+              <i class="fa fa-reply"></i>back to action tracker
+            </button>
+          </a>
+          <a>
+            <button type="button" class="btn btn-primary primary-btn" (click)="checkValidation()">
+              <i class="fa fa-check-circle"></i>action done
+            </button>
+          </a>
+        </footer>
+        <footer>
+          <a>
+            <button (click)="backToDashboard()" type="button" *ngIf="showDashboardbutton" class="btn btn-primary secondary-btn">
+              <i class="fa fa-reply"></i>back to dashboard
+            </button>
+          </a>
+          <a>
+            <button type="button" *ngIf="showToReassignAction && showActionParty" class="btn btn-primary primary-btn" (click)="submit()">
+              <i class="fa fa-check-circle"></i>submit
+            </button>
+          </a>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="onOkClickedForConfirmation()"
+    [confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>
+  <div class="clearfix"></div>
+</div>

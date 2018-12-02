@@ -1,0 +1,209 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="modal fade" id="assigned-actions" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><button type="button" class="close" data-dismiss="modal">&times;</button></button>
+        <h4 class="modal-title custom_align" id="Heading">Assigned Actions Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-condensed">
+            <thead>
+              <tr>
+                <th>Action Details</th>
+                <th>Priority</th>
+                <th>Action Owner</th>
+                <th>Action Assigned On</th>
+                <th>Action Party</th>
+                <th>Verifier</th>
+                <th>Action Due Date</th>
+              </tr>
+            </thead>
+             <tbody>
+              <tr *ngFor="let action of actions">
+                <td>{{action.ActionDetails}}</td>
+                <td>{{action.PriorityName}}</td>
+                <td>{{action.FullName}}</td>
+                <td>{{action.CreatedDate| date: dateFormatDDMMYYYY}}</td>
+                <td>{{action.ActionParty}}</td>
+                <td>{{action.ActionVerifier}}</td>
+                <td>{{action.TargetDate| date: dateFormatDDMMYYYY}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div> <!-- End table-responsive -->
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="modal-footer ">
+        <button type="button" class="btn primary-btn" data-dismiss="modal">Ok</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="top-heading center">
+        <h4>HSE Advisor Dashboard</h4>
+      </div>
+      <div class="sub-wrapper">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Observations</li>
+            <li class="breadcrumb-item" aria-current="page">Past Observations</li>
+            <li class="filter-sort">
+              <div class="filter-sort-wrapper" (clickOutside)="onClickedOutside()">
+                <a class="settings" data-toggle="collapse" data-target="#filter" (click)="onTabOpen()">
+                  <i class="fa fa-filter" aria-hidden="true" pTooltip="Filter" tooltipPosition="top"></i>
+                </a>
+                <div class="outer-wrapper" *ngIf="hideFilter">
+                  <ul class="filter-section-wrapper collapse" id="filter">
+                    <li>
+                      <div class="leave-type" *ngIf="loggedInUserJSON.Company.CompanyName === 'B44'">
+                        <h5>obervation type</h5>
+                        <div class="checkbox" *ngFor="let observation  of observationType">
+                          <label>
+                            <input type="checkbox" name="observationtype" [(ngModel)]='observation.checked' [checked]="observation.checked" value="{{observation}}" (change)="changeValue($event.target.checked,observation)">{{observation.ObservationTypeName}}
+                          </label>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="leave-type">
+                        <h5>status</h5>
+                        <div class="radio" *ngFor="let status  of statusList">
+                          <label>
+                            <input type="radio" (change)="submitCheckedStatus(status,$event)" [(ngModel)]="defaultStatus" [value]="status.StatusName"
+                                   [name]="statusgroup">{{status.StatusName}}
+                          </label>
+                        </div>
+                      </div>
+                    </li>
+                    <div class="clearfix"></div>
+                    <li class="filter-footer">
+                      <footer>
+                        <a (click)="resetValue()" role="button" class="btn btn-primary secondary-btn">
+                          <i class="fa fa-refresh"></i>reset
+                        </a>
+                        <a (click)="doneFilter()" role="button" class="btn btn-primary primary-btn">
+                          <i class="fa fa-check"></i>done
+                        </a>
+                      </footer>
+                    </li>
+                  </ul>
+                </div>
+                <a class="settings" data-toggle="collapse" data-target="#sort" (click)="onTabOpen()">
+                  <i class="fa fa-sort" aria-hidden="true" pTooltip="Sort" tooltipPosition="top"></i>
+                </a>
+                <div class="outer-wrapper" *ngIf="hideSort">
+                  <ul class="filter-section-wrapper sort-section-wrapper collapse" id="sort">
+                    <li>
+                      <div class="sort-wrapper">
+                        <div class="dt-sort">
+                          <label>observation date</label>
+                          <a class="selected">
+                            <i (click)="descObservationDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                          </a>
+                          <a>
+                          </a>
+                          <a class="">
+                            <i (click)="ascObservationDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="no-margin-right">
+                      <div class="sort-wrapper">
+                        <div class="dt-sort">
+                          <label>submission date</label>
+                          <a class="">
+                            <i (click)="descSubmissionDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                          </a>
+                          <a>
+                          </a>
+                          <a class="selected">
+                            <i (click)="ascSubmissionDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <div class="clearfix"></div>
+                  </ul>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ol>
+        </nav>
+        <div class="section-wrapper">
+          <!--<div class="col-lg-2 col-md-3 col-sm-3 no-padding margin-top-15">
+            <span class="section-title">Past Observation</span>
+              </div>
+          <div class="clearfix"></div> -->
+          <div class="col-lg-12 col-md-3 col-sm-3 no-padding">
+            <ul class="filter-details">
+              <li class="filters-applied">Filters applied</li>
+              <li *ngFor="let filter  of filterList">
+                {{filter}}
+                <i (click)="closeFilter(filter)" class="fa fa-times dismiss-filter"></i>
+              </li>
+              <li (click)="resetValue()" class="pull-right no-margin-right clear-all">Clear all</li>
+            </ul>
+          </div>
+          <div class="clearfix"></div>
+          <div class="table-responsive margin-top-15">
+            <table class="table table-bordered table-striped table-condensed fix-tablelayout">
+              <thead>
+                <tr>
+                  <th style="width: 100px">Observation Id</th>
+                  <th style="width: 100px">Observer</th>
+                  <th style="width: 110px">Observer Type</th>
+                  <th style="width: 165px">Observation Date</th>
+                  <th style="width: 170px">Submission Date</th>
+                  <th style="width: 115px">Location</th>
+                  <th style="width: 120px" *ngIf="loggedInUserJSON.Company.CompanyName === 'B44'">Observation Type</th>
+                  <th style="width: 115px" *ngIf="!isDeletionDateDisplay">Status</th>
+                  <th style="width: 87px" *ngIf="isClosureDate">Closure Date</th>
+                  <th style="width: 87px" *ngIf="isDeletionDateDisplay">Deletion Date</th>
+                  <th style="width: 125px" *ngIf="isActionAssignedDisplay">Action Asssigned</th>
+                  <th style="width: 50px">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let observation of observationData | paginate: { itemsPerPage: itemPerPage, currentPage: pageSize ,totalItems: rowCount}">
+                  <td>{{observation.DisplayId}}</td>
+                  <td>{{observation.UserId}} - {{observation.FullName}}</td>
+                  <td>{{observation.UserType}}</td>
+                  <td>{{observation.ObservationDate | date: dateFormatDDMMYYYYHHMMSS}}</td>
+                    <td>{{observation.CreatedDate | date: dateFormatDDMMYYYY}}</td>
+                  <td>{{observation.LocationName}}</td>
+                  <td *ngIf="loggedInUserJSON.Company.CompanyName === 'B44'">{{observation.ObservationType}}</td>
+                  <td *ngIf="!isDeletionDateDisplay">{{observation.Status}}</td>
+                  <td *ngIf="isClosureDate">{{observation.ClosureDate | date: dateFormatDDMMYYYYHHMMSS}}</td>
+                  <td *ngIf="isDeletionDateDisplay">{{observation.DeletionDate | date: dateFormatDDMMYYYYHHMMSS}}</td>
+                  <td *ngIf="isActionAssignedDisplay"><a href="#" data-toggle="modal" data-target="#assigned-actions" (click)="showAction(observation.ObservationId)"> {{observation.NoOfActionsAdded}}</a></td>
+                  <td>
+                    <a [routerLink]="['../hseadvisor-action',observation.ObservationId]" pTooltip="{{closedtooltip}}">
+                      <i class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+              <div style="width: 500px;margin-top:15px;color: red" *ngIf="!showPagination">{{noRecordsMsg}}</div>
+              <div style="width: 500px" *ngIf="showPagination">
+                <pagination-controls (pageChange)="getServerData($event)"></pagination-controls>
+              </div>
+            </table>
+          </div>
+          <!-- End table-responsive -->
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>

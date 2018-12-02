@@ -1,0 +1,282 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper">
+        <h3 class="page-title obs-card-title">Risk Details</h3>
+        <div class="section-wrapper right">
+          <span class="mandatory-info">Fields marked with
+            <span class="mandatory">*</span> are mandatory.</span>
+        </div>
+        <div class="section-wrapper">
+          <span class="section-title margin-top-10">Project and Activity</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">Risk Source</label>
+                </div>
+                <span class="label-details">{{this.riskRequestDetails.RiskSource.Source}}</span>
+              </div>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Project Name</label>
+                </div>
+                <span class="label-details">{{this.riskRequestDetails.ProjectDetails.ProjectName}}</span>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+                <div>
+                  <label class="last-column-labels">Location</label>
+                </div>
+                <span class="label-details">{{this.riskRequestDetails.LocationDetails.LocationName}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row-wrapper">
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">Risk Title</label>
+                </div>
+                <span class="label-details">{{this.riskRequestDetails.RiskTitle}}</span>
+              </div>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Risk Management Tool</label>
+                </div>
+                <span class="label-details">{{this.riskRequestDetails.RiskManagmentTool.ToolName}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="first-column-labels">Activity leading to hazard</label>
+                </div>
+                <span class="label-details description-details">{{this.riskRequestDetails.ActivityLeadingToHazard}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="first-column-labels">Hazard identified</label>
+                </div>
+                <span class="label-details description-details">{{this.riskRequestDetails.HazardIdentified}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="first-column-labels">Threat identified</label>
+                </div>
+                <span class="label-details description-details">{{this.riskRequestDetails.ThreatIdentified}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="first-column-labels">Consequences</label>
+                </div>
+                <span class="label-details description-details">{{this.riskRequestDetails.Consequences}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper">
+          <span class="section-title">Potential risk identified</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">PEAR</label>
+                </div>
+                <span class="label-details">{{this.riskRequestDetails.PotentialRiskPear}}</span>
+              </div>
+              <div class="col-lg-3 col-md-5 col-sm-5 col-xs-5 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Likelihood</label>
+                </div>
+                <span class="label-details">{{this.riskRequestDetails.PotentialRiskLikelihood}}</span>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+                <div>
+                  <label class="last-column-labels">Severity</label>
+                </div>
+                <span class="label-details">{{this.riskRequestDetails.PotentialRiskSeverity}}</span>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+                <div>
+                  <label class="last-column-labels">Risk</label>
+                </div>
+                <span [ngClass]="potentialRiskColor !== '' ? 'risk-band ' + potentialRiskColor : ''"></span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper">
+          <span class="section-title">Risk control measures</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">Control technique</label>
+                </div>
+                <span class="label-details">{{this.riskRequestDetails.RiskControlTechniques.ControlTechnique}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="first-column-labels">Control measure</label>
+                </div>
+                <span class="label-details description-details">{{this.riskRequestDetails.ControlMeasure}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row-wrapper">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div>
+                  <label class="first-column-labels">Contingency Plan</label>
+                </div>
+                <span class="label-details description-details">{{this.riskRequestDetails.ContengencyPlan}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper">
+          <span class="section-title">Residual risk post implementation of control measures</span>
+          <div class="clearfix"></div>
+          <div class="sub-sections-wrapper">
+            <div class="row-wrapper">
+              <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+                <div>
+                  <label class="first-column-labels">PEAR</label>
+                </div>
+                <span class="label-details">{{this.riskRequestDetails.ResidualRiskPear}}</span>
+              </div>
+              <div class="col-lg-3 col-md-5 col-sm-5 col-xs-5 no-padding-left">
+                <div>
+                  <label class="middle-column-labels">Likelihood</label>
+                </div>
+                <span class="label-details">{{this.riskRequestDetails.ResidualRiskLikelihood}}</span>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+                <div>
+                  <label class="last-column-labels">Severity</label>
+                </div>
+                <span class="label-details">{{this.riskRequestDetails.ResidualRiskSeverity}}</span>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+                <div>
+                  <label class="last-column-labels">Risk</label>
+                </div>
+                <span [ngClass]="residualRiskColor !== '' ? 'risk-band ' + residualRiskColor : ''"></span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="breaker"></div>
+        <!-- Start Section - add action part for risk only for action owner -->
+        <div class="section-wrapper add-action-wrapper" *ngIf="backToDashboardFlag">
+          <span class="section-title">Add Action you want to take</span>
+          <div class="table-responsive margin-bottom-20">
+            <table align="center" class="table table-bordered table-striped table-condensed tableheader table-red fix-tablelayout">
+              <thead>
+                <tr>
+                  <th style="width: 180px">Action Details</th>
+                  <th style="width: 120px">Priority</th>
+                  <th style="width: 200px">Action due date</th>
+                  <th style="width: 200px">Action Party</th>
+                  <th style="width: 200px">Action party designation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <textarea class="form-control margin-top-10" rows="2" id="comment" [(ngModel)]="actionDetailsForRisk.ActionDetails" disabled></textarea>
+                  </td>
+                  <td>
+                    <select class="form-control" id="sel1" disabled>
+
+                      <option>{{priorityName}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <div class="dt-time-wrapper">
+                      <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' class="form-control" value="{{actionDetailsForRisk.TargetDate | date: dateFormatDDMMYYYY}}" disabled />
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <p-autoComplete [(ngModel)]="selectedActionParty" [suggestions]="userResults" (completeMethod)="getUsersOnSearch($event)"
+                      (onSelect)="SelectedActionParty($event)" placeholder="Action Party" field="FullName" [minLength]="1"
+                      [disabled] = "isActionParty"
+                      [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
+                      <ng-template let-actionowner pTemplate="item">
+                        {{actionowner.FullName}}
+                      </ng-template>
+                    </p-autoComplete>
+                    <div class="margin-top-10" *ngIf="validateActionParty">
+                      <span style="color: red">Please select action party</span>
+                    </div>
+                  </td>
+                  <td>
+                    <label>{{actionPartDesignation}}</label>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- End table-responsive -->
+          <div class="clearfix"></div>
+        </div>
+        <!-- Start Section - add action part  -->
+        <div class="breaker add-action-wrapper"></div>
+        <div class="breaker"></div>
+        <footer>
+          <a (click)=backToDashboard() *ngIf="backToDashboardFlag; else navigateToDashboard" class="btn btn-primary secondary-btn"
+            role="button">
+            <i class="fa fa-reply"></i>back to action owner dashboard</a>
+          <ng-template #navigateToDashboard>
+            <a [routerLink]="['../../../../actiontracker/action-details', actionId]" class="btn btn-primary secondary-btn" role="button">
+              <i class="fa fa-reply"></i>back to action dashboard</a>
+          </ng-template>
+          <a *ngIf="isDisplay"  class="btn btn-primary primary-btn" role="button" (click)="submitActionDetailsByActionOwnerForRisk()">
+            <i class="fa fa-share-square"></i>Take Action</a>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+<app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="onYesClickedForSuccess()"
+  [confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>

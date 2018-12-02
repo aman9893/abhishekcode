@@ -1,0 +1,49 @@
+.page-content-wrapper {
+    width: 90%;
+}
+.ellepsis{
+	width: 132px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+	cursor: pointer;
+}
+.ellepsis .popover-content{
+	max-height: 85px;
+    overflow-y: auto;
+}
+.popover-content{
+	position: relative;
+    max-width: 240px;
+    font-size: 13px;
+}
+.close-popover{
+	position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    color: #afafaf;
+}
+.legend{
+	display: inline-block;
+    height: 18px;
+    width: 4px;
+    margin: 0 10px 0 3px;
+    vertical-align: middle;
+}
+.overdue-actions{
+	background: #ac1e2e;
+}
+.approaching-due-dt{
+	background: #d6a228;
+}
+.legend-name{
+	font-size: 13px;
+    margin-left: -4px;
+    margin-right: 10px;
+}
+
+.pointer {
+	cursor: pointer;
+}

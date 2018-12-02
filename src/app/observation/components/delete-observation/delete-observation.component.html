@@ -1,0 +1,181 @@
+<app-side-nav [routesFlag]='routesFlag'></app-side-nav>
+<div class="page-content-wrapper">
+	<div class="col-lg-12 col-md-12 col-sm-12">
+		<div class="inner-wrapper">
+			<div class="sub-wrapper">
+				<nav aria-label="breadcrumb" style="margin-bottom:10px;">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active" aria-current="page">
+							<a href="observation-card-dashboard.html" target="_blank">Observation Card Dashboard</a>
+						</li>
+						<li class="breadcrumb-item" aria-current="page">Cancel Observation Card</li>
+					</ol>
+				</nav>
+				<div class="clearfix"></div>
+				<div class="section-wrapper personal-details">
+					<div class="sub-sections-wrapper">
+						<div class="row-wrapper">
+							<div class="col-lg-4 col-md-4 col-sm-4 no-padding-left">
+								<div>
+									<label class="first-column-labels">Location</label>
+								</div>
+								<span class="label-details">{{observationData.LocationName}}</span>
+							</div>
+							<div class="col-lg-5 col-md-8 col-sm-8 no-padding-left">
+								<div>
+									<label class="middle-column-labels">Date &amp; Time</label>
+								</div>
+								<span class="label-details">{{observationData.ObservationDate}}</span>
+							</div>
+							<div class="col-lg-3 col-md-4 col-sm-4 no-padding-left">
+								<div>
+									<label class="last-column-labels">Company</label>
+								</div>
+								<span class="label-details">{{companyName}}</span>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="breaker"></div>
+
+				<div class="section-wrapper">
+					<span class="section-title">Type of Observation
+						<span class="info">(Please tick)</span>
+					</span>
+					<div class="clearfix"></div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left" *ngFor="let observation of observationType">
+						<div class="radio-inline">
+							<label>
+								<input type="radio" name="observation.ObservationTypeId" (click)="SubmitCheckedObservationValue(observation, $event)" value="observation"
+								 [checked]="observation.Checked" disabled>{{observation.ObservationTypeName}}</label>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="breaker"></div>
+
+				<div class="section-wrapper">
+					<span class="section-title">What did you observe or what changed?</span>
+					<p class="readonly">{{observationData.WhatObserved}}</p>
+					<div class="margin-top-20">
+						<div class="docs-wrapper" *ngIf="observationData.WhatObservedFileURL">
+						  <div class="label docs" (mouseenter)="displayImage($event,'didYouSee')" (mouseleave)="displayImage($event,'didYouSee')">
+							<a href="{{observationData.WhatObservedFileURL}}">
+							  <img src="{{observationData.WhatObservedFileURL}}" />
+							</a>
+						  </div>
+						  <div class="download-option" *ngIf="didYouSeeCheck">
+							<img src="{{observationData.WhatObservedFileURL}}" />
+						  </div>
+						</div>
+					  </div>
+				</div>
+
+				<div class="breaker"></div>
+
+				<div class="section-wrapper">
+					<span class="section-title">What did you do about it?</span>
+					<div class="clearfix"></div>
+					<div class="col-lg-4 col-md-3 col-sm-4 col-xs-6 no-padding-left margin-top-10">
+						<label>Did you stop the job?</label>
+					</div>
+					<div class="col-lg-4 col-md-3 col-sm-4 col-xs-5 no-padding-left margin-top-10">
+						<label class="radio-inline">
+							<input type="radio" value="true" name="did" [(ngModel)]="isJobPosted" disabled>Yes</label>
+						<label class="radio-inline">
+							<input type="radio" value="false" name="did" [(ngModel)]="isJobPosted" disabled>No</label>
+					</div>
+					<div class="clearfix"></div>
+					<p class="readonly margin-top-10">{{observationData.WhatYouDid}}</p>
+					<div class="margin-top-20">
+						<div class="docs-wrapper" *ngIf="observationData.WhatYouDidFileURL">
+						  <div class="label docs" (mouseenter)="displayImage($event, 'didYouDo')" (mouseleave)="displayImage($event, 'didYouDo')">
+							<a href="{{observationData.WhatYouDidFileURL}}">
+							  <img src="{{observationData.WhatYouDidFileURL}}" />
+							</a>
+						  </div>
+						  <div class="download-option" *ngIf="didYouDoCheck">
+							<img src="{{observationData.WhatYouDidFileURL}}" />
+						  </div>
+						</div>
+					  </div>
+				</div>
+
+				<div class="breaker"></div>
+
+				<div class="section-wrapper">
+					<span class="section-title">What could we do about it?</span>
+					<p class="readonly">{{observationData.WhatWeCouldDo}}</p>
+					<div class="margin-top-20">
+						<div class="docs-wrapper" *ngIf="observationData.WhatWeCouldDoFileURL">
+						  <div class="label docs" (mouseenter)="displayImage($event, 'improvedType')" (mouseleave)="displayImage($event, 'improvedType')">
+							<a href="{{observationData.WhatWeCouldDoFileURL}}">
+							  <img src="{{observationData.WhatWeCouldDoFileURL}}" />
+							</a>
+						  </div>
+						  <div class="download-option" *ngIf="improvedTypeCheck">
+							<img src="{{observationData.WhatWeCouldDoFileURL}}" />
+						  </div>
+						</div>
+					  </div>
+				</div>
+
+				<div class="breaker"></div>
+
+				<div class="section-wrapper">
+					<span class="section-title">Individual or Team / Organisation Feedback</span>
+					<p class="readonly">{{observationData.Feedback}}</p>
+				</div>
+
+				<div class="breaker"></div>
+
+				<div class="section-wrapper hazards-wrapper">
+					<span class="section-title">Hazard(s) identified
+						<span class="info">(Please tick)</span>
+					</span>
+					<div class="clearfix"></div>
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left" *ngFor="let hazard of hazards">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" value="hazard" (change)="SubmitCheckedHazardValue(hazard, $event)" [checked]="hazard.Checked" disabled>
+								<img src="{{hazard.FileURL}}" pTooltip="{{hazard.HazardName}}" tooltipPosition="top" />
+							</label>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 no-padding-left margin-top-20">
+						<label>Not listed :</label>
+					</div>
+					<div class="col-lg-7 col-md-6 col-sm-6 col-xs-8 margin-top-20">
+						<input type="text" value="{{observationData.NotListed}}" class="form-control" id="usr" readonly>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="breaker"></div>
+
+				<div class="section-wrapper">
+					<span class="section-title">Cancelled remarks</span>
+					<div class="clearfix"></div>
+					<textarea maxlength="200" class="form-control" rows="2" id="comment" [(ngModel)]="reason"></textarea>
+					<div class="clearfix"></div>
+				</div>
+
+				<footer>
+					<a [routerLink]="['../past-observations-dashboard']" role="button" class="btn btn-primary secondary-btn">
+						<i class="fa fa-reply"></i>Back to dashboard</a>
+					<a role="button" class="btn btn-primary primary-btn" (click)="deleteObservationRequest()">
+						<i class="fa fa-times-circle-o" aria-hidden="true"></i>Cancel</a>
+				</footer>
+			</div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (yesClicked)="onYesClickedForConfirmation()"
+[confirmMessage]="confirmMessage" (noClicked)="onNoClickedForConfirmation()" (okClicked)="navigateToDashboard()"></app-alerts>

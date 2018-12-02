@@ -1,0 +1,291 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes' *ngIf="!isBackOfficeViewDetailsPage"></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper">
+        <h3 class="page-title obs-card-title">observation card</h3>
+        <div class="section-wrapper right">
+          <span class="mandatory-info">Fields marked with
+            <span class="mandatory">*</span> are mandatory.</span>
+        </div>
+        <div class="section-wrapper personal-details">
+          <div class="form-group" *ngIf="isObservationForDisplay">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 no-padding-left">
+              <label for="name">Enter observation for
+                <span class="name-mandatory">*</span>
+              </label>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-5 no-padding">
+              <label class="radio-inline no-margin-top" *ngIf="!isBackOfficeViewDetailsPage">
+                <input type="radio" value="self" name="observation" [(ngModel)]="observationFor" (click)="setObservationForEdit('self')"
+                  [checked]="selfObservationDataFlag">Self</label>
+              <label class="radio-inline no-margin-top">
+                <input type="radio" value="onbehalfemp" name="observation" [(ngModel)]="observationFor" (click)="setObservationForEdit('onbehalfemp')"
+                  [checked]="onBehalfEmpObservationDataFlag">On Behalf of Employee</label>
+              <label class="radio-inline no-margin-top" *ngIf="!isBackOfficeViewDetailsPage">
+                <input type="radio" value="onbehalfcontractor" name="observation" (click)="setObservationForEdit('onbehalfcontractor')" [(ngModel)]="observationFor"
+                  [checked]="">On Behalf of Contractor</label>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="form-group obs-on-behalfemp" *ngIf="onBehalfEmpObservationDataFlag || showForEmp">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 no-padding-left">
+              <label for="name">Employee Name
+                <span class="mandatory">*</span>
+              </label>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8 no-padding">
+              <p-autoComplete [(ngModel)]="selectedUserEmp" [suggestions]="userResults" (completeMethod)="getUsersOnSearch($event)" (onSelect)="selectUser($event)"
+                placeholder="Employee Name" field="FullName" [minLength]="1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
+                <ng-template let-employee pTemplate="item">
+                  {{employee.FullName}}
+                </ng-template>
+              </p-autoComplete>
+              <div *ngIf="isEmployeeNameErrorMsg && !observationData.RaisedFor">
+                <span style="color: red">Kindly select employee name.</span>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="form-group obs-on-behalfcontract" *ngIf="showForContractor">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 no-padding-left">
+              <label for="name">Contractor Name
+                <span class="mandatory">*</span>
+              </label>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8 no-padding">
+              <p-autoComplete [(ngModel)]="selectedUserContractor" [suggestions]="userResults" (onSelect)="selectUser($event)" (completeMethod)="getUsersOnSearch($event)"
+                (onclick)="changeContractorErrormsg()" [ngModelOptions]="{standalone: true}" placeholder="Contractor Name"
+                [minLength]="1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" field="FullName">
+                <ng-template let-contractor pTemplate="item">
+                  <div>{{contractor.FullName}}</div>
+                </ng-template>
+              </p-autoComplete>
+              <div *ngIf="employeeNameErrorMsg && !text">
+                <span class="error-msg-colour">Kindly select employee name.</span>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 no-padding-left">
+              <label for="sel1">Location
+                <span class="mandatory">*</span>
+              </label>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8 no-padding">
+              <!-- <select class="form-control" id="sel1" value="location.LocationId" [(ngModel)]="observationData.LocationId">
+                <option *ngFor="let location of locations" value={{location.LocationId}} [selected]="observationData.LocationId === location.LocationId">{{location.LocationName}}</option>
+              </select> -->
+              <p-dropdown [options]="locations" placeholder="Select" [(ngModel)]="observationData.LocationId" [style]="{'width':'100%'}"></p-dropdown>
+              <div *ngIf="isLocationErrorMsg && !observationData.LocationId">
+                <span class="error-msg-colour">Kindly select location.</span>
+              </div>
+              <input type="text" maxLength="100" [(ngModel)]="observationData.ExactLocation" class="form-control margin-top-10" id="name"
+                placeholder="Exact Location">
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 no-padding-left">
+              <label for="name">Date &amp; Time
+                <span class="mandatory">*</span>
+              </label>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8 no-padding">
+              <div class="dt-time-wrapper">
+                <p-calendar [showIcon]="true" [maxDate]="dateTime" [showTime]="true" placeholder="" [(ngModel)]="observationData.ObservationDate"
+                  class="custom-datepicker" readonlyInput="true" required #timeOfUse="ngModel"></p-calendar>
+                <div *ngIf="isObservationDateErrorMsg && !observationData.ObservationDate">
+                  <span class="error-msg-colour">Kindly enter date and time of the observation.</span>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 no-padding-left">
+              <label for="name">Company</label>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8 no-padding">
+              <p class="company-name margin-top-5">{{company.CompanyName}}</p>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper" *ngIf="isDisplayObservationType">
+          <span class="section-title">Type of Observation
+            <span class="mandatory">*</span>
+            <span class="info">(Please tick)</span>
+          </span>
+          <div class="clearfix"></div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left" *ngFor="let observation of observationType">
+            <div class="radio-inline">
+              <label>
+                <input type="radio" name="observation.ObservationTypeId" (click)="SubmitCheckedObservationValue(observation, $event)" value="observation"
+                  [checked]="observation.Checked">{{observation.ObservationTypeName}}</label>
+            </div>
+          </div>
+          <div *ngIf="observationTypeErrorMsg && !observationCheck">
+            <span class="error-msg-colour">Kindly select at least one observation type.</span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper">
+          <span class="section-title">What did you observe or what changed?
+            <span class="mandatory">*</span>
+            <span class="personal-observation">
+              <i class="fa fa-male"></i>
+            </span>
+          </span>
+          <textarea class="form-control margin-top-10 margin-bottom-10" maxlength="100" [(ngModel)]="observationData.WhatObserved"
+            rows="2" id="comment"></textarea>
+          <div *ngIf="isWhatObserveErrorMsg && !observationData.WhatObserved">
+            <span class="error-msg-colour">Kindly enter your observation details.</span>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 no-padding-left margin-top-10">
+            <label class="font-normal">Upload documents</label>
+          </div>
+          <div class="col-lg-9 col-md-3 col-sm-4 col-xs-5 no-padding raise-obs-upload">
+            <app-file-upload [accept]="accept" [(inputFiles)]="observationData.WhatObservedFiles">
+            </app-file-upload>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper">
+          <span class="section-title">What did you do about it?
+            <span class="mandatory">*</span>
+            <span class="personal-observation">
+              <i class="fa fa-male"></i>
+            </span>
+          </span>
+          <div class="clearfix"></div>
+          <div class="col-lg-4 col-md-3 col-sm-4 col-xs-6 no-padding-left margin-top-10">
+            <label class="font-normal">Did you stop the job?</label>
+          </div>
+          <div class="col-lg-4 col-md-3 col-sm-4 col-xs-5 no-padding-left">
+            <label class="radio-inline">
+              <input type="radio" [(ngModel)]="IsJobStopped" value="true" name="whatdid">Yes</label>
+            <label class="radio-inline">
+              <input type="radio" [(ngModel)]="IsJobStopped" value="false" name="whatdid">No</label>
+          </div>
+          <div *ngIf="isJobStoppedErrorMsg && !observationData.IsJobStopped">
+            <span class="error-msg-colour">Kindly specify If you stopped the job.</span>
+          </div>
+
+          <div class="clearfix"></div>
+          <textarea class="form-control margin-top-10 margin-bottom-10" maxlength="100" [(ngModel)]="observationData.WhatYouDid" rows="2"
+            id="comment"></textarea>
+          <div *ngIf="isWhatYouDidErrorMsg && !observationData.WhatYouDid">
+            <span class="error-msg-colour">Kindly enter details of what you did about it.</span>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 no-padding-left margin-top-10">
+            <label class="font-normal">Upload documents</label>
+          </div>
+          <div class="col-lg-9 col-md-3 col-sm-4 col-xs-5 no-padding raise-obs-upload">
+            <app-file-upload [accept]="accept" [(inputFiles)]="observationData.WhatYouDidFiles">
+            </app-file-upload>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper">
+          <span class="section-title">What could we do about it?
+            <span class="group-observation">
+              <i class="fa fa-users"></i>
+            </span>
+          </span>
+          <textarea class="form-control margin-top-10 margin-bottom-10" maxlength="100" [(ngModel)]="observationData.WhatWeCouldDo"
+            rows="2" id="comment"></textarea>
+          <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 no-padding-left margin-top-10">
+            <label class="font-normal">Upload documents</label>
+          </div>
+          <div class="col-lg-9 col-md-3 col-sm-4 col-xs-5 no-padding raise-obs-upload">
+            <app-file-upload [accept]="accept" [(inputFiles)]="observationData.WhatWeCouldDoFiles">
+            </app-file-upload>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper">
+          <span class="section-title">Individual or Team / Organisation Feedback</span>
+          <textarea class="form-control" maxlength="100" [(ngModel)]="observationData.Feedback" rows="2" id="comment"></textarea>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper hazards-wrapper" *ngIf="isDisplayObservationType">
+          <span class="section-title">Hazard(s) identified
+            <span class="mandatory">*</span>
+            <span class="info">(Please tick)</span>
+          </span>
+          <div class="clearfix"></div>
+
+          <div *ngFor="let hazard of hazards; let i = index;">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" value="hazard" (change)="SubmitCheckedHazardValue(hazard, $event)" [checked]="hazard.Checked">
+                  <img src="{{hazard.FileURL}}" class="hazard-img" pTooltip="{{hazard.HazardName}}" tooltipPosition="top" />
+                </label>
+              </div>
+
+            </div>
+            <div class="clearfix" *ngIf="(i+1) % 4 == 0"></div>
+          </div>
+
+          <div class="clearboth">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 no-padding-left margin-top-20">
+              <label>Not listed :</label>
+            </div>
+            <div class="col-lg-7 col-md-6 col-sm-6 col-xs-8 margin-top-20">
+              <input type="text" maxlength="100" [(ngModel)]="observationData.NotListed" class="form-control" id="usr">
+              <div *ngIf="isHazardErrorMsg && (!hazardCheck && !observationData.NotListed) ">
+                <span class="error-msg-colour">Kindly select at least one hazard or enter hazard name in not listed field.</span>
+
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <footer>
+          <a [routerLink]="['../../past-observations-dashboard']" role="button" class="btn btn-primary secondary-btn" *ngIf="Button.showBackToDashboardButton">
+            <i class="fa fa-reply"></i>Back to dashboard</a>
+          <a [routerLink]="['../../../home']" *ngIf="Button.showBackButton">
+            <button type="button" class="btn btn-primary secondary-btn">
+              <i class="fa fa-reply"></i>BACK</button>
+          </a>
+          <button type="button" class="btn btn-primary secondary-btn" (click)="resetForm()" *ngIf="Button.showResetButton">
+            <i class="fa fa-refresh"></i>RESET</button>
+          <a>
+            <button type="button" class="btn btn-primary primary-btn" (click)="checkValidation()" *ngIf="Button.showSubmitButton">
+              <i class="fa fa-share-square"></i>SUBMIT</button>
+          </a>
+          <a>
+            <button type="button" class="btn btn-primary primary-btn" (click)="checkValidation()" *ngIf="Button.showUpdateButton">
+              <i class="fa fa-share-square"></i>UPDATE</button>
+          </a>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="onYesClickedForConfirmation()"
+    [confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>
+  <div class="clearfix"></div>
+</div>

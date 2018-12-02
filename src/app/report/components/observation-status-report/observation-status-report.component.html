@@ -1,0 +1,184 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+
+<div class="modal fade" id="assigned-actions" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><button type="button" class="close" data-dismiss="modal">&times;</button></button>
+        <h4 class="modal-title custom_align" id="Heading">Assigned Actions Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-condensed">
+            <thead>
+              <tr>
+                <th>Action Details</th>
+                <th>Priority</th>
+                <th>Action Owner</th>
+                <th>Action Assigned On</th>
+                <th>Action Party</th>
+                <th>Verifier</th>
+                <th>Action Due Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let action of actions">
+                <td>{{action.ActionDetails}}</td>
+                <td>{{action.PriorityName}}</td>
+                <td>{{action.FullName}}</td>
+                <td>{{action.CreatedDate| date: dateFormatDDMMYYYYHHMMSS}}</td>
+                <td>{{action.ActionParty}}</td>
+                <td>{{action.ActionVerifier}}</td>
+                <td>{{action.TargetDate| date: dateFormatDDMMYYYYHHMMSS}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div> <!-- End table-responsive -->
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="modal-footer ">
+        <button type="button" class="btn primary-btn" data-dismiss="modal">Ok</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper">
+        <h3 class="page-title obs-card-title">observation status report</h3>
+
+        <div class="section-wrapper">
+          <div class="search-wrapper">
+            <h5 class="search-title" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><i class="fa fa-caret-down down" aria-hidden="true"></i><i class="fa fa-caret-up up" aria-hidden="true"></i>search
+              criteria
+            </h5>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+              <div class="search-details-wrapper">
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 auto-width">
+                  <div class="form-group">
+                    <div><label for="title">Status</label></div>
+                    <p-multiSelect [options]="statusList" [(ngModel)]="selectedStatus"></p-multiSelect>
+                  </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 auto-width">
+                  <div class="form-group">
+                    <div><label for="title">Observation Types</label></div>
+                    <p-multiSelect [options]="observationTypeList" [(ngModel)]="selectedObservationType"></p-multiSelect>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="search-details-wrapper">
+                <div class="col-lg-5 col-md-3 col-sm-3 col-xs-3">
+                  <div class="form-group">
+                    <div><label for="title">Observation Date</label></div>
+                    <div class="form-group">
+                      <div class="col-lg-5 col-sm-6 no-padding-left auto-width">
+                        <p-calendar [showIcon]="true" [maxDate]="dateTime" [showTime]="true" placeholder="From date" [(ngModel)]="observationFromdate"
+                          class="custom-datepicker" readonlyInput="true" required></p-calendar>
+                      </div>
+                      <div class="col-lg-5 col-sm-6 no-padding-right auto-width">
+                        <p-calendar [showIcon]="true" [minDate]="observationFromdate" [showTime]="true" placeholder="To date" [(ngModel)]="observationTodate"
+                          class="custom-datepicker" readonlyInput="true" required></p-calendar>
+                      </div>
+                      <div class="clearfix"> </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-5 col-md-3 col-sm-3 col-xs-3">
+                  <div class="form-group">
+                    <div><label for="title">Observation Submission Date</label></div>
+                    <div class="form-group">
+                      <div class="col-lg-5 col-sm-6 no-padding-left auto-width">
+                        <p-calendar [showIcon]="true" [maxDate]="dateTime" [showTime]="true" placeholder="From date" [(ngModel)]="submissionFromdate"
+                          class="custom-datepicker" readonlyInput="true" required></p-calendar>
+                      </div>
+                      <div class="col-lg-5 col-sm-6 no-padding-right auto-width">
+                        <p-calendar [showIcon]="true" [minDate]="submissionFromdate" [showTime]="true" placeholder="To date" [(ngModel)]="submissionTodate"
+                          class="custom-datepicker" readonlyInput="true" required></p-calendar>
+                      </div>
+                      <div class="clearfix"> </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="clearfix"></div>
+              </div>
+
+              <footer class="no-margin-right">
+                <a (click)="resetValue()"class="btn btn-primary secondary-btn" role="button"><i class="fa fa-refresh"></i>clear</a>
+                <a (click)="generateReport()" class="btn btn-primary primary-btn" role="button"><i class="fa fa-file-excel-o"></i>generate report</a>
+              </footer>
+            </div>
+          </div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper">
+          <div class="col-lg-12 col-md-3 col-sm-3 no-padding">
+            <span class="section-title">Result Set</span>
+          </div>
+          <div class="clearfix"></div>
+          <div class="table-responsive">
+            <table align="center" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>OBS Card No.</th>
+                  <th>Raised By</th>
+                  <th>Observation Submitted By</th>
+                  <th>On Behalf of</th>
+                  <th>Observation Date</th>
+                  <th>Submission Date</th>
+                  <th>Observation Category</th>
+                  <th>Action Asssigned</th>
+                  <th>Status</th>
+                  <th>Closure Date</th>
+                  <th>Deleted on</th>
+                  <th>Acknowledged on</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let observationStatusReport  of observationStatusReports | paginate: { itemsPerPage: itemPerPage, currentPage: pageSize ,totalItems: rowCount}">
+                  <td>{{observationStatusReport.DisplayId}}</td>
+                  <td>{{observationStatusReport.RaisedByValue}}</td>
+                  <td>{{observationStatusReport.SubmittedByUserName}}</td>
+                  <td>{{observationStatusReport.OnBehalfUserName}}</td>
+                  <td>{{observationStatusReport.ObservationDate | date: dateFormatDDMMYYYYHHMMSS}}</td>
+                  <td>{{observationStatusReport.CreatedDate | date: dateFormatDDMMYYYYHHMMSS}}</td>
+                  <td>Unsafe Condition</td>
+                    <td (click)="showAction(observationStatusReport.ObservationRequestId)"><a href="#" data-toggle="modal" data-target="#assigned-actions" (click)="showAction(observationStatusReport.ObservationRequestId)"> {{observationStatusReport.NoOfActionsAdded}}</a></td>
+                  <td>{{observationStatusReport.Status}}</td>
+                
+                  <td>{{observationStatusReport.ClosureDate | date: dateFormatDDMMYYYYHHMMSS}}</td>
+                  <td>{{observationStatusReport.DeletionDate | date: dateFormatDDMMYYYYHHMMSS}}</td>
+                  <td>{{observationStatusReport.AcknowledgmentDate | date: dateFormatDDMMYYYYHHMMSS}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="width: 500px;margin-top:15px;color: red" *ngIf="!showPagination">{{noRecordsMsg}}</div>
+
+<div style="width: 500px" *ngIf="showPagination">
+<pagination-controls (pageChange)="getServerData($event)"></pagination-controls>
+</div>
+<div class="clearfix"></div>
+</div>
+
+<div class="breaker"></div>
+
+<footer>
+  <a (click)="onClickBack()" class="btn btn-primary secondary-btn" role="button"><i class="fa fa-reply"></i>back</a>
+  <a (click)="exportToExcel(observationStatusReports)" class="btn btn-primary primary-btn" role="button"><i class="fa fa-file-excel-o"></i>export to excel</a>
+</footer>
+</div>
+</div>
+</div>
+<div class="clearfix"></div>
+</div>

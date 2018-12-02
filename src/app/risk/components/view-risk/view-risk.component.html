@@ -1,0 +1,153 @@
+<div class="section-wrapper">
+  <span class="section-title">Project and Activity</span>
+  <div class="clearfix"></div>
+  <div class="sub-sections-wrapper">
+    <div class="row-wrapper">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+        <div><label class="first-column-labels">Risk Source</label></div>
+        <span class="label-details">{{this.riskRequestDetails.RiskSource.Source}}</span>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 no-padding-left">
+        <div><label class="middle-column-labels">Project Name</label></div>
+        <span class="label-details">{{this.riskRequestDetails.ProjectDetails.ProjectName}}</span>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+        <div><label class="last-column-labels">Location</label></div>
+        <span class="label-details">{{this.riskRequestDetails.LocationDetails.LocationName}}</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="row-wrapper">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+        <div><label class="first-column-labels">Risk Title</label></div>
+        <span class="label-details">{{this.riskRequestDetails.RiskTitle}}</span>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 no-padding-left">
+        <div><label class="middle-column-labels">Risk Management Tool</label></div>
+        <span class="label-details">{{this.riskRequestDetails.RiskManagmentTool.ToolName}}</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="row-wrapper">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+        <div><label class="first-column-labels">Activity leading to hazard</label></div>
+        <span class="label-details description-details">{{this.riskRequestDetails.ActivityLeadingToHazard}}</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="row-wrapper">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+        <div><label class="first-column-labels">Hazard identified</label></div>
+        <span class="label-details description-details">{{this.riskRequestDetails.HazardIdentified}}</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="row-wrapper">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+        <div><label class="first-column-labels">Threat identified</label></div>
+        <span class="label-details description-details">{{this.riskRequestDetails.ThreatIdentified}}</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="row-wrapper">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+        <div><label class="first-column-labels">Consequences</label></div>
+        <span class="label-details description-details">{{this.riskRequestDetails.Consequences}}</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<div class="breaker"></div>
+
+<div class="section-wrapper">
+  <span class="section-title">Potential risk identified</span>
+  <div class="clearfix"></div>
+  <div class="sub-sections-wrapper">
+    <div class="row-wrapper">
+      <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+        <div><label class="first-column-labels">PEAR</label></div>
+        <span class="label-details">{{this.riskRequestDetails.PotentialRiskPear}}</span>
+      </div>
+      <div class="col-lg-3 col-md-5 col-sm-5 col-xs-5 no-padding-left">
+        <div><label class="middle-column-labels">Consequence score</label></div>
+        <span class="label-details">{{this.riskRequestDetails.PotentialRiskLikelihood}}</span>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+        <div><label class="last-column-labels">Severity</label></div>
+        <span class="label-details">{{this.riskRequestDetails.PotentialRiskSeverity}}</span>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+        <div><label class="last-column-labels">Risk</label></div>
+        <span [ngClass]="potentialRiskColor !== '' ? 'risk-band ' + potentialRiskColor : ''"></span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<div class="breaker"></div>
+
+<div class="section-wrapper">
+  <span class="section-title">Risk control measures</span>
+  <div class="clearfix"></div>
+  <div class="sub-sections-wrapper">
+    <div class="row-wrapper">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+        <div><label class="first-column-labels">Control technique</label></div>
+        <span class="label-details">{{this.riskRequestDetails.RiskControlTechniques.ControlTechnique}}</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="row-wrapper">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+        <div><label class="first-column-labels">Control measure</label></div>
+        <span class="label-details description-details">{{this.riskRequestDetails.ControlMeasure}}</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="row-wrapper">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+        <div><label class="first-column-labels">Contingency Plan</label></div>
+        <span class="label-details description-details">{{this.riskRequestDetails.ContengencyPlan}}</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<div class="breaker"></div>
+
+<div class="section-wrapper">
+  <span class="section-title">Residual risk post implementation of control measures</span>
+  <div class="clearfix"></div>
+  <div class="sub-sections-wrapper">
+    <div class="row-wrapper">
+      <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+        <div><label class="first-column-labels">PEAR</label></div>
+        <span class="label-details">{{this.riskRequestDetails.ResidualRiskPear}}</span>
+      </div>
+      <div class="col-lg-3 col-md-5 col-sm-5 col-xs-5 no-padding-left">
+        <div><label class="middle-column-labels">Consequence score</label></div>
+        <span class="label-details">{{this.riskRequestDetails.ResidualRiskLikelihood}}</span>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+        <div><label class="last-column-labels">Severity</label></div>
+        <span class="label-details">{{this.riskRequestDetails.ResidualRiskSeverity}}</span>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding-left">
+        <div><label class="last-column-labels">Risk</label></div>
+        <span [ngClass]="residualRiskColor !== '' ? 'risk-band ' + residualRiskColor : ''"></span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<div class="breaker"></div>

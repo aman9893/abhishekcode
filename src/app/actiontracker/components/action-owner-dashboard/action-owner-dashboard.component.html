@@ -1,0 +1,431 @@
+<!-- sidebar -->
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="inner-wrapper">
+      <div class="top-heading center">
+        <h4>Action Owner Dashboard</h4>
+      </div>
+      <div class="sub-wrapper">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Action Owner</li>
+            <li class="breadcrumb-item" aria-current="page">My Dashboard</li>
+          </ol>
+        </nav>
+        <div class="section-wrapper">
+          <div class="action-owner-tabs">
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a data-toggle="tab" (click)="tabChange('Pending')" value="Pending" href="#pending-for-assign">Pending for assignment</a>
+              </li>
+              <li>
+                <a data-toggle="tab" (click)="tabChange('Closure')" href="#pending-for-closure">Pending for closure</a>
+              </li>
+              <li>
+                <a data-toggle="tab" (click)="tabChange('Assigned')" value="Assigned" href="#assigned">Assigned by me</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div id="pending-for-assign" class="tab-pane fade in active">
+                <div class="filter-sort">
+                  <div class="filter-sort-wrapper" (clickOutside)="onClickedOutside()">
+                    <a class="settings" data-toggle="collapse" data-target="#filter-pending-for-assign" (click)="onTabOpen()">
+                      <i class="fa fa-filter" aria-hidden="true" data-toggle="tooltip" data-original-title="Filter"></i>
+                    </a>
+                    <div class="outer-wrapper" *ngIf="hideFilter">
+                      <ul class="filter-section-wrapper collapse" id="filter-pending-for-assign">
+                        <li>
+                          <div class="leave-type">
+                            <h5>source</h5>
+                            <div class="checkbox" *ngFor="let process  of processList">
+                              <label>
+                                <input type="checkbox" name="leavetype" [(ngModel)]='process.checked' [checked]="process.checked" value="{{process}}" (change)="changeValueSourceType($event,process)">{{process.ProcessName}}
+                              </label>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="no-margin-right">
+                          <div class="leave-type">
+                            <h5>priority</h5>
+                            <div class="checkbox" *ngFor="let priority  of prioritys">
+                              <label>
+                                <input type="checkbox" (change)="changeValuePriority($event,priority)" [(ngModel)]='priority.checked' value="{{priority}}"
+                                  name="leavetype">{{priority.Priority}}
+                              </label>
+                            </div>
+                          </div>
+                        </li>
+                        <div class="clearfix"></div>
+                        <li class="filter-footer">
+                          <footer>
+                            <a (click)="reset()" role="button" class="btn btn-primary secondary-btn">
+                              <i class="fa fa-refresh"></i>reset</a>
+                            <a (click)="doneFilter()" role="button" class="btn btn-primary primary-btn">
+                              <i class="fa fa-check"></i>done</a>
+                          </footer>
+                        </li>
+                      </ul>
+                    </div>
+                    <a class="settings" data-toggle="collapse" data-target="#sort-pending-for-assign" (click)="onTabOpen()">
+                      <i class="fa fa-sort" aria-hidden="true" data-toggle="tooltip" data-original-title="Sort"></i>
+                    </a>
+                    <div class="outer-wrapper" *ngIf="hideSort">
+                      <ul class="filter-section-wrapper sort-section-wrapper collapse" id="sort-pending-for-assign">
+                        <li>
+                          <div class="sort-wrapper">
+                            <div class="dt-sort">
+                              <label>Action Assigned On</label>
+                              <a class="selected">
+                                <i (click)="ascActionAssignDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                              </a>
+                              <a>
+                              </a>
+                              <a class="">
+                                <i (click)="descActionAssignDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="no-margin-right">
+                          <div class="sort-wrapper">
+                            <div class="dt-sort">
+                              <label>Action Due Date</label>
+                              <a class="">
+                                <i (click)="ascActionDueDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                              </a>
+                              <a>
+                              </a>
+                              <a class="selected">
+                                <i (click)="descActionDueDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </li>
+                        <div class="clearfix"></div>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped table-condensed fix-tablelayout">
+                    <thead>
+                      <tr>
+                        <th style="width: 100px">Source</th>
+                        <th style="width: 80px">Source ID</th>
+                        <th style="width: 100px">Action ID</th>
+                        <th style="width: 140px">Action Required</th>
+                        <th style="width: 90px">Priority</th>
+                        <th style="width: 130px">Action assigned By</th>
+                        <th style="width: 125px">Action assigned On</th>
+                        <th style="width: 105px">Action due date</th>
+                        <th style="width: 45px">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let action of actionData | paginate: { itemsPerPage: itemPerPage, currentPage: pageSize ,totalItems: rowCount}">
+                        <td>{{action.ProcessName}}</td>
+                        <td>{{action.DisplayId}}</td>
+                        <td>{{action.ActionId}}</td>
+                        <td>{{action.ActionDetails}}</td>
+                        <td>{{action.PriorityName}}</td>
+                        <td>{{action.FullName}}</td>
+                        <td>{{action.CreatedDate | date: dateFormatDDMMYYYY}}</td>
+                        <td>{{action.TargetDate | date: dateFormatDDMMYYYY}}</td>
+                        <td>
+                          <a *ngIf="action.ProcessName === ObservationProcess" [routerLink]="['../view-details', action.ActionId]" pTooltip="{{viewtooltip}}">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                          </a>
+                          <a *ngIf="action.ProcessName === RiskProcess" [routerLink]="['../assign-action-for-risk', action.RiskDetails.RiskRequestId, action.ActionId]"
+                            pTooltip="Assign Action">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <div style="width: 500px">
+                      <pagination-controls (pageChange)="getServerData($event)"></pagination-controls>
+                    </div>
+                  </table>
+                </div>
+              </div>
+              <div id="pending-for-closure" class="tab-pane fade">
+                <div class="filter-sort">
+                  <div class="filter-sort-wrapper">
+                    <a class="settings" data-toggle="collapse" data-target="#filter-closure">
+                      <i class="fa fa-filter" aria-hidden="true" data-toggle="tooltip" data-original-title="Filter"></i>
+                    </a>
+                    <div class="outer-wrapper">
+                      <ul class="filter-section-wrapper collapse" id="filter-closure">
+                        <li>
+                          <div class="leave-type">
+                            <h5>source</h5>
+                            <div class="checkbox" *ngFor="let process  of processList">
+                              <label>
+                                <input type="checkbox" name="leavetype" [(ngModel)]='process.checked' value="{{process}}" (change)="changeValueSourceType($event,process)">{{process.ProcessName}}
+                              </label>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="no-margin-right">
+                          <div class="status">
+                            <h5>priority</h5>
+                            <div class="checkbox" *ngFor="let priority  of prioritys">
+                              <label>
+                                <input type="checkbox" (change)="changeValuePriority($event,priority)" [(ngModel)]='priority.checked' value="{{priority}}"
+                                  name="leavetype">{{priority.Priority}}
+                              </label>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="no-margin-right">
+                          <div class="status">
+                            <h5>status</h5>
+                            <div class="checkbox" *ngFor="let status  of closerTabStatusList">
+                              <label>
+                                <input type="radio" (change)="changeValueStatus($event,status)" [(ngModel)]="defultStatus" [value]="status.StatusName" [name]="statusgroup">{{status.StatusName}}
+                              </label>
+                            </div>
+                          </div>
+                        </li>
+                        <div class="clearfix"></div>
+                        <li class="filter-footer">
+                          <footer>
+                            <a (click)="reset()" role="button" class="btn btn-primary secondary-btn">
+                              <i class="fa fa-refresh"></i>reset</a>
+                            <a (click)="doneFilter()" role="button" class="btn btn-primary primary-btn">
+                              <i class="fa fa-check"></i>done</a>
+                          </footer>
+                        </li>
+                      </ul>
+                    </div>
+                    <a class="settings" data-toggle="collapse" data-target="#sort-closure">
+                      <i class="fa fa-sort" aria-hidden="true" data-toggle="tooltip" data-original-title="Sort"></i>
+                    </a>
+                    <div class="outer-wrapper">
+                      <ul class="filter-section-wrapper sort-section-wrapper collapse" id="sort-closure">
+                        <li>
+                          <div class="sort-wrapper">
+                            <div class="dt-sort">
+                              <label>Action Assigned On</label>
+                              <a class="selected">
+                                <i (click)="ascActionAssignDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                              </a>
+                              <a>
+                              </a>
+                              <a class="">
+                                <i (click)="descActionAssignDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="no-margin-right">
+                          <div class="sort-wrapper">
+                            <div class="dt-sort">
+                              <label>Action Due Date</label>
+                              <a class="">
+                                <i (click)="ascActionDueDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                              </a>
+                              <a>
+                              </a>
+                              <a class="selected">
+                                <i (click)="descActionDueDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </li>
+                        <div class="clearfix"></div>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped table-condensed fix-tablelayout">
+                    <thead>
+                      <tr>
+                        <th style="width: 100px">Source</th>
+                        <th style="width: 80px">Source ID</th>
+                        <th style="width: 80px" *ngIf="isDisplay">Action ID</th>
+                        <th style="width: 130px" *ngIf="isHide">Action assigned by</th>
+                        <th style="width: 120px">Action Required</th>
+                        <th style="width: 64px">Priority</th>
+                        <th style="width: 125px">Action assigned On</th>
+                        <th style="width: 111px">Action due date</th>
+                        <th style="width: 58px">Status</th>
+                        <th style="width: 139px" *ngIf="isHide">Action closed by</th>
+                        <th style="width: 139px" *ngIf="isHide">Action closed on</th>
+                        <th style="width: 139px" *ngIf="isDisplay">Action executed by</th>
+                        <th style="width: 139px">Action executed on</th>
+                        <th style="width: 111px" *ngIf="isDisplay">Verified by</th>
+                        <th style="width: 45px">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let action of actionData | paginate: { itemsPerPage: itemPerPage, currentPage: pageSize ,totalItems: rowCount}">
+                        <td>{{action.ProcessName}}</td>
+                        <td>{{action.DisplayId}}</td>
+                        <td *ngIf="isDisplay">{{action.ActionId}}</td>
+                        <td *ngIf="isHide">{{action.FullName}}</td>
+                        <td>
+                          <span class="ellepsis" data-html="true" pTooltip="{{action.ActionDetails}}" data-content="action.ActionDetails <i class='fa fa-times close-popover'></i>">{{action.ActionDetails}}</span>
+                        </td>
+                        <td>{{action.PriorityName}}</td>
+                        <td>{{action.CreatedDate| date: dateFormatDDMMYYYY}}</td>
+                        <td>{{action.TargetDate| date: dateFormatDDMMYYYY}}</td>
+                        <td>{{action.Status}}</td>
+                        <td *ngIf="isHide">{{action.ClosedBy}}</td>
+                        <td *ngIf="isHide">{{action.ClosedOn | date: dateFormatDDMMYYYY}}</td>
+                        <td *ngIf="isDisplay">{{action.ActionParty}}</td>
+                        <td>{{action.UpdatedDate | date: dateFormatDDMMYYYY}}</td>
+                        <td *ngIf="isDisplay">{{action.ActionVerifier}}</td>
+                        <td *ngIf="action.ProcessName === ObservationProcess">
+                          <a [routerLink]="['/actiontracker/action-details', action.ActionId]" data-toggle="tooltip" data-original-title="Verify action"
+                            pTooltip="{{viewtooltip}}">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                          </a>
+                        </td>
+                        <td *ngIf="action.ProcessName === RiskProcess">
+                          <a [routerLink]="['/actiontracker/action-details', action.ActionId ,{showParty : true}]" data-toggle="tooltip" data-original-title="Verify action"
+                            pTooltip="{{viewtooltip}}">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <div style="width: 500px">
+                      <pagination-controls (pageChange)="getServerData($event)"></pagination-controls>
+                    </div>
+                  </table>
+                </div>
+              </div>
+              <div id="assigned" class="tab-pane fade">
+                <div class="filter-sort">
+                  <div class="filter-sort-wrapper">
+                    <a class="settings" data-toggle="collapse" data-target="#filter-assigned">
+                      <i class="fa fa-filter" aria-hidden="true" data-toggle="tooltip" data-original-title="Filter"></i>
+                    </a>
+                    <div class="outer-wrapper">
+                      <ul class="filter-section-wrapper collapse" id="filter-assigned">
+                        <li>
+                          <div class="leave-type">
+                            <h5>source</h5>
+                            <div class="checkbox" *ngFor="let process  of processList">
+                              <label>
+                                <input type="checkbox" name="leavetype" [(ngModel)]='process.checked' value="{{process}}" (change)="changeValueSourceType($event,process)">{{process.ProcessName}}
+                              </label>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="no-margin-right">
+                          <div class="status">
+                            <h5>priority</h5>
+                            <div class="checkbox" *ngFor="let priority  of prioritys">
+                              <label>
+                                <input type="checkbox" (change)="changeValuePriority($event,priority)" [(ngModel)]='priority.checked' value="{{priority}}"
+                                  name="leavetype">{{priority.Priority}}
+                              </label>
+                            </div>
+                          </div>
+                        </li>
+                        <div class="clearfix"></div>
+                        <li class="filter-footer">
+                          <footer>
+                            <a (click)="reset()" role="button" class="btn btn-primary secondary-btn">
+                              <i class="fa fa-refresh"></i>reset</a>
+                            <a (click)="doneFilter()" role="button" class="btn btn-primary primary-btn">
+                              <i class="fa fa-check"></i>done</a>
+                          </footer>
+                        </li>
+                      </ul>
+                    </div>
+                    <a class="settings" data-toggle="collapse" data-target="#sort-assigned">
+                      <i class="fa fa-sort" aria-hidden="true" data-toggle="tooltip" data-original-title="Sort"></i>
+                    </a>
+                    <div class="outer-wrapper">
+                      <ul class="filter-section-wrapper sort-section-wrapper collapse" id="sort-assigned">
+                        <li>
+                          <div class="sort-wrapper">
+                            <div class="dt-sort">
+                              <label>Action Assigned On</label>
+                              <a class="selected">
+                                <i (click)="ascActionAssignDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                              </a>
+                              <a>
+                              </a>
+                              <a class="">
+                                <i (click)="descActionAssignDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="no-margin-right">
+                          <div class="sort-wrapper">
+                            <div class="dt-sort">
+                              <label>Action Due Date</label>
+                              <a class="">
+                                <i (click)="ascActionDueDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                              </a>
+                              <a>
+                              </a>
+                              <a class="selected">
+                                <i (click)="descActionDueDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </li>
+                        <div class="clearfix"></div>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped table-condensed fix-tablelayout">
+                    <thead>
+                      <tr>
+                        <th style="width: 100px">Source</th>
+                        <th style="width: 80px">Source ID</th>
+                        <th style="width: 100px">Action ID</th>
+                        <th style="width: 140px">Action Required</th>
+                        <th style="width: 90px">Priority</th>
+                        <th style="width: 125px">Action assigned On</th>
+                        <th style="width: 105px">Action due date</th>
+                        <th style="width: 45px">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let action of actionData | paginate: { itemsPerPage: itemPerPage, currentPage: pageSize ,totalItems: rowCount}">
+                        <td>{{action.ProcessName}}</td>
+                        <td>{{action.DisplayId}}</td>
+                        <td>{{action.ActionId}}</td>
+                        <td>{{action.ActionDetails}}</td>
+                        <td>{{action.PriorityName}}</td>
+                        <td>{{action.CreatedDate| date: dateFormatDDMMYYYY}}</td>
+                        <td>{{action.TargetDate| date: dateFormatDDMMYYYY}}</td>
+                        <td>
+                          <a *ngIf="action.ProcessName === ObservationProcess" [routerLink]="['../view-details',action.ActionId]" pTooltip="{{viewtooltip}}">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                          </a>
+                          <a *ngIf="action.ProcessName === RiskProcess" [routerLink]="['../assign-action-for-risk', action.RiskDetails.RiskRequestId, action.ActionId]"
+                            pTooltip="{{viewtooltip}}">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <div style="width: 500px">
+                      <pagination-controls (pageChange)="getServerData($event)"></pagination-controls>
+                    </div>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>

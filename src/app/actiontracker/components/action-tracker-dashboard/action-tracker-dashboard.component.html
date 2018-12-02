@@ -1,0 +1,197 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="inner-wrapper">
+            <div class="top-heading center">
+                <h4>Action Party Dashboard</h4>
+            </div>
+            <div class="sub-wrapper">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Action Party</li>
+                        <li class="breadcrumb-item" aria-current="page">My Dashboard</li>
+                        <li class="filter-sort">
+                            <div class="filter-sort-wrapper" (clickOutside)="onTabOpen()">
+                                <a class="settings pointer" data-toggle="collapse" data-target="#filter" (click)="onTabOpen()">
+                                    <i class="fa fa-filter" aria-hidden="true" pTooltip="Filter" tooltipPosition="top"></i>
+                                </a>
+                                <div class="outer-wrapper" *ngIf="hideFilter">
+                                    <ul class="filter-section-wrapper collapse" id="filter">
+                                        <li>
+                                            <div class="leave-type">
+                                                <h5>source</h5>
+                                                <div class="checkbox" *ngFor="let process  of processes">
+                                                    <label>
+                                                        <input type="checkbox" name="leavetype" [(ngModel)]='process.checked' (change)="changeValueSourceType($event,process)">{{process.ProcessName}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="status">
+                                                <h5>status</h5>
+                                                <div class="checkbox" *ngFor="let status  of statusList">
+                                                    <label>
+                                                        <input type="checkbox" (change)="submitCheckedStatus(status,$event)" [(ngModel)]='status.checked' [checked]='status.checked'
+                                                            value="{{status}}" name="leavetype">{{status.StatusName}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="status">
+                                                <h5>classification</h5>
+                                                <div class="checkbox" *ngFor="let priority  of priorities">
+                                                    <label>
+                                                        <input type="checkbox" (change)="changeValuePriority($event,priority)" [(ngModel)]='priority.checked' value="{{priority}}"
+                                                            name="leavetype">{{priority.Priority}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="leave-type">
+                                                <h5>Action assigned Date</h5>
+                                                <div class="col-lg-12 col-md-11 col-sm-11 no-padding margin-top-10">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 no-padding-left">
+                                                        <p-calendar [showIcon]="true" [maxDate]="dateTime" [showTime]="false" placeholder="" [(ngModel)]="actionAssignFromDate" class="custom-datepicker"
+                                                            overlayVisible='true' readonlyInput="true" required #timeOfUse="ngModel"></p-calendar>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 no-padding-right">
+                                                        <p-calendar [showIcon]="true" [minDate]="actionAssignFromDate" [showTime]="false" placeholder="" [(ngModel)]="actionAssignToDate"
+                                                            class="custom-datepicker" readonlyInput="true" required #timeOfUse="ngModel"></p-calendar>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </li>
+                                        <div class="clearfix"></div>
+                                        <li class="filter-footer">
+                                            <footer>
+                                                <a (click)="resetValue()" role="button" class="btn btn-primary secondary-btn">
+                                                    <i class="fa fa-refresh"></i>reset
+                                                </a>
+                                                <a (click)="doneFilter()" role="button" class="btn btn-primary primary-btn">
+                                                    <i class="fa fa-check"></i>done
+                                                </a>
+                                            </footer>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <a class="settings pointer" data-toggle="collapse" data-target="#sort" (click)="onTabOpen()">
+                                    <i class="fa fa-sort" aria-hidden="true" pTooltip="Sort" tooltipPosition="top"></i>
+                                </a>
+                                <div class="outer-wrapper" *ngIf="hideSort">
+                                    <ul class="filter-section-wrapper sort-section-wrapper collapse" id="sort">
+                                        <li>
+                                            <div class="sort-wrapper">
+                                                <div class="dt-sort">
+                                                    <label>Action assigned date</label>
+                                                    <a class="selected pointer">
+                                                        <i (click)="descActionAssignDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a>
+                                                    </a>
+                                                    <a class="pointer">
+                                                        <i (click)="ascActionAssignDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="no-margin-right">
+                                            <div class="sort-wrapper">
+                                                <div class="dt-sort">
+                                                    <label>Action Due date</label>
+                                                    <a class="pointer">
+                                                        <i (click)="descActionDueDate()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a>
+                                                    </a>
+                                                    <a class="selected pointer">
+                                                        <i (click)="ascActionDueDate()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <div class="clearfix"></div>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </li>
+                    </ol>
+                </nav>
+                <div class="section-wrapper">
+                    <div class="col-lg-12 col-md-3 col-sm-3 no-padding">
+                        <ul class="filter-details">
+                            <li class="filters-applied">Filters applied</li>
+                            <li *ngFor="let filter  of filterList">
+                                {{filter}}
+                                <i class="fa fa-times dismiss-filter"></i>
+                            </li>
+                            <li (click)="resetValue()" class="pull-right no-margin-right clear-all">Clear all</li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 no-padding">
+                        <span class="section-title">Action pending with me</span>
+                        <div class="pull-right margin-bottom-10">
+                            <span class="legend overdue-actions"></span>
+                            <span class="legend-name">Overdue actions</span>
+                            <span class="legend approaching-due-dt"></span>
+                            <span class="legend-name">Approaching due date</span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-condensed fix-tablelayout">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px">Source</th>
+                                    <th style="width: 80px">Source ID</th>
+                                    <th style="width: 100px">Action ID</th>
+                                    <th style="width: 120px">Action Required</th>
+                                    <th style="width: 80px">Priority</th>
+                                    <th style="width: 110px">Action assigned By</th>
+                                    <th style="width: 110px">Action assigned On</th>
+                                    <th style="width: 90px">Action due date</th>
+                                    <th style="width: 40px">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let action of actionData | paginate: { itemsPerPage: itemPerPage, currentPage: pageSize ,totalItems: rowCount}">
+                                <tr>
+                                    <td>
+                                        <span class="legend {{action.DueDateColour}}"></span>
+                                        <span class="v-middle">{{action.SourceText}}</span>
+                                    </td>
+                                    <td>{{action.DisplayId}}</td>
+                                    <td>{{action.ActionId}}</td>
+                                    <td>
+                                        <span class="ellepsis" pTooltip="{{action.ActionDetails}}" tooltipPosition="right">{{action.ActionDetails}}</span>
+                                    </td>
+                                    <td>{{action.ActionPriority}}</td>
+                                    <td>{{action.AssignedBy}}</td>
+                                    <td>{{action.CreatedDate | date: dateFormatDDMMYYYY}}</td>
+                                    <td>{{action.TargetDate | date: dateFormatDDMMYYYY}}</td>
+                                    <td>
+                                        <a [routerLink]="['/actiontracker/action-details', action.ActionId, {showParty: false} ]" pTooltip="{{viewToolTip}}" tooltipPosition="top">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <div style="width: 500px;margin-top:15px;color: red" *ngIf="!showPagination">{{noRecordsMsg}}</div>
+                            <div style="width: 500px" *ngIf="showPagination">
+                                <pagination-controls (pageChange)="getServerData($event)"></pagination-controls>
+                            </div>
+                        </table>
+                    </div>
+                    <!-- End table-responsive -->
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

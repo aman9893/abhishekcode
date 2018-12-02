@@ -1,0 +1,412 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper">
+        <h3 class="page-title obs-card-title">add risks</h3>
+        <div class="section-wrapper right">
+          <span class="mandatory-info">Fields marked with
+            <span class="mandatory">*</span> are mandatory.</span>
+        </div>
+        <div class="margin-left10px" *ngIf="!isUserHasHSEMemberRole">
+          <span class="error-msg-colour">You do not have permission to raise risk, kindly contact your admin.</span>
+        </div>
+        <div class="section-wrapper">
+          <span class="section-title no-margin-bottom">Project and Activity</span>
+          <div class="clearfix"></div>
+          <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="sel1">Risk Source<span class="mandatory">*</span></label>
+              <select class="form-control" value="0" [(ngModel)]="riskRequest.RiskSourceId">
+                <option value="0">Select</option>
+                <option *ngFor="let riskSource of raiseRiskAllMaster.RiskSource" value={{riskSource.RiskSourceId}} [selected]="riskRequest.RiskSourceId === riskSource.RiskSourceId">{{riskSource.Source}}</option>
+              </select>
+            </div>
+            <div *ngIf="(riskRequest.RiskSourceId === 0 || riskRequest.RiskSourceId === '0') && displayErrorMessage.showRiskSourceErrorMessage">
+              <span class="error-msg-colour">Kindly select risk source</span>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="sel1">Project Name<span class="mandatory">*</span></label>
+              <select class="form-control" value="0" [(ngModel)]="riskRequest.ProjectId">
+                <option value="0">Select</option>
+                <option *ngFor="let project of raiseRiskAllMaster.Project" value={{project.ProjectId}} [selected]="riskRequest.ProjectId === project.ProjectId">{{project.ProjectName}}</option>
+              </select>
+            </div>
+            <div *ngIf="(riskRequest.ProjectId === 0 || riskRequest.ProjectId === '0') && displayErrorMessage.showProjectNameErrorMessage">
+              <span class="error-msg-colour">Kindly select project name</span>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+
+          <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="sel1">Location
+                <span class="mandatory">*</span>
+              </label>
+              <select class="form-control" value="0" [(ngModel)]="riskRequest.LocationId">
+                <option value="0">Select</option>
+                <option *ngFor="let location of raiseRiskAllMaster.Location" value={{location.LocationId}} [selected]="riskRequest.LocationId === location.LocationId">{{location.LocationName}}</option>
+              </select>
+            </div>
+            <div *ngIf="(riskRequest.LocationId === 0 || riskRequest.LocationId === '0') && displayErrorMessage.showLocationErrorMessage">
+              <span class="error-msg-colour">Kindly select location name</span>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="sel1">Risk Title
+                <span class="mandatory">*</span>
+              </label>
+              <input type="text" class="form-control" [(ngModel)]="riskRequest.RiskTitle">
+            </div>
+            <div *ngIf="riskRequest.RiskTitle.trim() === '' && displayErrorMessage.showRiskTitleErrorMessage">
+              <span class="error-msg-colour">Kindly enter Risk title</span>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+
+          <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="sel1">Risk Management Tool
+                <span class="mandatory">*</span>
+              </label>
+              <select class="form-control" value="0" [(ngModel)]="riskRequest.RiskManagementToolId">
+                <option value="0">Select</option>
+                <option *ngFor="let riskManagement of raiseRiskAllMaster.RiskManagementTool" value={{riskManagement.RiskManagementToolId}}
+                  [selected]="riskRequest.RiskManagementToolId === riskManagement.RiskManagementToolId">{{riskManagement.ToolName}}</option>
+              </select>
+            </div>
+            <div *ngIf="(riskRequest.RiskManagementToolId === 0 || riskRequest.RiskManagementToolId === '0') && displayErrorMessage.showRiskManagementToolErrorMessage">
+              <span class="error-msg-colour">Kindly select risk management tool</span>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+
+          <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="comment">Activity leading to hazard
+                <span class="mandatory">*</span>
+              </label>
+              <textarea class="form-control" rows="2" [(ngModel)]="riskRequest.ActivityLeadingToHazard"></textarea>
+            </div>
+            <div *ngIf="riskRequest.ActivityLeadingToHazard.trim() === '' && displayErrorMessage.showActivityLeadingToHazardErrorMessage">
+              <span class="error-msg-colour">Kindly enter activity which leads to a hazard</span>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="comment">Hazard identified
+                <span class="mandatory">*</span>
+              </label>
+              <textarea class="form-control" rows="2" [(ngModel)]="riskRequest.HazardIdentified"></textarea>
+            </div>
+            <div *ngIf="riskRequest.HazardIdentified.trim() === '' && displayErrorMessage.showHazardIdentifiedErrorMessage">
+              <span class="error-msg-colour">Kindly enter details of hazards identified</span>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+
+          <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="comment">Threat identified
+                <span class="mandatory">*</span>
+              </label>
+              <textarea class="form-control" rows="2" [(ngModel)]="riskRequest.ThreatIdentified"></textarea>
+            </div>
+            <div *ngIf="riskRequest.ThreatIdentified.trim() === '' && displayErrorMessage.showThreatIdentifiedErrorMessage">
+              <span class="error-msg-colour">Kindly enter details of threats identified</span>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="comment">Consequences
+                <span class="mandatory">*</span>
+              </label>
+              <textarea class="form-control" rows="2" [(ngModel)]="riskRequest.Consequences"></textarea>
+            </div>
+            <div *ngIf="riskRequest.Consequences.trim() === '' && displayErrorMessage.showConsequencesErrorMessage">
+              <span class="error-msg-colour">Kindly enter consequences</span>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper">
+          <span class="section-title no-margin-bottom ram-title">Potential risk identified
+            <span class="risk-matrix" data-toggle="modal" data-target="#risk-matrix">RAM</span>
+          </span>
+          <div class="clearfix"></div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="sel1">PEAR
+                <span class="mandatory">*</span>
+              </label>
+              <select class="form-control" value="0" [(ngModel)]="riskRequest.PotentialRiskPear">
+                <option value="0">Select</option>
+                <option *ngFor="let pear of pearMaster" value={{pear}} [selected]="riskRequest.PotentialRiskPear === pear">{{pear}}</option>
+              </select>
+            </div>
+            <div *ngIf="(riskRequest.PotentialRiskPear === 0 || riskRequest.PotentialRiskPear === '0') && displayErrorMessage.showPotentialPearErrorMessage">
+              <span class="error-msg-colour">Kindly select PEAR</span>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="sel1">Likelihood
+                <span class="mandatory">*</span>
+              </label>
+              <select class="form-control" value="0" (change)="getRiskColor('Potential')" [(ngModel)]="riskRequest.PotentialRiskLikelihood">
+                <option value="0">Select</option>
+                <option *ngFor="let consequence of consequenceMaster" value={{consequence}} [selected]="riskRequest.PotentialRiskLikelihood === consequence">{{consequence}}</option>
+              </select>
+            </div>
+            <div *ngIf="(riskRequest.PotentialRiskLikelihood === 0 || riskRequest.PotentialRiskLikelihood === '0') && displayErrorMessage.showPotentialConsequencesErrorMessage">
+              <span class="error-msg-colour">Kindly select consequence rating</span>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="sel1">Severity
+                <span class="mandatory">*</span>
+              </label>
+              <select class="form-control" value="0" (change)="getRiskColor('Potential')" [(ngModel)]="riskRequest.PotentialRiskSeverity">
+                <option value="0">Select</option>
+                <option *ngFor="let severity of severityMaster" value={{severity}} [selected]="riskRequest.PotentialRiskSeverity === severity">{{severity}}</option>
+              </select>
+            </div>
+            <div *ngIf="(riskRequest.PotentialRiskSeverity === 0 || riskRequest.PotentialRiskSeverity === '0') && displayErrorMessage.showPotentialSeverityErrorMessage">
+              <span class="error-msg-colour">Kindly select severity</span>
+            </div>
+          </div>
+          <div class="col-lg-1 col-md-4 col-sm-4 col-xs-4 no-padding">
+            <div class="form-group">
+              <label for="sel1">Risk<span class="mandatory"></span></label>
+              <span [ngClass]="potentialRiskColor !== '' ? 'risk-band ' + potentialRiskColor : ''"></span>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="section-wrapper">
+          <span class="section-title">Risk control measures</span>
+          <div class="clearfix"></div>
+          <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="sel1">Control technique
+                <span class="mandatory">*</span>
+              </label>
+              <select class="form-control" value="0" [(ngModel)]="riskRequest.RiskControlTechniquesId">
+                <option value="0">Select</option>
+                <option *ngFor="let controlTechnique of raiseRiskAllMaster.RiskControlTechniques" value={{controlTechnique.RiskControlTechniquesId}}
+                  [selected]="riskRequest.RiskControlTechniquesId === controlTechnique.RiskControlTechniquesId">{{controlTechnique.ControlTechnique}}</option>
+              </select>
+            </div>
+            <div *ngIf="(riskRequest.RiskControlTechniquesId === 0 || riskRequest.RiskControlTechniquesId === '0') && displayErrorMessage.showControlTechniqueErrorMessage">
+              <span class="error-msg-colour">Kindly select control technique</span>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="comment">Control measure
+                <span class="mandatory">*</span>
+              </label>
+              <textarea class="form-control" rows="2" [(ngModel)]="riskRequest.ControlMeasure"></textarea>
+            </div>
+            <div *ngIf="riskRequest.ControlMeasure.trim() === '' && displayErrorMessage.showControlMeasureErrorMessage">
+              <span class="error-msg-colour">Kindly specify control measure</span>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="comment">Contingency Plan
+                <span class="mandatory">*</span>
+              </label>
+              <textarea class="form-control" rows="2" [(ngModel)]="riskRequest.ContengencyPlan"></textarea>
+            </div>
+            <div *ngIf="riskRequest.ContengencyPlan.trim() === '' && displayErrorMessage.showContegencyPlanErrorMessage">
+              <span class="error-msg-colour">Kindly specify contingency plan</span>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="breaker"></div>
+        <div class="section-wrapper add-action-wrapper">
+          <span class="section-title">Add Action you want to take</span>
+          <div class="table-responsive margin-bottom-20 add-action-table">
+            <table align="center" class="table table-bordered table-striped table-condensed tableheader table-red fix-tablelayout">
+              <thead>
+                <tr>
+                  <th style="width: 162px">
+                    Action
+                    <span class="mandatory">*</span>
+                  </th>
+                  <th style="width: 165px">
+                    Action Owner
+                    <span class="mandatory">*</span>
+                  </th>
+                  <th style="width: 110px">Designation</th>
+                  <th style="width: 130px">
+                    Priority
+                    <span class="mandatory">*</span>
+                  </th>
+                  <th style="width: 115px">
+                    Target Date
+                    <span class="mandatory">*</span>
+                  </th>
+                  <th style="width: 90px">Delete Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let action of actionList; let i = index">
+                  <td>
+                    <textarea [disabled]="selectedRiskRequestId !== 0 && selectedRiskRequestId !== '0'" class="form-control" rows="2" [(ngModel)]="action.Action"></textarea>
+                    <div *ngIf="!action.Action && action.ShowActionErrorMessage">
+                      <span class="error-msg-colour">Provide action details</span>
+                    </div>
+                  </td>
+                  <td>
+                    <p-autoComplete [disabled]="selectedRiskRequestId !== 0 && selectedRiskRequestId !== '0'" [(ngModel)]="action.ActionOwner" [suggestions]="userResults" (completeMethod)="getUsersOnSearch($event)"
+                      (onSelect)="selectActionOwner($event)" (change)="selectActionOwner($event)" placeholder="Action Owner"
+                      field="FullName" [minLength]="1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
+                      <ng-template let-actionowner pTemplate="item">
+                        {{actionowner.FullName}}
+                      </ng-template>
+                    </p-autoComplete>
+                    <div *ngIf="!action.ActionOwner && action.ShowActionOwnerErrorMessage">
+                      <span class="error-msg-colour">Kindly select action owner</span>
+                    </div>
+                  </td>
+                  <td>{{action.ActionOwner ? action.ActionOwner.Designation : ''}}</td>
+                  <td>
+                    <select [disabled]="selectedRiskRequestId !== 0 && selectedRiskRequestId !== '0'" class="form-control" id="sel1" [(ngModel)]="action.Priority">
+                      <option selected [ngValue]=0>Select</option>
+                      <option [ngValue]=1>High</option>
+                      <option [ngValue]=2>Medium</option>
+                      <option [ngValue]=3>Low</option>
+                    </select>
+                    <div *ngIf="!action.Priority && action.ShowPriorityErrorMessage">
+                      <span class="error-msg-colour">Kindly select priority</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <p-calendar [disabled]="selectedRiskRequestId !== 0 && selectedRiskRequestId !== '0'" [showIcon]="true" [minDate]="dateTime" [showTime]="false" placeholder="" [(ngModel)]="action.TargetDate" readonlyInput="true"
+                                  required #timeOfUse="ngModel" appendTo="body"></p-calendar>
+                      <div *ngIf="!action.TargetDate && action.ShowTargetErrorMessage">
+                        <span class="error-msg-colour">Kindly select target date</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="center">
+                    <a [ngClass]="selectedRiskRequestId !== 0 && selectedRiskRequestId !== '0' ? 'disabled' : 'cursor-pointer'" (click)="removeActionFromActionList(i)">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- End table-responsive -->
+          <a [ngClass]="selectedRiskRequestId !== 0 && selectedRiskRequestId !== '0' ? 'disabled' : 'cursor-pointer'" (click)="addAction()" class="pull-right margin-top-10">
+            <i class="fa fa-plus" aria-hidden="true" style="padding-right:6px;"></i>Add Action
+          </a>
+          <div class="clearfix"></div>
+        </div>
+        <div class="breaker"></div>
+
+        <div class="section-wrapper">
+          <span class="section-title">Residual risk post implementation of control measures</span>
+          <div class="clearfix"></div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="sel1">Pear
+                <span class="mandatory">*</span>
+              </label>
+              <select class="form-control" value="0" [(ngModel)]="riskRequest.ResidualRiskPear">
+                <option value="0">Select</option>
+                <option *ngFor="let pear of pearMaster" value={{pear}} [selected]="riskRequest.ResidualRiskPear === pear">{{pear}}</option>
+              </select>
+            </div>
+            <div *ngIf="(riskRequest.ResidualRiskPear === 0 || riskRequest.ResidualRiskPear === '0') && displayErrorMessage.showResidualPearErrorMessage">
+              <span class="error-msg-colour">Kindly select PEAR</span>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="sel1">Likelihood
+                <span class="mandatory">*</span>
+              </label>
+              <select class="form-control" value="0" (change)="getRiskColor('Residual')" [(ngModel)]="riskRequest.ResidualRiskLikelihood">
+                <option value="0">Select</option>
+                <option *ngFor="let consequence of consequenceMaster" value={{consequence}} [selected]="riskRequest.ResidualRiskLikelihood === consequence">{{consequence}}</option>
+              </select>
+            </div>
+            <div *ngIf="(riskRequest.ResidualRiskLikelihood === 0 || riskRequest.ResidualRiskLikelihood === '0') && displayErrorMessage.showResidualConsequenceErrorMessage">
+              <span class="error-msg-colour">Kindly select consequence rating</span>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 no-padding-left">
+            <div class="form-group">
+              <label for="sel1">Severity
+                <span class="mandatory">*</span>
+              </label>
+              <select class="form-control" value="0" (change)="getRiskColor('Residual')" [(ngModel)]="riskRequest.ResidualRiskSeverity">
+                <option value="0">Select</option>
+                <option *ngFor="let severity of severityMaster" value={{severity}} [selected]="riskRequest.ResidualRiskSeverity === severity">{{severity}}</option>
+              </select>
+            </div>
+            <div *ngIf="(riskRequest.ResidualRiskSeverity === 0 || riskRequest.ResidualRiskSeverity === '0') && displayErrorMessage.showResidualSeverityErrorMessage">
+              <span class="error-msg-colour">Kindly select severity</span>
+            </div>
+          </div>
+          <div class="col-lg-1 col-md-4 col-sm-4 col-xs-4 no-padding">
+            <div class="form-group">
+              <label for="sel1">Risk<span class="mandatory"></span></label>
+              <span [ngClass]="residualRiskColor !== '' ? 'risk-band ' + residualRiskColor : ''"></span>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <footer>
+          <a *ngIf="selectedRiskRequestId === 0 || selectedRiskRequestId === '0'" (click)="confirmResetForm()" class="btn btn-primary secondary-btn" role="button">
+            <i class="fa fa-refresh"></i>reset</a>
+          <a *ngIf="selectedRiskRequestId === 0 || selectedRiskRequestId === '0'" (click)="raiseRisk()" class="btn btn-primary primary-btn" role="button">
+            <i class="fa fa-share-square"></i>submit</a>
+            <a *ngIf="selectedRiskRequestId !== 0 && selectedRiskRequestId !== '0'" (click)="updateRisk()" class="btn btn-primary primary-btn" role="button">
+              <i class="fa fa-share-square"></i>update</a>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="onYesClickedSuccess()"
+  [confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>
+
+<div class="modal fade" id="risk-matrix" role="dialog">
+  <div class="modal-dialog custom-modal">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </button>
+        <h4 class="modal-title custom_align" id="Heading">Risk Assessment Matrix</h4>
+      </div>
+      <div class="modal-body">
+        <img class="ram-img" src="assets/images/risk-management-matrix.png" />
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

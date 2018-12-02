@@ -1,0 +1,28 @@
+.apply-title {
+    margin-bottom: 0;
+    font-weight: 600;
+    width: 175px;
+    font-size: 12px;
+    text-align: right;
+}
+
+.file-upload-box{
+	width: 489px;
+	display: inline-block;
+    vertical-align: middle;
+    max-height: 150px;
+    overflow: auto;
+}
+
+::ng-deep .ui-widget-header .ui-button, .ui-widget-content .ui-button, .ui-widget.ui-button, .ui-button{
+        border: 1px solid #696969;
+        color: #FFFFFF;
+        background: #696969;
+        transition: background-color .2s;
+}
+
+::ng-deep .ui-fileupload-row > div:nth-child(3){
+    display: none;
+}
+
+

@@ -1,0 +1,53 @@
+<app-side-nav [routesFlag]='routesFlag' [reportRoutes]='reportRoutes'></app-side-nav>
+<div class="page-content-wrapper">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="inner-wrapper">
+      <div class="sub-wrapper">
+        <h3 class="page-title obs-card-title">Investigation Details</h3>
+        <div class="section-wrapper right">
+          <span class="mandatory-info">Fields marked with
+            <span class="mandatory">*</span> are mandatory.</span>
+        </div>
+        <!-- Display view request for specific incident request id -->
+        <app-view-request-details [incidentRequestId]="incidentRequestId"></app-view-request-details>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+          <!-- START - Close Section for closure -->
+          <div class="section-wrapper no-margin">
+            <span class="section-title">Closure Details</span>
+            <div class="col-lg-9 col-md-3 col-sm-3 no-padding margin-top-10">
+              <label class="labelClass">Closure remarks
+                <span class="mandatory">*</span>
+              </label>
+              <textarea class="form-control textboxalign" maxlength="200" [(ngModel)]="closureDetails" (input)="onSearchChange()"></textarea>
+              <div class="marginLeftClass" *ngIf="validationOnReason">
+                <span class="error-msg-colour">Please enter closure remarks</span>
+              </div>
+
+            </div>
+            <div class="col-lg-3 col-md-2 col-sm-2">
+              <footer class="margin-bottom-10 btn-alignment-left">
+                <a>
+                  <button type="button" class="btn btn-primary primary-btn" (click)="closeIncidentRequest()">
+                    <i class="fa fa-share-square"></i>Close request</button>
+                </a>
+              </footer>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="breaker margin-top-10"></div>
+        </div>
+        <!-- END - Close Section for closure -->
+
+        <footer>
+          <a routerLink="../../incident-case-owner-dashboard" class="btn btn-primary secondary-btn" role="button">
+            <i class="fa fa-reply"></i>back to case owner dashboard</a>
+        </footer>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<app-alerts [alertType]="alertType" [successDetails]="successDetails" [errorDetails]="errorDetails" (okClicked)="onYesClickedSuccess()"
+  [confirmMessage]="confirmMessage" (yesClicked)="onYesClickedForConfirmation()" (noClicked)="onNoClickedForConfirmation()"></app-alerts>
